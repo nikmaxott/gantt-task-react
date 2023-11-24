@@ -8,8 +8,15 @@
 
 ## Install
 
+Add a .npmrc file to the root of your project with the following content:
+
 ```
-npm install gantt-task-react
+@nikmaxott:registry=https://npm.pkg.github.com
+```
+Then install as normal
+
+```
+npm install @nikmaxott/gantt-task-react
 ```
 
 ## How to use it
