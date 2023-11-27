@@ -46,6 +46,8 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   projectBackgroundSelectedColor = "#f7bb53",
   milestoneBackgroundColor = "#f1c453",
   milestoneBackgroundSelectedColor = "#f29e4c",
+  ganttColor = "transparent",
+  ganttLineColor = "#e0e0e0",
   rtl = false,
   handleWidth = 8,
   timeStep = 300000,
@@ -394,6 +396,8 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     dates: dateSetup.dates,
     todayColor,
     rtl,
+    ganttColor,
+    ganttLineColor,
   };
   const calendarProps: CalendarProps = {
     dateSetup,

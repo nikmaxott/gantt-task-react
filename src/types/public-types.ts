@@ -110,6 +110,8 @@ export interface StylingOption {
   projectBackgroundSelectedColor?: string;
   milestoneBackgroundColor?: string;
   milestoneBackgroundSelectedColor?: string;
+  ganttColor?: string;
+  ganttLineColor?: string;
   arrowColor?: string;
   arrowIndent?: number;
   todayColor?: string;
