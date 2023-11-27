@@ -1,10 +1,10 @@
 {
-  "name": "@nikmaxott/gantt-task-react",
-  "version": "0.4.0-rc3",
+  "name": "@ecerto/gantt-chart",
+  "version": "0.4.1",
   "description": "Interactive Gantt Chart for React with TypeScript.",
   "author": "MaTeMaTuK <maksym.vikarii@gmail.com>, nikmaxott <nikolaus@nikmaxott.org>",
   "license": "MIT",
-  "repository": "nikmaxott/gantt-task-react",
+  "repository": "ecerto/gantt-chart",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
