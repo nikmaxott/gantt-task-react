@@ -108,6 +108,8 @@ export interface StylingOption {
   projectProgressSelectedColor?: string;
   projectBackgroundColor?: string;
   projectBackgroundSelectedColor?: string;
+  projectStrokeColor?: string;
+  projectStrokeSelectedColor?: string;
   milestoneBackgroundColor?: string;
   milestoneBackgroundSelectedColor?: string;
   ganttColor?: string;
