@@ -112,8 +112,6 @@ export interface StylingOption {
   projectStrokeSelectedColor?: string;
   milestoneBackgroundColor?: string;
   milestoneBackgroundSelectedColor?: string;
-  ganttColor?: string;
-  ganttLineColor?: string;
   arrowColor?: string;
   arrowIndent?: number;
   todayColor?: string;
@@ -125,14 +123,10 @@ export interface StylingOption {
   TaskListHeader?: React.FC<{
     headerHeight: number;
     rowWidth: string;
-    fontFamily: string;
-    fontSize: string;
   }>;
   TaskListTable?: React.FC<{
     rowHeight: number;
     rowWidth: string;
-    fontFamily: string;
-    fontSize: string;
     locale: string;
     tasks: Task[];
     selectedTaskId: string;

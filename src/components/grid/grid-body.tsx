@@ -11,8 +11,6 @@ export type GridBodyProps = {
   columnWidth: number;
   todayColor: string;
   rtl: boolean;
-  ganttColor?: string;
-  ganttLineColor?: string;
 };
 export const GridBody: React.FC<GridBodyProps> = ({
   tasks,
@@ -22,8 +20,6 @@ export const GridBody: React.FC<GridBodyProps> = ({
   columnWidth,
   todayColor,
   rtl,
-  ganttColor = "transparent",
-  ganttLineColor = "#e0e0e0",
 }) => {
   let y = 0;
   const gridRows: ReactChild[] = [];
@@ -45,7 +41,8 @@ export const GridBody: React.FC<GridBodyProps> = ({
         y={y}
         width={svgWidth}
         height={rowHeight}
-        fill={ganttColor}
+        className={styles.gridRow}
+        role="row"
       />
     );
     rowLines.push(
@@ -55,7 +52,7 @@ export const GridBody: React.FC<GridBodyProps> = ({
         y1={y + rowHeight}
         x2={svgWidth}
         y2={y + rowHeight}
-        className={ganttLineColor}
+        className={styles.gridRowLine}
       />
     );
     y += rowHeight;
@@ -74,7 +71,7 @@ export const GridBody: React.FC<GridBodyProps> = ({
         y1={0}
         x2={tickX}
         y2={y}
-        stroke={ganttLineColor}
+        stroke={styles.gridTick}
       />
     );
     if (
@@ -121,10 +118,16 @@ export const GridBody: React.FC<GridBodyProps> = ({
     tickX += columnWidth;
   }
   return (
-    <g className="gridBody">
-      <g className="rows">{gridRows}</g>
-      <g className="rowLines">{rowLines}</g>
-      <g className="ticks">{ticks}</g>
+    <g className="gridBody" role="grid">
+      <g className="rows" role="rowgroup">
+        {gridRows}
+      </g>
+      <g className="rowLines" role="presentation">
+        {rowLines}
+      </g>
+      <g className="ticks" role="presentation">
+        {ticks}
+      </g>
       <g className="today">{today}</g>
     </g>
   );

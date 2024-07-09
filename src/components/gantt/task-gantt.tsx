@@ -49,6 +49,8 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
         height={calendarProps.headerHeight}
         fontFamily={barProps.fontFamily}
       >
+        <title>Gantt Chart Calendar Header</title>
+        <desc>Displays the calendar in {calendarProps.viewMode}s</desc>
         <Calendar {...calendarProps} />
       </svg>
       <div
@@ -67,6 +69,8 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
           fontFamily={barProps.fontFamily}
           ref={ganttSVGRef}
         >
+          <title>Gantt Chart Content</title>
+          <desc>Displays the tasks in the Gantt chart</desc>
           <Grid {...gridProps} />
           <TaskGanttContent {...newBarProps} />
         </svg>

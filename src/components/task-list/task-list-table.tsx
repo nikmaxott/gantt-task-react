@@ -24,20 +24,20 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 export const TaskListTableDefault: React.FC<{
   rowHeight: number;
   rowWidth: string;
-  fontFamily: string;
-  fontSize: string;
   locale: string;
   tasks: Task[];
   selectedTaskId: string;
+  ganttHeight: number;
+  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
   setSelectedTask: (taskId: string) => void;
   onExpanderClick: (task: Task) => void;
 }> = ({
   rowHeight,
   rowWidth,
   tasks,
-  fontFamily,
-  fontSize,
   locale,
+  ganttHeight,
+  horizontalContainerRef,
   onExpanderClick,
 }) => {
   const toLocaleDateString = useMemo(
@@ -46,12 +46,10 @@ export const TaskListTableDefault: React.FC<{
   );
 
   return (
-    <div
-      className={styles.taskListWrapper}
-      style={{
-        fontFamily: fontFamily,
-        fontSize: fontSize,
-      }}
+    <tbody
+      ref={horizontalContainerRef}
+      style={ganttHeight ? { maxHeight: ganttHeight } : {}}
+      className={styles.horizontalContainer}
     >
       {tasks.map(t => {
         let expanderSymbol = "";
@@ -62,12 +60,23 @@ export const TaskListTableDefault: React.FC<{
         }
 
         return (
-          <div
+          <tr
             className={styles.taskListTableRow}
             style={{ height: rowHeight }}
             key={`${t.id}row`}
           >
-            <div
+            <td>
+              {expanderSymbol ? (
+                <button
+                  type="button"
+                  className={styles.taskListExpander}
+                  onClick={() => onExpanderClick(t)}
+                >
+                  {expanderSymbol}
+                </button>
+              ) : null}
+            </td>
+            <td
               className={styles.taskListCell}
               style={{
                 minWidth: rowWidth,
@@ -75,41 +84,29 @@ export const TaskListTableDefault: React.FC<{
               }}
               title={t.name}
             >
-              <div className={styles.taskListNameWrapper}>
-                <div
-                  className={
-                    expanderSymbol
-                      ? styles.taskListExpander
-                      : styles.taskListEmptyExpander
-                  }
-                  onClick={() => onExpanderClick(t)}
-                >
-                  {expanderSymbol}
-                </div>
-                <div>{t.name}</div>
-              </div>
-            </div>
-            <div
+              {t.name}
+            </td>
+            <td
               className={styles.taskListCell}
               style={{
                 minWidth: rowWidth,
                 maxWidth: rowWidth,
               }}
             >
-              &nbsp;{toLocaleDateString(t.start, dateTimeOptions)}
-            </div>
-            <div
+              {toLocaleDateString(t.start, dateTimeOptions)}
+            </td>
+            <td
               className={styles.taskListCell}
               style={{
                 minWidth: rowWidth,
                 maxWidth: rowWidth,
               }}
             >
-              &nbsp;{toLocaleDateString(t.end, dateTimeOptions)}
-            </div>
-          </div>
+              {toLocaleDateString(t.end, dateTimeOptions)}
+            </td>
+          </tr>
         );
       })}
-    </div>
+    </tbody>
   );
 };

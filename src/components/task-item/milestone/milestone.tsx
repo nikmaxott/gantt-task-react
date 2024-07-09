@@ -17,7 +17,11 @@ export const Milestone: React.FC<TaskItemProps> = ({
   };
 
   return (
-    <g tabIndex={0} className={styles.milestoneWrapper}>
+    <g
+      tabIndex={0}
+      className={styles.milestoneWrapper}
+      aria-labelledby={`taskName${task.id}`}
+    >
       <rect
         fill={getBarColor()}
         x={task.x1}

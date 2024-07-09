@@ -13,6 +13,7 @@ Add a .npmrc file to the root of your project with the following content:
 ```
 @nikmaxott:registry=https://npm.pkg.github.com
 ```
+
 Then install as normal
 
 ```
@@ -91,13 +92,13 @@ npm start
 
 ### DisplayOption
 
-| Parameter Name | Type    | Description                                                                                                 |
-| :------------- | :------ | :---------------------------------------------------------------------------------------------------------- |
+| Parameter Name | Type    | Description                                                                                                              |
+| :------------- | :------ | :----------------------------------------------------------------------------------------------------------------------- |
 | viewMode       | enum    | Specifies the time scale. Hour, Quarter Day, Half Day, Day, Week(ISO-8601, 1st day is Monday), Month, QuarterYear, Year. |
-| viewDate       | date    | Specifies display date and time for display.                                                                |
-| preStepsCount  | number  | Specifies empty space before the fist task                                                                  |
-| locale         | string  | Specifies the month name language. Able formats: ISO 639-2, Java Locale.                                    |
-| rtl            | boolean | Sets rtl mode.                                                                                              |
+| viewDate       | date    | Specifies display date and time for display.                                                                             |
+| preStepsCount  | number  | Specifies empty space before the fist task                                                                               |
+| locale         | string  | Specifies the month name language. Able formats: ISO 639-2, Java Locale.                                                 |
+| rtl            | boolean | Sets rtl mode.                                                                                                           |
 
 ### StylingOption
 
@@ -124,9 +125,9 @@ npm start
 | TaskListHeader             |        | Specifies the task list Header view                                                            |
 | TaskListTable              |        | Specifies the task list Table view                                                             |
 
-- TooltipContent: [`React.FC<{ task: Task; fontSize: string; fontFamily: string; }>;`](https://github.com/MaTeMaTuK/gantt-task-react/blob/main/src/components/other/tooltip.tsx#L56)
-- TaskListHeader: `React.FC<{ headerHeight: number; rowWidth: string; fontFamily: string; fontSize: string;}>;`
-- TaskListTable: `React.FC<{ rowHeight: number; rowWidth: string; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; }>;`
+- TooltipContent: [`React.FC<{ task: Task; fontSize: string; fontFamily: string; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/other/tooltip.tsx)
+- TaskListHeader: [`React.FC<{ headerHeight: number; rowWidth: string; fontFamily: string; fontSize: string;}>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-header.tsx)
+- TaskListTable: [`React.FC<{ rowHeight: number; rowWidth: string; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-table.tsx)
 
 ### Task
 

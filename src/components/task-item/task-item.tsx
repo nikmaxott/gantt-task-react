@@ -117,6 +117,7 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
             : style.barLabel && style.barLabelOutside
         }
         ref={textRef}
+        id={`taskName${task.id}`}
       >
         {task.name}
       </text>

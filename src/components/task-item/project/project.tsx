@@ -5,7 +5,7 @@ import styles from "./project.module.css";
 export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
   const barColor = isSelected
     ? task.styles.backgroundSelectedColor
-    : task.styles.backgroundColor;  
+    : task.styles.backgroundColor;
   const strokeColor = isSelected
     ? task.styles.strokeSelectedColor
     : task.styles.strokeColor;
@@ -14,9 +14,12 @@ export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
     : task.styles.progressColor;
   const projectWith = task.x2 - task.x1;
 
-
   return (
-    <g tabIndex={0} className={styles.projectWrapper}>
+    <g
+      tabIndex={0}
+      className={styles.projectWrapper}
+      aria-labelledby={`taskName${task.id}`}
+    >
       <rect
         fill={barColor}
         x={task.x1}

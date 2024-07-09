@@ -18,7 +18,11 @@ export const BarSmall: React.FC<TaskItemProps> = ({
     task.height
   );
   return (
-    <g className={styles.barWrapper} tabIndex={0}>
+    <g
+      className={styles.barWrapper}
+      tabIndex={0}
+      aria-labelledby={`taskName${task.id}`}
+    >
       <BarDisplay
         x={task.x1}
         y={task.y}

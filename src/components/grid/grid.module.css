@@ -1,5 +1,5 @@
 .gridRow {
-  fill: #fff;
+  fill: transparent;
 }
 
 .gridRow:nth-child(even) {
