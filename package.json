@@ -1,6 +1,6 @@
 {
   "name": "@nikmaxott/gantt-task-react",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Interactive Gantt Chart for React with TypeScript.",
   "author": "MaTeMaTuK <maksym.vikarii@gmail.com>, nikmaxott <nikolaus@nikmaxott.org>",
   "license": "MIT",
@@ -32,8 +32,8 @@
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
     "test:lint": "eslint --ext .tsx src/**/*",
-    "test:unit": "set CI=true && react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test:unit": "vitest run",
+    "test:watch": "vitest --watch",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/dist"
   },
@@ -42,13 +42,15 @@
     "react-dom": "^18.3.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.1.4",
-    "@testing-library/react": "^14.1.2",
-    "@testing-library/user-event": "^14.5.1",
+    "@testing-library/jest-dom": "^6.4.8",
+    "@testing-library/react": "^14.3.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.10",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vitejs/plugin-react-refresh": "^1.3.6",
     "gh-pages": "^6.1.0",
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
@@ -58,8 +60,9 @@
     "prettier": "^3.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-scripts": "^5.0.1",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vite": "^5.3.5",
+    "vitest": "^2.0.4"
   },
   "files": [
     "dist"
