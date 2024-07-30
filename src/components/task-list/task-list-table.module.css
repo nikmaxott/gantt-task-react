@@ -1,9 +1,11 @@
 .taskListTableRow {
   overflow: hidden;
+  border: 1px solid rgb(224, 224, 224);
 }
-
-.taskListTableRow:nth-of-type(even) {
-  background-color: #f5f5f5;
+.taskListTableRow_Parent {
+  overflow: hidden;
+  font-weight: bold;
+  border: 1px solid rgb(224, 224, 224);
 }
 
 .taskListCell {

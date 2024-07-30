@@ -61,7 +61,11 @@ export const TaskListTableDefault: React.FC<{
 
         return (
           <tr
-            className={styles.taskListTableRow}
+            className={
+              expanderSymbol === ""
+                ? styles.taskListTableRow
+                : styles.taskListTableRow_Parent
+            }
             style={{ height: rowHeight }}
             key={`${t.id}row`}
           >
