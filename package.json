@@ -33,7 +33,7 @@
     "task"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --config vite.config.demo.ts",
     "build": "tsc --p ./tsconfig-build.json && vite build",
     "build:demo": "vite build --config vite.config.demo.ts",
     "test:lint": "eslint .",
