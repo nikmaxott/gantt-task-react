@@ -3,7 +3,7 @@ name: Publish package to GitHub Packages
 on:
   release:
     types: [published]
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   build:
@@ -27,9 +27,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-          registry-url: "https://npm.pkg.github.com"
-          scope: "@nikmaxott"
+          registry-url: "https://registry.npmjs.org"
       - run: npm ci
-      - run: npm publish
+      - run: npm publish --provenance --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

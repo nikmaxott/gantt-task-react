@@ -1,6 +1,6 @@
 {
-  "short_name": "gantt-task-react",
-  "name": "gantt-task-react",
+  "short_name": "@nikmaxott/react-gantt",
+  "name": "@nikmaxott/react-gantt",
   "icons": [
     {
       "src": "favicon.ico",
