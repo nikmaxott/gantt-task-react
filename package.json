@@ -9,9 +9,15 @@
     "type": "git",
     "url": "git+https://github.com/nikmaxott/gantt-task-react.git"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
+  "main": "dist/gantt-task-react.js",
+  "module": "dist/gantt-task-react.js",
   "source": "src/index.tsx",
+  "exports": {
+    ".": {
+      "import": "./dist/gantt-task-react.js",
+      "require": "./dist/gantt-task-react.umd.cjs"
+    }
+  },
   "engines": {
     "node": ">=10"
   },
@@ -34,7 +40,8 @@
     "test:unit": "vitest run",
     "test:watch": "vitest --watch",
     "lint:fix": "eslint --fix .",
-    "prettier:fix": "prettier --write ./src"
+    "prettier:fix": "prettier --write ./src",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "react": "^18.3.0",
@@ -54,7 +61,6 @@
     "eslint-plugin-react": "^7.35.0",
     "globals": "^15.8.0",
     "jsdom": "^24.1.1",
-    "microbundle": "^0.15.1",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^9.6.0",

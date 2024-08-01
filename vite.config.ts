@@ -8,7 +8,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/index.tsx"),
       name: "@nikmaxott/gantt-task-react",
-      fileName: format => `@nikmaxott/gantt-task-react.${format}.js`,
+      fileName: "@nikmaxott/gantt-task-react",
     },
     rollupOptions: {
       // Ensure to externalize dependencies that shouldn't be bundled
