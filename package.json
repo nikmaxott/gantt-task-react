@@ -35,6 +35,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --p ./tsconfig-build.json && vite build",
+    "build:demo": "vite build --config vite.config.demo.ts",
     "test:lint": "eslint .",
     "test:prettier": "prettier --check ./src",
     "test:unit": "vitest run",
