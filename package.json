@@ -1,6 +1,6 @@
 {
   "name": "@nikmaxott/gantt-task-react",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Interactive Gantt Chart for React with TypeScript. Fork of MaTeMaTuK's gantt-task-react.",
   "author": "nikmaxott <nikolaus@nikmaxott.org>, MaTeMaTuK <maksym.vikarii@gmail.com>",
   "license": "MIT",
