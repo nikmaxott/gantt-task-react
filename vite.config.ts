@@ -4,21 +4,16 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  base: "/gantt-task-react",
   build: {
+    copyPublicDir: false,
     lib: {
-      entry: path.resolve(__dirname, "src/index.tsx"),
-      name: "@nikmaxott/gantt-task-react",
-      fileName: "@nikmaxott/gantt-task-react",
+      entry: path.resolve(__dirname, "src/index.ts"),
+      formats: ["es"],
     },
     rollupOptions: {
       // Ensure to externalize dependencies that shouldn't be bundled
-      external: ["react", "react-dom"],
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
-      },
+      external: ["react", "react/jsx-runtime"],
     },
   },
   test: {

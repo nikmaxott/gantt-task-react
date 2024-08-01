@@ -1,5 +1,5 @@
 import React from "react";
-import { ViewMode } from "@nikmaxott/gantt-task-react";
+import { ViewMode } from "../../src";
 
 type ViewSwitcherProps = {
   isChecked: boolean;
