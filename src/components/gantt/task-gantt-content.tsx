@@ -142,7 +142,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
           if (result !== undefined) {
             operationSuccess = result;
           }
-        } catch (error) {
+        } catch (_) {
           operationSuccess = false;
         }
       } else if (onProgressChange && isNotLikeOriginal) {
@@ -154,7 +154,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
           if (result !== undefined) {
             operationSuccess = result;
           }
-        } catch (error) {
+        } catch (_) {
           operationSuccess = false;
         }
       }
@@ -233,10 +233,10 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       if (ganttEvent.action === "mouseenter") {
         setGanttEvent({ action: "" });
       }
-    } else if (action === "dblclick") {
-      !!onDoubleClick && onDoubleClick(task);
-    } else if (action === "click") {
-      !!onClick && onClick(task);
+    } else if (action === "dblclick" && onDoubleClick) {
+      onDoubleClick(task);
+    } else if (action === "click" && onClick) {
+      onClick(task);
     }
     // Change task event start
     else if (action === "move") {

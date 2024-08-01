@@ -32,9 +32,7 @@ export const Milestone: React.FC<TaskItemProps> = ({
         ry={task.barCornerRadius}
         transform={transform}
         className={styles.milestoneBackground}
-        onMouseDown={e => {
-          isDateChangeable && onEventStart("move", task, e);
-        }}
+        onMouseDown={e => isDateChangeable && onEventStart("move", task, e)}
       />
     </g>
   );

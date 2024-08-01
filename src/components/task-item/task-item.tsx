@@ -20,7 +20,7 @@ export type TaskItemProps = {
     action: GanttContentMoveAction,
     selectedTask: BarTask,
     event?: React.MouseEvent | React.KeyboardEvent
-  ) => any;
+  ) => Promise<void>;
 };
 
 export const TaskItem: React.FC<TaskItemProps> = props => {
