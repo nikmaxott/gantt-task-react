@@ -4,6 +4,7 @@
   "description": "Interactive Gantt Chart for React with TypeScript.",
   "author": "MaTeMaTuK <maksym.vikarii@gmail.com>, nikmaxott <nikolaus@nikmaxott.org>",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nikmaxott/gantt-task-react.git"
