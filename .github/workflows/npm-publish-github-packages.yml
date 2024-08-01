@@ -7,8 +7,9 @@ on:
 
 # Sets the GITHUB_TOKEN permissions to allow provenance and public access
 permissions:
-  pages: write
   id-token: write
+  contents: read
+  attestations: write
 
 jobs:
   build:
