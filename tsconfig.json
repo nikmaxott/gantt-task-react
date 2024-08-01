@@ -7,6 +7,7 @@
     "jsx": "react",
     "sourceMap": true,
     "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -15,8 +16,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es5",
-    "allowJs": true,
+    "target": "ESNext",
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -24,6 +24,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src", "node_modules/microbundle/index.d.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist", "example", "src/test"]
 }
