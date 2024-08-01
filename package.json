@@ -1,8 +1,8 @@
 {
   "name": "@nikmaxott/gantt-task-react",
-  "version": "0.5.0",
-  "description": "Interactive Gantt Chart for React with TypeScript.",
-  "author": "MaTeMaTuK <maksym.vikarii@gmail.com>, nikmaxott <nikolaus@nikmaxott.org>",
+  "version": "0.5.1",
+  "description": "Interactive Gantt Chart for React with TypeScript. Fork of MaTeMaTuK's gantt-task-react.",
+  "author": "nikmaxott <nikolaus@nikmaxott.org>, MaTeMaTuK <maksym.vikarii@gmail.com>",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -71,9 +71,6 @@
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "bugs": {
     "url": "https://github.com/nikmaxott/gantt-chart/issues"
   },

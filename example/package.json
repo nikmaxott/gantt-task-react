@@ -10,7 +10,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@nikmaxott/gantt-task-react": "file:.."
+    "@nikmaxott/gantt-task-react": "^0.5.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
