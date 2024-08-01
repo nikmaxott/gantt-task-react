@@ -14,9 +14,12 @@ jobs:
         with:
           node-version: 20.x
       - run: npm ci
-      - run: npm test
+      - run: npm run test:lint
+      - run: npm run test:prettier
+      - run: npm run test:unit
+      - run: npm run build
 
-  publish-gpr:
+  publish:
     needs: build
     runs-on: ubuntu-latest
     permissions:

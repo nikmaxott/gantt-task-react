@@ -1,4 +1,4 @@
-import { Task } from "@nikmaxott/gantt-task-react";
+import { Task } from "../src";
 
 export function initTasks() {
   const currentDate = new Date();
