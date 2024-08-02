@@ -35,9 +35,11 @@ export const TaskListTableDefault: React.FC<{
   rowHeight,
   rowWidth,
   tasks,
+  selectedTaskId,
   locale,
   ganttHeight,
   horizontalContainerRef,
+  setSelectedTask,
   onExpanderClick,
 }) => {
   const toLocaleDateString = useMemo(
@@ -59,15 +61,21 @@ export const TaskListTableDefault: React.FC<{
           expanderSymbol = "▶";
         }
 
+        const isSelected = selectedTaskId === t.id;
+        const rowClassName = isSelected
+          ? expanderSymbol === ""
+            ? styles.taskListTableRow_Selected
+            : styles.taskListTableRow_Parent_Selected
+          : expanderSymbol === ""
+            ? styles.taskListTableRow
+            : styles.taskListTableRow_Parent;
+
         return (
           <tr
-            className={
-              expanderSymbol === ""
-                ? styles.taskListTableRow
-                : styles.taskListTableRow_Parent
-            }
+            className={rowClassName}
             style={{ height: rowHeight }}
             key={`${t.id}row`}
+            onClick={() => setSelectedTask(t.id)}
           >
             <td>
               {expanderSymbol ? (
