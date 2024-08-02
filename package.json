@@ -16,7 +16,8 @@
   "exports": {
     ".": {
       "import": "./dist/gantt-task-react.js",
-      "require": "./dist/gantt-task-react.umd.cjs"
+      "require": "./dist/gantt-task-react.umd.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "engines": {
