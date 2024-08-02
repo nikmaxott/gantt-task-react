@@ -44,6 +44,12 @@ You may handle actions
 />
 ```
 
+### Caution
+
+If aliasing '@' the style import may not work properly use the following alias to fix this bug:
+
+`'@nikmaxott': path.resolve(__dirname, './node_modules/@nikmaxott')`
+
 ## How to run example
 
 ```

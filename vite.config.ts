@@ -16,11 +16,20 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      formats: ["es"],
+      name: "@nikmaxott/GanttTaskReact",
+      fileName: "gantt-task-react",
     },
     rollupOptions: {
       // Ensure to externalize dependencies that shouldn't be bundled
       external: ["react", "react/jsx-runtime", "react-dom"],
+      output: {
+        // Provide global variables to use in the UMD build
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+          "react/jsx-runtime": "jsxRuntime",
+        },
+      },
     },
   },
   test: {
