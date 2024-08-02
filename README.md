@@ -12,7 +12,7 @@ This is a fork of https://github.com/MaTeMaTuK/gantt-task-react.
 
 ```javascript
 import { Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption } from '@nikmaxott/gantt-task-react';
-import "@nikmaxott/gantt-task-react/dist/index.css";
+import "@nikmaxott/gantt-task-react/dist/style.css";
 
 let tasks: Task[] = [
     {
@@ -47,9 +47,8 @@ You may handle actions
 ## How to run example
 
 ```
-cd ./example
 npm install
-npm start
+npm run dev
 ```
 
 ## Gantt Configuration
