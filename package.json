@@ -12,6 +12,7 @@
   "main": "dist/gantt-task-react.js",
   "module": "dist/gantt-task-react.js",
   "source": "src/index.tsx",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/gantt-task-react.js",
@@ -62,15 +63,13 @@
     "eslint-plugin-react": "^7.35.0",
     "globals": "^15.8.0",
     "jsdom": "^24.1.1",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-normalize": "^10.0.1",
-    "postcss-preset-env": "^9.6.0",
     "prettier": "^3.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.0",
     "vite": "^5.3.5",
+    "vite-plugin-dts": "^3.9.1",
     "vitest": "^2.0.4"
   },
   "files": [
