@@ -66,6 +66,15 @@ const App = () => {
     console.log(task.name + " has " + (isSelected ? "selected" : "unselected"));
   };
 
+  const handleCustomSelect = (task: CustomTask) => {
+    console.log(
+      task.name +
+        (task.hasExtraField
+          ? " has an extra field"
+          : " doesn't have an extra field")
+    );
+  };
+
   const handleExpanderClick = (task: Task) => {
     setTasks(tasks.map(t => (t.id === task.id ? task : t)));
     console.log("On expander click Id:" + task.id);
@@ -153,7 +162,7 @@ const App = () => {
         onProgressChange={handleProgressChange}
         onDoubleClick={handleDblClick}
         onClick={handleClick}
-        onSelect={handleSelect}
+        onSelect={handleCustomSelect}
         onExpanderClick={handleExpanderClick}
         listCellWidth={isChecked ? "155px" : ""}
         columnWidth={columnWidth}
