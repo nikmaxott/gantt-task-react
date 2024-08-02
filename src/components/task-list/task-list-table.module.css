@@ -7,6 +7,12 @@
   font-weight: bold;
   border: 1px solid rgb(224, 224, 224);
 }
+.taskListTableRow:hover {
+  background-color: rgb(245, 245, 245);
+}
+.taskListTableRow_Parent:hover {
+  background-color: rgb(245, 245, 245);
+}
 
 .taskListCell {
   vertical-align: middle;
