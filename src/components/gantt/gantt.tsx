@@ -24,7 +24,7 @@ import { HorizontalScroll } from "../other/horizontal-scroll";
 import { removeHiddenTasks, sortTasks } from "../../helpers/other-helper";
 import styles from "./gantt.module.css";
 
-export const Gantt: React.FunctionComponent<GanttProps> = ({
+export const Gantt = <T extends Task>({
   tasks,
   headerHeight = 50,
   columnWidth = 60,
@@ -59,7 +59,17 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   viewDate,
   TooltipContent = StandardTooltipContent,
   TaskListHeader = TaskListHeaderDefault,
-  TaskListTable = TaskListTableDefault,
+  TaskListTable = TaskListTableDefault as React.FC<{
+    rowHeight: number;
+    rowWidth: string;
+    locale: string;
+    tasks: Task[];
+    selectedTaskId: string;
+    ganttHeight: number;
+    horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+    setSelectedTask: (taskId: string) => void;
+    onExpanderClick: (task: Task) => void;
+  }>,
   onDateChange,
   onProgressChange,
   onDoubleClick,
@@ -67,7 +77,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   onDelete,
   onSelect,
   onExpanderClick,
-}) => {
+}: GanttProps<T>) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const taskListRef = useRef<HTMLTableElement>(null);
   const [dateSetup, setDateSetup] = useState<DateSetup>(() => {

@@ -23,7 +23,7 @@ let tasks: Task[] = [
       type:'task',
       progress: 45,
       isDisabled: true,
-      styles: { progressColor: '#ffbb54', progressSelectedColor: '#ff9e0d' },
+      styles: { progressColor: '#ffbb54', progressSelectedColor: '#ff9e0d' }
     },
     ...
 ];
@@ -42,6 +42,34 @@ You may handle actions
   onDoubleClick={onDblClick}
   onClick={onClick}
 />
+```
+
+You may extend the Tasks to use a custom type.
+
+```javascript
+
+interface CustomTask extends Task {
+  hasExtraField: boolean;
+}
+
+let tasks: CustomTask[] = [
+    {
+      start: new Date(2020, 1, 1),
+      end: new Date(2020, 1, 2),
+      name: 'Idea',
+      id: 'Task 0',
+      type:'task',
+      progress: 45,
+      isDisabled: true,
+      styles: { progressColor: '#ffbb54', progressSelectedColor: '#ff9e0d' },
+      hasExtraField: true
+    },
+    ...
+];
+<Gantt<CustomTask>
+  tasks={tasks}
+/>
+
 ```
 
 ### Caution

@@ -33,7 +33,7 @@ export interface Task {
   displayOrder?: number;
 }
 
-export interface EventOption {
+export interface EventOption<T = Task> {
   /**
    * Time step value for date changes.
    */
@@ -41,37 +41,37 @@ export interface EventOption {
   /**
    * Invokes on bar select on unselect.
    */
-  onSelect?: (task: Task, isSelected: boolean) => void;
+  onSelect?: (task: T, isSelected: boolean) => void;
   /**
    * Invokes on bar double click.
    */
-  onDoubleClick?: (task: Task) => void;
+  onDoubleClick?: (task: T) => void;
   /**
    * Invokes on bar click.
    */
-  onClick?: (task: Task) => void;
+  onClick?: (task: T) => void;
   /**
    * Invokes on end and start time change. Chart undoes operation if method return false or error.
    */
   onDateChange?: (
-    task: Task,
-    children: Task[]
+    task: T,
+    children: T[]
   ) => void | boolean | Promise<void> | Promise<boolean>;
   /**
    * Invokes on progress change. Chart undoes operation if method return false or error.
    */
   onProgressChange?: (
-    task: Task,
-    children: Task[]
+    task: T,
+    children: T[]
   ) => void | boolean | Promise<void> | Promise<boolean>;
   /**
    * Invokes on delete selected task. Chart undoes operation if method return false or error.
    */
-  onDelete?: (task: Task) => void | boolean | Promise<void> | Promise<boolean>;
+  onDelete?: (task: T) => void | boolean | Promise<void> | Promise<boolean>;
   /**
    * Invokes on expander on task list
    */
-  onExpanderClick?: (task: Task) => void;
+  onExpanderClick?: (task: T) => void;
 }
 
 export interface DisplayOption {
@@ -85,7 +85,7 @@ export interface DisplayOption {
   rtl?: boolean;
 }
 
-export interface StylingOption {
+export interface StylingOption<T = Task> {
   headerHeight?: number;
   columnWidth?: number;
   listCellWidth?: string;
@@ -116,7 +116,7 @@ export interface StylingOption {
   arrowIndent?: number;
   todayColor?: string;
   TooltipContent?: React.FC<{
-    task: Task;
+    task: T;
     fontSize: string;
     fontFamily: string;
   }>;
@@ -128,16 +128,19 @@ export interface StylingOption {
     rowHeight: number;
     rowWidth: string;
     locale: string;
-    tasks: Task[];
+    tasks: T[];
     selectedTaskId: string;
     /**
      * Sets selected task by id
      */
     setSelectedTask: (taskId: string) => void;
-    onExpanderClick: (task: Task) => void;
+    onExpanderClick: (task: T) => void;
   }>;
 }
 
-export interface GanttProps extends EventOption, DisplayOption, StylingOption {
-  tasks: Task[];
+export interface GanttProps<T = Task>
+  extends EventOption<T>,
+    DisplayOption,
+    StylingOption<T> {
+  tasks: T[];
 }
