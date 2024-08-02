@@ -3,6 +3,11 @@ import { Task, ViewMode, Gantt } from "../src";
 import { ViewSwitcher } from "./components/view-switcher";
 import { getStartEndDateForProject, initTasks } from "./helper";
 
+import MyTaskListTable from "./components/custom-table";
+import MyTaskListHeader from "./components/custom-header";
+import MyTaskListTableCustom from "./components/custom-type-table";
+import MyToolTip from "./components/custom-tooltip";
+
 // Init
 const App = () => {
   const [view, setView] = React.useState<ViewMode>(ViewMode.Day);
@@ -103,8 +108,65 @@ const App = () => {
         ganttHeight={300}
         columnWidth={columnWidth}
       />
+
+      <h3>Gantt With Custom Popup</h3>
+      <Gantt
+        tasks={tasks}
+        viewMode={view}
+        onDateChange={handleTaskChange}
+        onDelete={handleTaskDelete}
+        onProgressChange={handleProgressChange}
+        onDoubleClick={handleDblClick}
+        onClick={handleClick}
+        onSelect={handleSelect}
+        onExpanderClick={handleExpanderClick}
+        listCellWidth={isChecked ? "155px" : ""}
+        columnWidth={columnWidth}
+        rowHeight={30}
+        TooltipContent={MyToolTip}
+      />
+
+      <h3>Gantt with Custom Table</h3>
+      <Gantt
+        tasks={tasks}
+        viewMode={view}
+        onDateChange={handleTaskChange}
+        onDelete={handleTaskDelete}
+        onProgressChange={handleProgressChange}
+        onDoubleClick={handleDblClick}
+        onClick={handleClick}
+        onSelect={handleSelect}
+        onExpanderClick={handleExpanderClick}
+        listCellWidth={isChecked ? "155px" : ""}
+        columnWidth={columnWidth}
+        rowHeight={30}
+        TaskListHeader={MyTaskListHeader}
+        TaskListTable={MyTaskListTable}
+      />
+
+      <h3>Gantt with Custom Type</h3>
+      <Gantt<CustomTask>
+        tasks={tasks.map(t => ({ ...t, hasExtraField: Math.random() > 0.5 }))}
+        viewMode={view}
+        onDateChange={handleTaskChange}
+        onDelete={handleTaskDelete}
+        onProgressChange={handleProgressChange}
+        onDoubleClick={handleDblClick}
+        onClick={handleClick}
+        onSelect={handleSelect}
+        onExpanderClick={handleExpanderClick}
+        listCellWidth={isChecked ? "155px" : ""}
+        columnWidth={columnWidth}
+        rowHeight={30}
+        TaskListHeader={MyTaskListHeader}
+        TaskListTable={MyTaskListTableCustom}
+      />
     </div>
   );
 };
+
+export interface CustomTask extends Task {
+  hasExtraField: boolean;
+}
 
 export default App;
