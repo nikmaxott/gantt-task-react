@@ -102,7 +102,7 @@ const App = () => {
         columnWidth={columnWidth}
         rowHeight={30}
       />
-      <h3>Gantt With Limited Height</h3>
+      <h3>Gantt With Fixed Height</h3>
       <Gantt
         tasks={tasks}
         viewMode={view}

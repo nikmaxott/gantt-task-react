@@ -445,7 +445,7 @@ export const Gantt = <T extends Task>({
     rowWidth: listCellWidth,
     fontFamily,
     fontSize,
-    tasks,
+    tasks: barTasks.map(t => t.task),
     locale,
     headerHeight,
     scrollY,
