@@ -68,6 +68,8 @@ export const Gantt = <T extends Task>({
   onSelect,
   onExpanderClick,
 }: GanttProps<T>) => {
+  if (tasks.length === 0) return;
+
   const wrapperRef = useRef<HTMLDivElement>(null);
   const taskListRef = useRef<HTMLTableElement>(null);
   const [dateSetup, setDateSetup] = useState<DateSetup>(() => {

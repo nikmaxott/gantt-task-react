@@ -12,6 +12,7 @@ import MyToolTip from "./components/custom-tooltip";
 const App = () => {
   const [view, setView] = React.useState<ViewMode>(ViewMode.Day);
   const [tasks, setTasks] = React.useState<Task[]>(initTasks());
+  const [delayedTasks, setDelayedTasks] = React.useState<Task[]>([]);
   const [isChecked, setIsChecked] = React.useState(true);
   let columnWidth = 65;
   if (view === ViewMode.Year) {
@@ -80,6 +81,15 @@ const App = () => {
     console.log("On expander click Id:" + task.id);
   };
 
+  React.useEffect(() => {
+    const delay = 5000; // 5 seconds
+    const timer = setTimeout(() => {
+      setDelayedTasks(tasks);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="Wrapper">
       <ViewSwitcher
@@ -116,6 +126,22 @@ const App = () => {
         listCellWidth={isChecked ? "155px" : ""}
         ganttHeight={300}
         columnWidth={columnWidth}
+      />
+
+      <h3>Gantt with Delayed Tasks</h3>
+      <Gantt
+        tasks={delayedTasks}
+        viewMode={view}
+        onDateChange={handleTaskChange}
+        onDelete={handleTaskDelete}
+        onProgressChange={handleProgressChange}
+        onDoubleClick={handleDblClick}
+        onClick={handleClick}
+        onSelect={handleSelect}
+        onExpanderClick={handleExpanderClick}
+        listCellWidth={isChecked ? "155px" : ""}
+        columnWidth={columnWidth}
+        rowHeight={30}
       />
 
       <h3>Gantt With Custom Popup</h3>
