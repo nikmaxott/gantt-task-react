@@ -3,23 +3,24 @@ import { GridProps, Grid } from "../grid/grid";
 import { CalendarProps, Calendar } from "../calendar/calendar";
 import { TaskGanttContentProps, TaskGanttContent } from "./task-gantt-content";
 import styles from "./gantt.module.css";
+import { Task } from "../../types/public-types";
 
-export type TaskGanttProps = {
+export type TaskGanttProps<T extends Task> = {
   gridProps: GridProps;
   calendarProps: CalendarProps;
-  barProps: TaskGanttContentProps;
+  barProps: TaskGanttContentProps<T>;
   ganttHeight: number;
   scrollY: number;
   scrollX: number;
 };
-export const TaskGantt: React.FC<TaskGanttProps> = ({
+export const TaskGantt = <T extends Task>({
   gridProps,
   calendarProps,
   barProps,
   ganttHeight,
   scrollY,
   scrollX,
-}) => {
+}: TaskGanttProps<T>) => {
   const ganttSVGRef = useRef<SVGSVGElement>(null);
   const horizontalContainerRef = useRef<HTMLDivElement>(null);
   const verticalGanttContainerRef = useRef<HTMLDivElement>(null);

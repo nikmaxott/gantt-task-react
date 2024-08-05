@@ -59,17 +59,7 @@ export const Gantt = <T extends Task>({
   viewDate,
   TooltipContent = StandardTooltipContent,
   TaskListHeader = TaskListHeaderDefault,
-  TaskListTable = TaskListTableDefault as React.FC<{
-    rowHeight: number;
-    rowWidth: string;
-    locale: string;
-    tasks: Task[];
-    selectedTaskId: string;
-    ganttHeight: number;
-    horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
-    setSelectedTask: (taskId: string) => void;
-    onExpanderClick: (task: Task) => void;
-  }>,
+  TaskListTable = TaskListTableDefault,
   onDateChange,
   onProgressChange,
   onDoubleClick,
@@ -91,8 +81,8 @@ export const Gantt = <T extends Task>({
   const [taskListWidth, setTaskListWidth] = useState(0);
   const [svgContainerWidth, setSvgContainerWidth] = useState(0);
   const [svgContainerHeight, setSvgContainerHeight] = useState(ganttHeight);
-  const [barTasks, setBarTasks] = useState<BarTask[]>([]);
-  const [ganttEvent, setGanttEvent] = useState<GanttEvent>({
+  const [barTasks, setBarTasks] = useState<BarTask<T>[]>([]);
+  const [ganttEvent, setGanttEvent] = useState<GanttEvent<T>>({
     action: "",
   });
   const taskHeight = useMemo(
@@ -100,8 +90,8 @@ export const Gantt = <T extends Task>({
     [rowHeight, barFill]
   );
 
-  const [selectedTask, setSelectedTask] = useState<BarTask>();
-  const [failedTask, setFailedTask] = useState<BarTask | null>(null);
+  const [selectedTask, setSelectedTask] = useState<BarTask<T>>();
+  const [failedTask, setFailedTask] = useState<BarTask<T> | null>(null);
 
   const svgWidth = dateSetup.dates.length * columnWidth;
   const ganttFullHeight = barTasks.length * rowHeight;
@@ -112,7 +102,7 @@ export const Gantt = <T extends Task>({
 
   // task change events
   useEffect(() => {
-    let filteredTasks: Task[];
+    let filteredTasks: T[];
     if (onExpanderClick) {
       filteredTasks = removeHiddenTasks(tasks);
     } else {
@@ -133,7 +123,7 @@ export const Gantt = <T extends Task>({
     }
     setDateSetup({ dates: newDates, viewMode });
     setBarTasks(
-      convertToBarTasks(
+      convertToBarTasks<T>(
         filteredTasks,
         newDates,
         columnWidth,
@@ -214,23 +204,27 @@ export const Gantt = <T extends Task>({
     if (changedTask) {
       if (action === "delete") {
         setGanttEvent({ action: "" });
-        setBarTasks(barTasks.filter(t => t.id !== changedTask.id));
+        setBarTasks(barTasks.filter(t => t.task.id !== changedTask.task.id));
       } else if (
         action === "move" ||
         action === "end" ||
         action === "start" ||
         action === "progress"
       ) {
-        const prevStateTask = barTasks.find(t => t.id === changedTask.id);
+        const prevStateTask = barTasks.find(
+          t => t.task.id === changedTask.task.id
+        );
         if (
           prevStateTask &&
-          (prevStateTask.start.getTime() !== changedTask.start.getTime() ||
-            prevStateTask.end.getTime() !== changedTask.end.getTime() ||
-            prevStateTask.progress !== changedTask.progress)
+          (prevStateTask.task.start.getTime() !==
+            changedTask.task.start.getTime() ||
+            prevStateTask.task.end.getTime() !==
+              changedTask.task.end.getTime() ||
+            prevStateTask.task.progress !== changedTask.task.progress)
         ) {
           // actions for change
           const newTaskList = barTasks.map(t =>
-            t.id === changedTask.id ? changedTask : t
+            t.task.id === changedTask.task.id ? changedTask : t
           );
           setBarTasks(newTaskList);
         }
@@ -240,7 +234,9 @@ export const Gantt = <T extends Task>({
 
   useEffect(() => {
     if (failedTask) {
-      setBarTasks(barTasks.map(t => (t.id !== failedTask.id ? t : failedTask)));
+      setBarTasks(
+        barTasks.map(t => (t.task.id !== failedTask.task.id ? t : failedTask))
+      );
       setFailedTask(null);
     }
   }, [failedTask, barTasks]);
@@ -381,21 +377,21 @@ export const Gantt = <T extends Task>({
    * Task select event
    */
   const handleSelectedTask = (taskId: string) => {
-    const newSelectedTask = barTasks.find(t => t.id === taskId);
+    const newSelectedTask = barTasks.find(t => t.task.id === taskId);
     const oldSelectedTask = barTasks.find(
-      t => !!selectedTask && t.id === selectedTask.id
+      t => !!selectedTask && t.task.id === selectedTask.task.id
     );
     if (onSelect) {
       if (oldSelectedTask) {
-        onSelect(oldSelectedTask, false);
+        onSelect(oldSelectedTask.task, false);
       }
       if (newSelectedTask) {
-        onSelect(newSelectedTask, true);
+        onSelect(newSelectedTask.task, true);
       }
     }
     setSelectedTask(newSelectedTask);
   };
-  const handleExpanderClick = (task: Task) => {
+  const handleExpanderClick = (task: T) => {
     if (onExpanderClick && task.hideChildren !== undefined) {
       onExpanderClick({ ...task, hideChildren: !task.hideChildren });
     }
@@ -419,7 +415,7 @@ export const Gantt = <T extends Task>({
     fontSize,
     rtl,
   };
-  const barProps: TaskGanttContentProps = {
+  const barProps: TaskGanttContentProps<T> = {
     tasks: barTasks,
     dates: dateSetup.dates,
     ganttEvent,
@@ -444,12 +440,12 @@ export const Gantt = <T extends Task>({
     onDelete,
   };
 
-  const tableProps: TaskListProps = {
+  const tableProps: TaskListProps<T> = {
     rowHeight,
     rowWidth: listCellWidth,
     fontFamily,
     fontSize,
-    tasks: barTasks,
+    tasks,
     locale,
     headerHeight,
     scrollY,
@@ -479,7 +475,7 @@ export const Gantt = <T extends Task>({
           scrollX={scrollX}
         />
         {ganttEvent.changedTask && (
-          <Tooltip
+          <Tooltip<T>
             arrowIndent={arrowIndent}
             rowHeight={rowHeight}
             svgContainerHeight={svgContainerHeight}

@@ -5,15 +5,16 @@ import { BarDateHandle } from "./bar-date-handle";
 import { BarProgressHandle } from "./bar-progress-handle";
 import { TaskItemProps } from "../task-item";
 import styles from "./bar.module.css";
+import { Task } from "../../../types/public-types";
 
-export const Bar: React.FC<TaskItemProps> = ({
+export const Bar = <T extends Task>({
   task,
   isProgressChangeable,
   isDateChangeable,
   rtl,
   onEventStart,
   isSelected,
-}) => {
+}: TaskItemProps<T>) => {
   const progressPoint = getProgressPoint(
     +!rtl * task.progressWidth + task.progressX,
     task.y,
@@ -24,7 +25,7 @@ export const Bar: React.FC<TaskItemProps> = ({
     <g
       className={styles.barWrapper}
       tabIndex={0}
-      aria-labelledby={`taskName${task.id}`}
+      aria-labelledby={`taskName${task.task.id}`}
     >
       <BarDisplay
         x={task.x1}

@@ -1,6 +1,7 @@
 import { Task, TaskType } from "./public-types";
 
-export interface BarTask extends Task {
+export interface BarTask<T extends Task = Task> {
+  task: T;
   index: number;
   typeInternal: TaskTypeInternal;
   x1: number;
@@ -11,7 +12,7 @@ export interface BarTask extends Task {
   progressWidth: number;
   barCornerRadius: number;
   handleWidth: number;
-  barChildren: BarTask[];
+  barChildren: BarTask<T>[];
   styles: {
     backgroundColor: string;
     backgroundSelectedColor: string;

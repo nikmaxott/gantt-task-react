@@ -21,17 +21,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
   day: "numeric",
 };
 
-export const TaskListTableDefault: React.FC<{
-  rowHeight: number;
-  rowWidth: string;
-  locale: string;
-  tasks: Task[];
-  selectedTaskId: string;
-  ganttHeight: number;
-  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
-  setSelectedTask: (taskId: string) => void;
-  onExpanderClick: (task: Task) => void;
-}> = ({
+export const TaskListTableDefault = <T extends Task>({
   rowHeight,
   rowWidth,
   tasks,
@@ -41,6 +31,16 @@ export const TaskListTableDefault: React.FC<{
   horizontalContainerRef,
   setSelectedTask,
   onExpanderClick,
+}: {
+  rowHeight: number;
+  rowWidth: string;
+  locale: string;
+  tasks: T[];
+  selectedTaskId: string;
+  ganttHeight: number;
+  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+  setSelectedTask: (taskId: string) => void;
+  onExpanderClick: (task: T) => void;
 }) => {
   const toLocaleDateString = useMemo(
     () => toLocaleDateStringFactory(locale),

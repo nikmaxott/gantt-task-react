@@ -6,9 +6,10 @@ import { BarSmall } from "./bar/bar-small";
 import { Milestone } from "./milestone/milestone";
 import { Project } from "./project/project";
 import style from "./task-list.module.css";
+import { Task } from "../../types/public-types";
 
-export type TaskItemProps = {
-  task: BarTask;
+export interface TaskItemProps<T extends Task> {
+  task: BarTask<T>;
   arrowIndent: number;
   taskHeight: number;
   isProgressChangeable: boolean;
@@ -18,12 +19,12 @@ export type TaskItemProps = {
   rtl: boolean;
   onEventStart: (
     action: GanttContentMoveAction,
-    selectedTask: BarTask,
+    selectedTask: BarTask<T>,
     event?: React.MouseEvent | React.KeyboardEvent
   ) => Promise<void>;
-};
+}
 
-export const TaskItem: React.FC<TaskItemProps> = props => {
+export const TaskItem = <T extends Task>(props: TaskItemProps<T>) => {
   const {
     task,
     arrowIndent,
@@ -117,9 +118,9 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
             : style.barLabel && style.barLabelOutside
         }
         ref={textRef}
-        id={`taskName${task.id}`}
+        id={`taskName${task.task.id}`}
       >
-        {task.name}
+        {task.task.name}
       </text>
     </g>
   );

@@ -1,13 +1,14 @@
 import React from "react";
 import { TaskItemProps } from "../task-item";
 import styles from "./milestone.module.css";
+import { Task } from "../../../types/public-types";
 
-export const Milestone: React.FC<TaskItemProps> = ({
+export const Milestone = <T extends Task>({
   task,
   isDateChangeable,
   onEventStart,
   isSelected,
-}) => {
+}: TaskItemProps<T>) => {
   const transform = `rotate(45 ${task.x1 + task.height * 0.356} 
     ${task.y + task.height * 0.85})`;
   const getBarColor = () => {
@@ -20,7 +21,7 @@ export const Milestone: React.FC<TaskItemProps> = ({
     <g
       tabIndex={0}
       className={styles.milestoneWrapper}
-      aria-labelledby={`taskName${task.id}`}
+      aria-labelledby={`taskName${task.task.id}`}
     >
       <rect
         fill={getBarColor()}

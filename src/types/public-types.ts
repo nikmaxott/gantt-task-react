@@ -33,7 +33,7 @@ export interface Task {
   displayOrder?: number;
 }
 
-export interface EventOption<T = Task> {
+export interface EventOption<T extends Task> {
   /**
    * Time step value for date changes.
    */
@@ -85,7 +85,7 @@ export interface DisplayOption {
   rtl?: boolean;
 }
 
-export interface StylingOption<T = Task> {
+export interface StylingOption<T extends Task> {
   headerHeight?: number;
   columnWidth?: number;
   listCellWidth?: string;
@@ -130,6 +130,8 @@ export interface StylingOption<T = Task> {
     locale: string;
     tasks: T[];
     selectedTaskId: string;
+    ganttHeight: number;
+    horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
     /**
      * Sets selected task by id
      */
@@ -138,7 +140,7 @@ export interface StylingOption<T = Task> {
   }>;
 }
 
-export interface GanttProps<T = Task>
+export interface GanttProps<T extends Task = Task>
   extends EventOption<T>,
     DisplayOption,
     StylingOption<T> {

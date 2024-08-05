@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { EventOption } from "../../types/public-types";
+import { EventOption, Task } from "../../types/public-types";
 import { BarTask } from "../../types/bar-task";
 import { Arrow } from "../other/arrow";
 import { handleTaskBySVGMouseEvent } from "../../helpers/bar-helper";
@@ -11,10 +11,10 @@ import {
   GanttEvent,
 } from "../../types/gantt-task-actions";
 
-export type TaskGanttContentProps = {
-  tasks: BarTask[];
+export type TaskGanttContentProps<T extends Task> = {
+  tasks: BarTask<T>[];
   dates: Date[];
-  ganttEvent: GanttEvent;
+  ganttEvent: GanttEvent<T>;
   selectedTask: BarTask | undefined;
   rowHeight: number;
   columnWidth: number;
@@ -27,12 +27,12 @@ export type TaskGanttContentProps = {
   fontSize: string;
   fontFamily: string;
   rtl: boolean;
-  setGanttEvent: (value: GanttEvent) => void;
-  setFailedTask: (value: BarTask | null) => void;
+  setGanttEvent: (value: GanttEvent<T>) => void;
+  setFailedTask: (value: BarTask<T> | null) => void;
   setSelectedTask: (taskId: string) => void;
-} & EventOption;
+} & EventOption<T>;
 
-export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
+export const TaskGanttContent = <T extends Task>({
   tasks,
   dates,
   ganttEvent,
@@ -55,7 +55,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
   onDoubleClick,
   onClick,
   onDelete,
-}) => {
+}: TaskGanttContentProps<T>) => {
   const point = svg?.current?.createSVGPoint();
   const [xStep, setXStep] = useState(0);
   const [initEventX1Delta, setInitEventX1Delta] = useState(0);
@@ -82,7 +82,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         svg?.current.getScreenCTM()?.inverse()
       );
 
-      const { isChanged, changedTask } = handleTaskBySVGMouseEvent(
+      const { isChanged, changedTask } = handleTaskBySVGMouseEvent<T>(
         cursor.x,
         ganttEvent.action as BarMoveAction,
         ganttEvent.changedTask,
@@ -117,9 +117,9 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       );
 
       const isNotLikeOriginal =
-        originalSelectedTask.start !== newChangedTask.start ||
-        originalSelectedTask.end !== newChangedTask.end ||
-        originalSelectedTask.progress !== newChangedTask.progress;
+        originalSelectedTask.task.start !== newChangedTask.task.start ||
+        originalSelectedTask.task.end !== newChangedTask.task.end ||
+        originalSelectedTask.task.progress !== newChangedTask.task.progress;
 
       // remove listeners
       svg.current.removeEventListener("mousemove", handleMouseMove);
@@ -136,8 +136,8 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       ) {
         try {
           const result = await onDateChange(
-            newChangedTask,
-            newChangedTask.barChildren
+            newChangedTask.task,
+            newChangedTask.barChildren.map(child => tasks[child.index].task)
           );
           if (result !== undefined) {
             operationSuccess = result;
@@ -148,8 +148,8 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       } else if (onProgressChange && isNotLikeOriginal) {
         try {
           const result = await onProgressChange(
-            newChangedTask,
-            newChangedTask.barChildren
+            newChangedTask.task,
+            newChangedTask.barChildren.map(child => tasks[child.index].task)
           );
           if (result !== undefined) {
             operationSuccess = result;
@@ -197,12 +197,12 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
    */
   const handleBarEventStart = async (
     action: GanttContentMoveAction,
-    task: BarTask,
+    task: BarTask<T>,
     event?: React.MouseEvent | React.KeyboardEvent
   ) => {
     if (!event) {
       if (action === "select") {
-        setSelectedTask(task.id);
+        setSelectedTask(task.task.id);
       }
     }
     // Keyboard events
@@ -210,7 +210,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       if (action === "delete") {
         if (onDelete) {
           try {
-            const result = await onDelete(task);
+            const result = await onDelete(task.task);
             if (result !== undefined && result) {
               setGanttEvent({ action, changedTask: task });
             }
@@ -234,9 +234,9 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         setGanttEvent({ action: "" });
       }
     } else if (action === "dblclick" && onDoubleClick) {
-      onDoubleClick(task);
+      onDoubleClick(task.task);
     } else if (action === "click" && onClick) {
-      onClick(task);
+      onClick(task.task);
     }
     // Change task event start
     else if (action === "move") {
@@ -267,7 +267,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
           return task.barChildren.map(child => {
             return (
               <Arrow
-                key={`Arrow from ${task.id} to ${tasks[child.index].id}`}
+                key={`Arrow from ${task.task.id} to ${tasks[child.index].task.id}`}
                 taskFrom={task}
                 taskTo={tasks[child.index]}
                 rowHeight={rowHeight}
@@ -282,16 +282,18 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       <g className="bar" fontFamily={fontFamily} fontSize={fontSize}>
         {tasks.map(task => {
           return (
-            <TaskItem
+            <TaskItem<T>
               task={task}
               arrowIndent={arrowIndent}
               taskHeight={taskHeight}
-              isProgressChangeable={!!onProgressChange && !task.isDisabled}
-              isDateChangeable={!!onDateChange && !task.isDisabled}
-              isDelete={!task.isDisabled}
+              isProgressChangeable={!!onProgressChange && !task.task.isDisabled}
+              isDateChangeable={!!onDateChange && !task.task.isDisabled}
+              isDelete={!task.task.isDisabled}
               onEventStart={handleBarEventStart}
-              key={task.id}
-              isSelected={!!selectedTask && task.id === selectedTask.id}
+              key={task.task.id}
+              isSelected={
+                !!selectedTask && task.task.id === selectedTask.task.id
+              }
               rtl={rtl}
             />
           );

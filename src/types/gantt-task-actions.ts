@@ -1,4 +1,5 @@
 import { BarTask } from "./bar-task";
+import { Task } from "./public-types";
 
 export type BarMoveAction = "progress" | "end" | "start" | "move";
 export type GanttContentMoveAction =
@@ -11,8 +12,8 @@ export type GanttContentMoveAction =
   | ""
   | BarMoveAction;
 
-export type GanttEvent = {
-  changedTask?: BarTask;
-  originalSelectedTask?: BarTask;
+export type GanttEvent<T extends Task> = {
+  changedTask?: BarTask<T>;
+  originalSelectedTask?: BarTask<T>;
   action: GanttContentMoveAction;
 };

@@ -3,8 +3,8 @@ import { Task } from "../../types/public-types";
 import { BarTask } from "../../types/bar-task";
 import styles from "./tooltip.module.css";
 
-export type TooltipProps = {
-  task: BarTask;
+export type TooltipProps<T extends Task> = {
+  task: BarTask<T>;
   arrowIndent: number;
   rtl: boolean;
   svgContainerHeight: number;
@@ -18,12 +18,12 @@ export type TooltipProps = {
   fontSize: string;
   fontFamily: string;
   TooltipContent: React.FC<{
-    task: Task;
+    task: T;
     fontSize: string;
     fontFamily: string;
   }>;
 };
-export const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip = <T extends Task>({
   task,
   rowHeight,
   rtl,
@@ -37,7 +37,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   headerHeight,
   taskListWidth,
   TooltipContent,
-}) => {
+}: TooltipProps<T>) => {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [relatedY, setRelatedY] = useState(0);
   const [relatedX, setRelatedX] = useState(0);
@@ -107,16 +107,24 @@ export const Tooltip: React.FC<TooltipProps> = ({
       }
       style={{ left: relatedX, top: relatedY }}
     >
-      <TooltipContent task={task} fontSize={fontSize} fontFamily={fontFamily} />
+      <TooltipContent
+        task={task.task}
+        fontSize={fontSize}
+        fontFamily={fontFamily}
+      />
     </div>
   );
 };
 
-export const StandardTooltipContent: React.FC<{
-  task: Task;
+export const StandardTooltipContent = <T extends Task>({
+  task,
+  fontSize,
+  fontFamily,
+}: {
+  task: T;
   fontSize: string;
   fontFamily: string;
-}> = ({ task, fontSize, fontFamily }) => {
+}) => {
   const style = {
     fontSize,
     fontFamily,

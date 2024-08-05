@@ -4,14 +4,15 @@ import { BarDisplay } from "./bar-display";
 import { BarProgressHandle } from "./bar-progress-handle";
 import { TaskItemProps } from "../task-item";
 import styles from "./bar.module.css";
+import { Task } from "../../../types/public-types";
 
-export const BarSmall: React.FC<TaskItemProps> = ({
+export const BarSmall = <T extends Task>({
   task,
   isProgressChangeable,
   isDateChangeable,
   onEventStart,
   isSelected,
-}) => {
+}: TaskItemProps<T>) => {
   const progressPoint = getProgressPoint(
     task.progressWidth + task.x1,
     task.y,
@@ -21,7 +22,7 @@ export const BarSmall: React.FC<TaskItemProps> = ({
     <g
       className={styles.barWrapper}
       tabIndex={0}
-      aria-labelledby={`taskName${task.id}`}
+      aria-labelledby={`taskName${task.task.id}`}
     >
       <BarDisplay
         x={task.x1}

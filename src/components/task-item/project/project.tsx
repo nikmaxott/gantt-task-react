@@ -1,8 +1,12 @@
 import React from "react";
 import { TaskItemProps } from "../task-item";
 import styles from "./project.module.css";
+import { Task } from "../../../types/public-types";
 
-export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
+export const Project = <T extends Task>({
+  task,
+  isSelected,
+}: TaskItemProps<T>) => {
   const barColor = isSelected
     ? task.styles.backgroundSelectedColor
     : task.styles.backgroundColor;
@@ -18,7 +22,7 @@ export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
     <g
       tabIndex={0}
       className={styles.projectWrapper}
-      aria-labelledby={`taskName${task.id}`}
+      aria-labelledby={`taskName${task.task.id}`}
     >
       <rect
         fill={barColor}
