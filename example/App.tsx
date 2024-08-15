@@ -179,7 +179,7 @@ const App = () => {
         TaskListTable={MyTaskListTable}
       />
 
-      <h3>Gantt with Custom Type</h3>
+      <h3>Gantt with Custom Type, Table and Header</h3>
       <Gantt<CustomTask>
         tasks={tasks.map(t => ({ ...t, hasExtraField: Math.random() > 0.5 }))}
         viewMode={view}
@@ -195,6 +195,24 @@ const App = () => {
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
         TaskListTable={MyTaskListTableCustom}
+      />
+
+      <h3>Gantt with Custom Table, Type, Header and Fixed Height</h3>
+      <Gantt
+        tasks={tasks}
+        viewMode={view}
+        onDateChange={handleTaskChange}
+        onDelete={handleTaskDelete}
+        onProgressChange={handleProgressChange}
+        onDoubleClick={handleDblClick}
+        onClick={handleClick}
+        onSelect={handleSelect}
+        onExpanderClick={handleExpanderClick}
+        listCellWidth={isChecked ? "155px" : ""}
+        columnWidth={columnWidth}
+        ganttHeight={300}
+        TaskListHeader={MyTaskListHeader}
+        TaskListTable={MyTaskListTable}
       />
     </div>
   );

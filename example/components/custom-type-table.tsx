@@ -4,9 +4,26 @@ import { CustomTask } from "../App";
 const MyTaskListTableCustom: React.FC<{
   tasks: CustomTask[];
   onExpanderClick: (task: CustomTask) => void;
-}> = ({ tasks, onExpanderClick }) => {
+  ganttHeight: number;
+  rowHeight: number;
+  rowWidth: string;
+  locale: string;
+  selectedTaskId: string;
+  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+  setSelectedTask: (taskId: string) => void;
+}> = ({
+  tasks,
+  onExpanderClick,
+  ganttHeight,
+  rowHeight,
+  horizontalContainerRef,
+  setSelectedTask,
+}) => {
   return (
-    <tbody>
+    <tbody
+      ref={horizontalContainerRef}
+      style={ganttHeight ? { maxHeight: ganttHeight } : {}}
+    >
       {tasks.map(t => {
         let expanderSymbol = "";
         if (t.hideChildren === false) {
@@ -16,7 +33,11 @@ const MyTaskListTableCustom: React.FC<{
         }
 
         return (
-          <tr key={t.id}>
+          <tr
+            key={t.id}
+            style={{ height: rowHeight }}
+            onClick={() => setSelectedTask(t.id)}
+          >
             <td>
               {expanderSymbol ? (
                 <button type="button" onClick={() => onExpanderClick(t)}>

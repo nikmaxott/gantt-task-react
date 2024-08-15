@@ -5,10 +5,6 @@
   display: block;
 }
 
-.ganttTable_Header {
-  list-style: none;
-}
-
 .ganttTable_HeaderItem {
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
