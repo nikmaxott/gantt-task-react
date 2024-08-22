@@ -62,17 +62,10 @@ export const TaskListTableDefault = <T extends Task>({
         }
 
         const isSelected = selectedTaskId === t.id;
-        const rowClassName = isSelected
-          ? expanderSymbol === ""
-            ? styles.taskListTableRow_Selected
-            : styles.taskListTableRow_Parent_Selected
-          : expanderSymbol === ""
-            ? styles.taskListTableRow
-            : styles.taskListTableRow_Parent;
 
         return (
           <tr
-            className={rowClassName}
+            className={`${styles.taskListTableRow} ${expanderSymbol ? styles.taskListTableRow_Parent : ""} ${isSelected ? styles.taskListTableRow_Selected : ""}`}
             style={{ height: rowHeight }}
             key={`${t.id}row`}
             onClick={() => setSelectedTask(t.id)}

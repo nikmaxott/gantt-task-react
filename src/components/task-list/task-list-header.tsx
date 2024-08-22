@@ -8,7 +8,6 @@ export const TaskListHeaderDefault: React.FC<{
   return (
     <thead className={styles.ganttTable}>
       <tr
-        className={styles.ganttTable_Header}
         style={{
           height: headerHeight - 2,
         }}

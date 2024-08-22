@@ -197,7 +197,7 @@ const App = () => {
         TaskListTable={MyTaskListTableCustom}
       />
 
-      <h3>Gantt with Custom Table, Type, Header and Fixed Height</h3>
+      <h3>Gantt with Custom Table, Header and Fixed Height</h3>
       <Gantt
         tasks={tasks}
         viewMode={view}
