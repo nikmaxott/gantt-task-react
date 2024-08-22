@@ -6,7 +6,7 @@ const MyTaskListTableCustom: React.FC<{
   onExpanderClick: (task: CustomTask) => void;
   ganttHeight: number;
   rowHeight: number;
-  rowWidth: string;
+  rowWidth: number;
   locale: string;
   selectedTaskId: string;
   horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
@@ -16,6 +16,7 @@ const MyTaskListTableCustom: React.FC<{
   onExpanderClick,
   ganttHeight,
   rowHeight,
+  rowWidth,
   horizontalContainerRef,
   setSelectedTask,
 }) => {
@@ -45,10 +46,12 @@ const MyTaskListTableCustom: React.FC<{
                 </button>
               ) : null}
             </td>
-            <td>
+            <td style={{ minWidth: `${rowWidth}px` }}>
               <a href="#">Link to {t.name}</a>
             </td>
-            <td>{t.hasExtraField ? "Wow!" : "Not Disabled"}</td>
+            <td style={{ minWidth: `${rowWidth}px` }}>
+              {t.hasExtraField ? "Wow!" : "Not Disabled"}
+            </td>
           </tr>
         );
       })}

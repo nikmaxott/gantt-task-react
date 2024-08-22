@@ -6,7 +6,7 @@ const MyTaskListTable: React.FC<{
   onExpanderClick: (task: Task) => void;
   ganttHeight: number;
   rowHeight: number;
-  rowWidth: string;
+  rowWidth: number;
   locale: string;
   selectedTaskId: string;
   horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
@@ -16,6 +16,7 @@ const MyTaskListTable: React.FC<{
   onExpanderClick,
   ganttHeight,
   rowHeight,
+  rowWidth,
   horizontalContainerRef,
 }) => {
   return (
@@ -40,10 +41,12 @@ const MyTaskListTable: React.FC<{
                 </button>
               ) : null}
             </td>
-            <td>
+            <td style={{ minWidth: `${rowWidth}px` }}>
               <a href="#">Link to {t.name}</a>
             </td>
-            <td>{t.isDisabled ? "Disabled" : "Not Disabled"}</td>
+            <td style={{ minWidth: `${rowWidth}px` }}>
+              {t.isDisabled ? "Disabled" : "Not Disabled"}
+            </td>
           </tr>
         );
       })}
