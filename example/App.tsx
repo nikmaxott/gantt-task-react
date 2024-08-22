@@ -176,7 +176,7 @@ const App = () => {
         columnWidth={columnWidth}
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
-        TaskListTable={MyTaskListTable}
+        TaskListBody={MyTaskListTable}
       />
 
       <h3>Gantt with Custom Type, Table and Header</h3>
@@ -194,7 +194,7 @@ const App = () => {
         columnWidth={columnWidth}
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
-        TaskListTable={MyTaskListTableCustom}
+        TaskListBody={MyTaskListTableCustom}
       />
 
       <h3>Gantt with Custom Table, Header and Fixed Height</h3>
@@ -212,7 +212,7 @@ const App = () => {
         columnWidth={columnWidth}
         ganttHeight={300}
         TaskListHeader={MyTaskListHeader}
-        TaskListTable={MyTaskListTable}
+        TaskListBody={MyTaskListTable}
       />
     </div>
   );

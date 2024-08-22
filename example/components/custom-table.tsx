@@ -22,7 +22,14 @@ const MyTaskListTable: React.FC<{
   return (
     <tbody
       ref={horizontalContainerRef}
-      style={ganttHeight ? { maxHeight: ganttHeight } : {}}
+      style={{
+        margin: 0,
+        padding: 0,
+        overflow: "hidden",
+        overflowY: "auto",
+        display: "block",
+        maxHeight: ganttHeight ? ganttHeight : "",
+      }}
     >
       {tasks.map(t => {
         let expanderSymbol = "";
@@ -41,7 +48,7 @@ const MyTaskListTable: React.FC<{
                 </button>
               ) : null}
             </td>
-            <td style={{ minWidth: `${rowWidth}px` }}>
+            <td style={{ minWidth: `${rowWidth}px` }} colSpan={2}>
               <a href="#">Link to {t.name}</a>
             </td>
             <td style={{ minWidth: `${rowWidth}px` }}>

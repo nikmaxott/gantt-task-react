@@ -124,7 +124,7 @@ export interface StylingOption<T extends Task> {
     headerHeight: number;
     rowWidth: number;
   }>;
-  TaskListTable?: React.FC<{
+  TaskListBody?: React.FC<{
     rowHeight: number;
     rowWidth: number;
     locale: string;

@@ -5,7 +5,7 @@ const MyTaskListHeader: React.FC<{
   rowWidth: number;
 }> = ({ headerHeight, rowWidth }) => {
   return (
-    <thead>
+    <thead style={{ display: "block" }}>
       <tr
         style={{
           height: headerHeight - 2,
@@ -15,6 +15,7 @@ const MyTaskListHeader: React.FC<{
         <th style={{ minWidth: `${rowWidth * 2}px` }} colSpan={2}>
           My Custom Task List Header OVER 2
         </th>
+        <th style={{ minWidth: `${rowWidth}px` }}>Final</th>
       </tr>
     </thead>
   );

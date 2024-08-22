@@ -20,7 +20,7 @@ export type TaskListProps<T extends Task> = {
     headerHeight: number;
     rowWidth: number;
   }>;
-  TaskListTable: React.FC<{
+  TaskListBody: React.FC<{
     rowHeight: number;
     rowWidth: number;
     locale: string;
@@ -48,7 +48,7 @@ export const TaskList = <T extends Task>({
   ganttHeight,
   taskListRef,
   TaskListHeader,
-  TaskListTable,
+  TaskListBody,
 }: TaskListProps<T>) => {
   const horizontalContainerRef = useRef<HTMLTableSectionElement>(null);
   useEffect(() => {
@@ -84,7 +84,7 @@ export const TaskList = <T extends Task>({
       }}
     >
       <TaskListHeader {...headerProps} />
-      <TaskListTable {...tableProps} />
+      <TaskListBody {...tableProps} />
     </table>
   );
 };
