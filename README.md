@@ -128,7 +128,7 @@ npm run dev
 | headerHeight               | number | Specifies the header height.                                                                   |
 | ganttHeight                | number | Specifies the gantt chart height without header. Default is 0. It`s mean no height limitation. |
 | columnWidth                | number | Specifies the time period width.                                                               |
-| listCellWidth              | string | Specifies the task list cell width. Empty string is mean "no display".                         |
+| listCellWidth              | number | Specifies the task list cell width. Empty string is mean "no display".                         |
 | rowHeight                  | number | Specifies the task row height.                                                                 |
 | barCornerRadius            | number | Specifies the taskbar corner rounding.                                                         |
 | barFill                    | number | Specifies the taskbar occupation. Sets in percent from 0 to 100.                               |
@@ -147,8 +147,8 @@ npm run dev
 | TaskListTable              |        | Specifies the task list Table view                                                             |
 
 - TooltipContent: [`React.FC<{ task: Task; fontSize: string; fontFamily: string; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/other/tooltip.tsx)
-- TaskListHeader: [`React.FC<{ headerHeight: number; rowWidth: string; fontFamily: string; fontSize: string;}>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-header.tsx)
-- TaskListTable: [`React.FC<{ rowHeight: number; rowWidth: string; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-table.tsx)
+- TaskListHeader: [`React.FC<{ headerHeight: number; rowWidth: number; fontFamily: string; fontSize: string;}>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-header.tsx)
+- TaskListTable: [`React.FC<{ rowHeight: number; rowWidth: number; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-table.tsx)
 
 ### Task
 

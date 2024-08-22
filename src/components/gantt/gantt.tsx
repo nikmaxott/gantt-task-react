@@ -28,7 +28,7 @@ export const Gantt = <T extends Task>({
   tasks,
   headerHeight = 50,
   columnWidth = 60,
-  listCellWidth = "155px",
+  listCellWidth = 155,
   rowHeight = 50,
   ganttHeight = 0,
   viewMode = ViewMode.Day,

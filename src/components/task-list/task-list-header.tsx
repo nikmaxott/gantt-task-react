@@ -3,7 +3,7 @@ import styles from "./task-list-header.module.css";
 
 export const TaskListHeaderDefault: React.FC<{
   headerHeight: number;
-  rowWidth: string;
+  rowWidth: number;
 }> = ({ headerHeight, rowWidth }) => {
   return (
     <thead className={styles.ganttTable}>
@@ -16,7 +16,7 @@ export const TaskListHeaderDefault: React.FC<{
         <th
           className={styles.ganttTable_HeaderItem}
           style={{
-            minWidth: rowWidth,
+            minWidth: `${rowWidth}px`,
           }}
         >
           &nbsp;Name
@@ -24,7 +24,7 @@ export const TaskListHeaderDefault: React.FC<{
         <th
           className={styles.ganttTable_HeaderItem}
           style={{
-            minWidth: rowWidth,
+            minWidth: `${rowWidth}px`,
           }}
         >
           &nbsp;From
@@ -32,7 +32,7 @@ export const TaskListHeaderDefault: React.FC<{
         <th
           className={styles.ganttTable_HeaderItem}
           style={{
-            minWidth: rowWidth,
+            minWidth: `${rowWidth}px`,
           }}
         >
           &nbsp;To

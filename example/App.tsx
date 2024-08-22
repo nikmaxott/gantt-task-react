@@ -108,7 +108,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
       />
@@ -123,7 +123,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         ganttHeight={300}
         columnWidth={columnWidth}
       />
@@ -139,7 +139,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
       />
@@ -155,7 +155,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
         TooltipContent={MyToolTip}
@@ -172,7 +172,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
@@ -190,7 +190,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleCustomSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
@@ -208,7 +208,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         ganttHeight={300}
         TaskListHeader={MyTaskListHeader}

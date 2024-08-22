@@ -33,7 +33,7 @@ export const TaskListTableDefault = <T extends Task>({
   onExpanderClick,
 }: {
   rowHeight: number;
-  rowWidth: string;
+  rowWidth: number;
   locale: string;
   tasks: T[];
   selectedTaskId: string;
@@ -84,8 +84,8 @@ export const TaskListTableDefault = <T extends Task>({
             <td
               className={styles.taskListCell}
               style={{
-                minWidth: rowWidth,
-                maxWidth: rowWidth,
+                minWidth: `${rowWidth}px`,
+                maxWidth: `${rowWidth}px`,
               }}
               title={t.name}
             >
@@ -94,8 +94,8 @@ export const TaskListTableDefault = <T extends Task>({
             <td
               className={styles.taskListCell}
               style={{
-                minWidth: rowWidth,
-                maxWidth: rowWidth,
+                minWidth: `${rowWidth}px`,
+                maxWidth: `${rowWidth}px`,
               }}
             >
               {toLocaleDateString(t.start, dateTimeOptions)}
@@ -103,8 +103,8 @@ export const TaskListTableDefault = <T extends Task>({
             <td
               className={styles.taskListCell}
               style={{
-                minWidth: rowWidth,
-                maxWidth: rowWidth,
+                minWidth: `${rowWidth}px`,
+                maxWidth: `${rowWidth}px`,
               }}
             >
               {toLocaleDateString(t.end, dateTimeOptions)}
