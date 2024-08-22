@@ -84,8 +84,8 @@ export const TaskListTableDefault = <T extends Task>({
             <td
               className={styles.taskListCell}
               style={{
-                minWidth: `${rowWidth}px`,
-                maxWidth: `${rowWidth}px`,
+                minWidth: rowWidth,
+                maxWidth: rowWidth,
               }}
               title={t.name}
             >
@@ -94,8 +94,8 @@ export const TaskListTableDefault = <T extends Task>({
             <td
               className={styles.taskListCell}
               style={{
-                minWidth: `${rowWidth}px`,
-                maxWidth: `${rowWidth}px`,
+                minWidth: rowWidth,
+                maxWidth: rowWidth,
               }}
             >
               {toLocaleDateString(t.start, dateTimeOptions)}
@@ -103,8 +103,8 @@ export const TaskListTableDefault = <T extends Task>({
             <td
               className={styles.taskListCell}
               style={{
-                minWidth: `${rowWidth}px`,
-                maxWidth: `${rowWidth}px`,
+                minWidth: rowWidth,
+                maxWidth: rowWidth,
               }}
             >
               {toLocaleDateString(t.end, dateTimeOptions)}

@@ -48,10 +48,10 @@ const MyTaskListTable: React.FC<{
                 </button>
               ) : null}
             </td>
-            <td style={{ minWidth: `${rowWidth}px` }} colSpan={2}>
+            <td style={{ minWidth: rowWidth }} colSpan={2}>
               <a href="#">Link to {t.name}</a>
             </td>
-            <td style={{ minWidth: `${rowWidth}px` }}>
+            <td style={{ minWidth: rowWidth }}>
               {t.isDisabled ? "Disabled" : "Not Disabled"}
             </td>
           </tr>

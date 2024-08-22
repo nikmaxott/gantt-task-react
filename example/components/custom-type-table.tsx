@@ -53,10 +53,10 @@ const MyTaskListTableCustom: React.FC<{
                 </button>
               ) : null}
             </td>
-            <td style={{ minWidth: `${rowWidth}px` }}>
+            <td style={{ minWidth: rowWidth }}>
               <a href="#">Link to {t.name}</a>
             </td>
-            <td style={{ minWidth: `${rowWidth}px` }}>
+            <td style={{ minWidth: rowWidth }}>
               {t.hasExtraField ? "Wow!" : "Not Disabled"}
             </td>
           </tr>
