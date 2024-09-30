@@ -1,7 +1,7 @@
 import React from "react";
 import { CustomTask } from "../App";
 
-const MyTaskListTableCustom: React.FC<{
+const MyTaskListBodyCustom: React.FC<{
   tasks: CustomTask[];
   onExpanderClick: (task: CustomTask) => void;
   ganttHeight: number;
@@ -66,4 +66,4 @@ const MyTaskListTableCustom: React.FC<{
   );
 };
 
-export default MyTaskListTableCustom;
+export default MyTaskListBodyCustom;

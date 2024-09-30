@@ -1,7 +1,7 @@
 import React from "react";
 import { Task } from "../../src";
 
-const MyTaskListTable: React.FC<{
+const MyTaskListBody: React.FC<{
   tasks: Task[];
   onExpanderClick: (task: Task) => void;
   ganttHeight: number;
@@ -61,4 +61,4 @@ const MyTaskListTable: React.FC<{
   );
 };
 
-export default MyTaskListTable;
+export default MyTaskListBody;

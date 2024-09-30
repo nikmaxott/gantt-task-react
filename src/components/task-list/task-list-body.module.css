@@ -1,17 +1,17 @@
-.taskListTableRow {
+.taskListBodyRow {
   overflow: hidden;
   border: 1px solid rgb(224, 224, 224);
 }
 
-.taskListTableRow_Selected {
+.taskListBodyRow_Selected {
   background-color: rgb(210, 210, 210);
 }
 
-.taskListTableRow_Parent {
+.taskListBodyRow_Parent {
   font-weight: bold;
 }
 
-.taskListTableRow:hover {
+.taskListBodyRow:hover {
   background-color: rgb(245, 245, 245);
 }
 

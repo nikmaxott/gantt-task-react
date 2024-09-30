@@ -144,11 +144,11 @@ npm run dev
 | todayColor                 | string | Specifies the current period column fill color.                                                |
 | TooltipContent             |        | Specifies the Tooltip view for selected taskbar.                                               |
 | TaskListHeader             |        | Specifies the task list Header view                                                            |
-| TaskListBody               |        | Specifies the task list Table view                                                             |
+| TaskListBody               |        | Specifies the task list Body view                                                              |
 
 - TooltipContent: [`React.FC<{ task: Task; fontSize: string; fontFamily: string; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/other/tooltip.tsx)
 - TaskListHeader: [`React.FC<{ headerHeight: number; rowWidth: number; fontFamily: string; fontSize: string;}>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-header.tsx)
-- TaskListBody: [`React.FC<{ rowHeight: number; rowWidth: number; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-table.tsx)
+- TaskListBody: [`React.FC<{ rowHeight: number; rowWidth: number; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-body.tsx)
 
 ### Task
 

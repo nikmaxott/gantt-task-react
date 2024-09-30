@@ -3,9 +3,9 @@ import { Task, ViewMode, Gantt } from "../src";
 import { ViewSwitcher } from "./components/view-switcher";
 import { getStartEndDateForProject, initTasks } from "./helper";
 
-import MyTaskListTable from "./components/custom-table";
+import MyTaskListBody from "./components/custom-table";
 import MyTaskListHeader from "./components/custom-header";
-import MyTaskListTableCustom from "./components/custom-type-table";
+import MyTaskListBodyCustom from "./components/custom-type-table";
 import MyToolTip from "./components/custom-tooltip";
 
 // Init
@@ -176,7 +176,7 @@ const App = () => {
         columnWidth={columnWidth}
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
-        TaskListBody={MyTaskListTable}
+        TaskListBody={MyTaskListBody}
       />
 
       <h3>Gantt with Custom Type, Table and Header</h3>
@@ -194,7 +194,7 @@ const App = () => {
         columnWidth={columnWidth}
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
-        TaskListBody={MyTaskListTableCustom}
+        TaskListBody={MyTaskListBodyCustom}
       />
 
       <h3>Gantt with Custom Table, Header and Fixed Height</h3>
@@ -212,7 +212,7 @@ const App = () => {
         columnWidth={columnWidth}
         ganttHeight={300}
         TaskListHeader={MyTaskListHeader}
-        TaskListBody={MyTaskListTable}
+        TaskListBody={MyTaskListBody}
       />
     </div>
   );
