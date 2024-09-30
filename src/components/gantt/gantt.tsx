@@ -11,7 +11,7 @@ import { ganttDateRange, seedDates } from "../../helpers/date-helper";
 import { CalendarProps } from "../calendar/calendar";
 import { TaskGanttContentProps } from "./task-gantt-content";
 import { TaskListHeaderDefault } from "../task-list/task-list-header";
-import { TaskListBodyDefault } from "../task-list/task-list-table";
+import { TaskListBodyDefault } from "../task-list/task-list-body";
 import { StandardTooltipContent, Tooltip } from "../other/tooltip";
 import { VerticalScroll } from "../other/vertical-scroll";
 import { TaskListProps, TaskList } from "../task-list/task-list";
