@@ -3,9 +3,9 @@ import { Task, ViewMode, Gantt } from "../src";
 import { ViewSwitcher } from "./components/view-switcher";
 import { getStartEndDateForProject, initTasks } from "./helper";
 
-import MyTaskListBody from "./components/custom-table";
+import MyTaskListBody from "./components/custom-body";
 import MyTaskListHeader from "./components/custom-header";
-import MyTaskListBodyCustom from "./components/custom-type-table";
+import MyTaskListBodyCustom from "./components/custom-type-body";
 import MyToolTip from "./components/custom-tooltip";
 
 // Init
