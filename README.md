@@ -145,10 +145,13 @@ npm run dev
 | TooltipContent             |        | Specifies the Tooltip view for selected taskbar.                                               |
 | TaskListHeader             |        | Specifies the task list Header view                                                            |
 | TaskListBody               |        | Specifies the task list Body view                                                              |
+| TaskListTable              |        | Specifies the (optional) task list table                                                       |
 
 - TooltipContent: [`React.FC<{ task: Task; fontSize: string; fontFamily: string; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/other/tooltip.tsx)
 - TaskListHeader: [`React.FC<{ headerHeight: number; rowWidth: number; fontFamily: string; fontSize: string;}>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-header.tsx)
 - TaskListBody: [`React.FC<{ rowHeight: number; rowWidth: number; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; }>;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-body.tsx)
+- Optional: TaskListTable: React.FC<{taskListRef: React.RefObject<HTMLTableElement>; fontFamily: string; fontSize: string; headerHeight: number; rowHeight: number; rowWidth: number;
+  tasks: T[]; locale: string; selectedTaskId: string; ganttHeight: number; horizontalContainerRef: React.RefObject<HTMLTableSectionElement>; setSelectedTask: (taskId: string) => void; onExpanderClick: (task: T) => void; }>;
 
 ### Task
 

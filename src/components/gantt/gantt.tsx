@@ -60,6 +60,7 @@ export const Gantt = <T extends Task>({
   TooltipContent = StandardTooltipContent,
   TaskListHeader = TaskListHeaderDefault,
   TaskListBody = TaskListBodyDefault,
+  TaskListTable,
   onDateChange,
   onProgressChange,
   onDoubleClick,
@@ -458,6 +459,7 @@ export const Gantt = <T extends Task>({
     onExpanderClick: handleExpanderClick,
     TaskListHeader,
     TaskListBody,
+    TaskListTable,
   };
   return (
     <div>

@@ -138,6 +138,18 @@ export interface StylingOption<T extends Task> {
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: T) => void;
   }>;
+  TaskListTable?: React.FC<{
+    headerHeight: number;
+    rowHeight: number;
+    rowWidth: number;
+    tasks: T[];
+    locale: string;
+    selectedTaskId: string;
+    ganttHeight: number;
+    horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+    setSelectedTask: (taskId: string) => void;
+    onExpanderClick: (task: T) => void;
+  }>;
 }
 
 export interface GanttProps<T extends Task = Task>
