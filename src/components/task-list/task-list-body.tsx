@@ -21,7 +21,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
   day: "numeric",
 };
 
-export const TaskListTableDefault = <T extends Task>({
+export const TaskListBodyDefault = <T extends Task>({
   rowHeight,
   rowWidth,
   tasks,
@@ -33,7 +33,7 @@ export const TaskListTableDefault = <T extends Task>({
   onExpanderClick,
 }: {
   rowHeight: number;
-  rowWidth: string;
+  rowWidth: number;
   locale: string;
   tasks: T[];
   selectedTaskId: string;
@@ -62,17 +62,10 @@ export const TaskListTableDefault = <T extends Task>({
         }
 
         const isSelected = selectedTaskId === t.id;
-        const rowClassName = isSelected
-          ? expanderSymbol === ""
-            ? styles.taskListTableRow_Selected
-            : styles.taskListTableRow_Parent_Selected
-          : expanderSymbol === ""
-            ? styles.taskListTableRow
-            : styles.taskListTableRow_Parent;
 
         return (
           <tr
-            className={rowClassName}
+            className={`${styles.taskListBodyRow} ${expanderSymbol ? styles.taskListBodyRow_Parent : ""} ${isSelected ? styles.taskListBodyRow_Selected : ""}`}
             style={{ height: rowHeight }}
             key={`${t.id}row`}
             onClick={() => setSelectedTask(t.id)}

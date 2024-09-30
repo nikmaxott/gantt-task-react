@@ -3,9 +3,9 @@ import { Task, ViewMode, Gantt } from "../src";
 import { ViewSwitcher } from "./components/view-switcher";
 import { getStartEndDateForProject, initTasks } from "./helper";
 
-import MyTaskListTable from "./components/custom-table";
+import MyTaskListBody from "./components/custom-table";
 import MyTaskListHeader from "./components/custom-header";
-import MyTaskListTableCustom from "./components/custom-type-table";
+import MyTaskListBodyCustom from "./components/custom-type-table";
 import MyToolTip from "./components/custom-tooltip";
 
 // Init
@@ -108,7 +108,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
       />
@@ -123,7 +123,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         ganttHeight={300}
         columnWidth={columnWidth}
       />
@@ -139,7 +139,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
       />
@@ -155,7 +155,7 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
         TooltipContent={MyToolTip}
@@ -172,14 +172,14 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
-        TaskListTable={MyTaskListTable}
+        TaskListBody={MyTaskListBody}
       />
 
-      <h3>Gantt with Custom Type</h3>
+      <h3>Gantt with Custom Type, Table and Header</h3>
       <Gantt<CustomTask>
         tasks={tasks.map(t => ({ ...t, hasExtraField: Math.random() > 0.5 }))}
         viewMode={view}
@@ -190,11 +190,29 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleCustomSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? "155px" : ""}
+        listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
         TaskListHeader={MyTaskListHeader}
-        TaskListTable={MyTaskListTableCustom}
+        TaskListBody={MyTaskListBodyCustom}
+      />
+
+      <h3>Gantt with Custom Table, Header and Fixed Height</h3>
+      <Gantt
+        tasks={tasks}
+        viewMode={view}
+        onDateChange={handleTaskChange}
+        onDelete={handleTaskDelete}
+        onProgressChange={handleProgressChange}
+        onDoubleClick={handleDblClick}
+        onClick={handleClick}
+        onSelect={handleSelect}
+        onExpanderClick={handleExpanderClick}
+        listCellWidth={isChecked ? 155 : 0}
+        columnWidth={columnWidth}
+        ganttHeight={300}
+        TaskListHeader={MyTaskListHeader}
+        TaskListBody={MyTaskListBody}
       />
     </div>
   );

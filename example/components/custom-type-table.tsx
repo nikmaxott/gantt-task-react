@@ -1,12 +1,37 @@
 import React from "react";
 import { CustomTask } from "../App";
 
-const MyTaskListTableCustom: React.FC<{
+const MyTaskListBodyCustom: React.FC<{
   tasks: CustomTask[];
   onExpanderClick: (task: CustomTask) => void;
-}> = ({ tasks, onExpanderClick }) => {
+  ganttHeight: number;
+  rowHeight: number;
+  rowWidth: number;
+  locale: string;
+  selectedTaskId: string;
+  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+  setSelectedTask: (taskId: string) => void;
+}> = ({
+  tasks,
+  onExpanderClick,
+  ganttHeight,
+  rowHeight,
+  rowWidth,
+  horizontalContainerRef,
+  setSelectedTask,
+}) => {
   return (
-    <tbody>
+    <tbody
+      ref={horizontalContainerRef}
+      style={{
+        margin: 0,
+        padding: 0,
+        overflow: "hidden",
+        overflowY: "auto",
+        display: "block",
+        maxHeight: ganttHeight ? ganttHeight : "",
+      }}
+    >
       {tasks.map(t => {
         let expanderSymbol = "";
         if (t.hideChildren === false) {
@@ -16,7 +41,11 @@ const MyTaskListTableCustom: React.FC<{
         }
 
         return (
-          <tr key={t.id}>
+          <tr
+            key={t.id}
+            style={{ height: rowHeight }}
+            onClick={() => setSelectedTask(t.id)}
+          >
             <td>
               {expanderSymbol ? (
                 <button type="button" onClick={() => onExpanderClick(t)}>
@@ -24,10 +53,12 @@ const MyTaskListTableCustom: React.FC<{
                 </button>
               ) : null}
             </td>
-            <td>
+            <td style={{ minWidth: rowWidth }}>
               <a href="#">Link to {t.name}</a>
             </td>
-            <td>{t.hasExtraField ? "Wow!" : "Not Disabled"}</td>
+            <td style={{ minWidth: rowWidth }}>
+              {t.hasExtraField ? "Wow!" : "Not Disabled"}
+            </td>
           </tr>
         );
       })}
@@ -35,4 +66,4 @@ const MyTaskListTableCustom: React.FC<{
   );
 };
 
-export default MyTaskListTableCustom;
+export default MyTaskListBodyCustom;

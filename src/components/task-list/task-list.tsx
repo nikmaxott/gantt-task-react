@@ -4,7 +4,7 @@ import { Task } from "../../types/public-types";
 
 export type TaskListProps<T extends Task> = {
   headerHeight: number;
-  rowWidth: string;
+  rowWidth: number;
   fontFamily: string;
   fontSize: string;
   rowHeight: number;
@@ -18,11 +18,11 @@ export type TaskListProps<T extends Task> = {
   onExpanderClick: (task: T) => void;
   TaskListHeader: React.FC<{
     headerHeight: number;
-    rowWidth: string;
+    rowWidth: number;
   }>;
-  TaskListTable: React.FC<{
+  TaskListBody: React.FC<{
     rowHeight: number;
-    rowWidth: string;
+    rowWidth: number;
     locale: string;
     tasks: T[];
     selectedTaskId: string;
@@ -48,7 +48,7 @@ export const TaskList = <T extends Task>({
   ganttHeight,
   taskListRef,
   TaskListHeader,
-  TaskListTable,
+  TaskListBody,
 }: TaskListProps<T>) => {
   const horizontalContainerRef = useRef<HTMLTableSectionElement>(null);
   useEffect(() => {
@@ -84,7 +84,7 @@ export const TaskList = <T extends Task>({
       }}
     >
       <TaskListHeader {...headerProps} />
-      <TaskListTable {...tableProps} />
+      <TaskListBody {...tableProps} />
     </table>
   );
 };

@@ -3,12 +3,11 @@ import styles from "./task-list-header.module.css";
 
 export const TaskListHeaderDefault: React.FC<{
   headerHeight: number;
-  rowWidth: string;
+  rowWidth: number;
 }> = ({ headerHeight, rowWidth }) => {
   return (
     <thead className={styles.ganttTable}>
       <tr
-        className={styles.ganttTable_Header}
         style={{
           height: headerHeight - 2,
         }}

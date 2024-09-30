@@ -1,12 +1,36 @@
 import React from "react";
 import { Task } from "../../src";
 
-const MyTaskListTable: React.FC<{
+const MyTaskListBody: React.FC<{
   tasks: Task[];
   onExpanderClick: (task: Task) => void;
-}> = ({ tasks, onExpanderClick }) => {
+  ganttHeight: number;
+  rowHeight: number;
+  rowWidth: number;
+  locale: string;
+  selectedTaskId: string;
+  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+  setSelectedTask: (taskId: string) => void;
+}> = ({
+  tasks,
+  onExpanderClick,
+  ganttHeight,
+  rowHeight,
+  rowWidth,
+  horizontalContainerRef,
+}) => {
   return (
-    <tbody>
+    <tbody
+      ref={horizontalContainerRef}
+      style={{
+        margin: 0,
+        padding: 0,
+        overflow: "hidden",
+        overflowY: "auto",
+        display: "block",
+        maxHeight: ganttHeight ? ganttHeight : "",
+      }}
+    >
       {tasks.map(t => {
         let expanderSymbol = "";
         if (t.hideChildren === false) {
@@ -16,7 +40,7 @@ const MyTaskListTable: React.FC<{
         }
 
         return (
-          <tr key={t.id}>
+          <tr key={t.id} style={{ height: rowHeight }}>
             <td>
               {expanderSymbol ? (
                 <button type="button" onClick={() => onExpanderClick(t)}>
@@ -24,10 +48,12 @@ const MyTaskListTable: React.FC<{
                 </button>
               ) : null}
             </td>
-            <td>
+            <td style={{ minWidth: rowWidth }} colSpan={2}>
               <a href="#">Link to {t.name}</a>
             </td>
-            <td>{t.isDisabled ? "Disabled" : "Not Disabled"}</td>
+            <td style={{ minWidth: rowWidth }}>
+              {t.isDisabled ? "Disabled" : "Not Disabled"}
+            </td>
           </tr>
         );
       })}
@@ -35,4 +61,4 @@ const MyTaskListTable: React.FC<{
   );
 };
 
-export default MyTaskListTable;
+export default MyTaskListBody;
