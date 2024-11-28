@@ -6,11 +6,12 @@ type ViewSwitcherProps = {
   onViewListChange: (isChecked: boolean) => void;
   onViewModeChange: (viewMode: ViewMode) => void;
 };
-export const ViewSwitcher: React.FC<ViewSwitcherProps> = ({
+
+export const ViewSwitcher = ({
   onViewModeChange,
   onViewListChange,
   isChecked,
-}) => {
+}: ViewSwitcherProps) => {
   return (
     <div className="ViewContainer">
       <button

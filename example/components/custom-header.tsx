@@ -1,9 +1,12 @@
 import React from "react";
 
-const MyTaskListHeader: React.FC<{
+const MyTaskListHeader = ({
+  headerHeight,
+  rowWidth,
+}: {
   headerHeight: number;
   rowWidth: number;
-}> = ({ headerHeight, rowWidth }) => {
+}) => {
   return (
     <thead style={{ display: "block" }}>
       <tr

@@ -1,11 +1,11 @@
 import React from "react";
 import { Task } from "../../src";
-
-const MyToolTip: React.FC<{
+type MyToolTipProps = {
   task: Task;
   fontSize: string;
   fontFamily: string;
-}> = props => {
+};
+const MyToolTip = (props: MyToolTipProps) => {
   return (
     <div
       style={{ backgroundColor: "white", borderRadius: "5px", padding: "2rem" }}
