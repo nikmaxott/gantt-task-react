@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import styles from "./task-list-table.module.css";
+import styles from "./task-list-body.module.css";
 import { Task } from "../../types/public-types";
 
 const localeDateStringCache: { [key: string]: string } = {};
