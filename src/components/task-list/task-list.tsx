@@ -16,11 +16,11 @@ export type TaskListProps<T extends Task> = {
   selectedTask: BarTask<T> | undefined;
   setSelectedTask: (task: string) => void;
   onExpanderClick: (task: T) => void;
-  TaskListHeader: React.FC<{
+  TaskListHeader: (props: {
     headerHeight: number;
     rowWidth: number;
-  }>;
-  TaskListBody: React.FC<{
+  }) => React.ReactNode;
+  TaskListBody: (props: {
     rowHeight: number;
     rowWidth: number;
     locale: string;
@@ -30,7 +30,7 @@ export type TaskListProps<T extends Task> = {
     horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: T) => void;
-  }>;
+  }) => React.ReactNode;
 };
 
 export const TaskList = <T extends Task>({

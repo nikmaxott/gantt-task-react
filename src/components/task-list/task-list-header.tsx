@@ -1,10 +1,15 @@
 import React from "react";
 import styles from "./task-list-header.module.css";
 
-export const TaskListHeaderDefault: React.FC<{
+type TaskListHeaderProps = {
   headerHeight: number;
   rowWidth: number;
-}> = ({ headerHeight, rowWidth }) => {
+};
+
+export const TaskListHeaderDefault = ({
+  headerHeight,
+  rowWidth,
+}: TaskListHeaderProps) => {
   return (
     <thead className={styles.ganttTable}>
       <tr
