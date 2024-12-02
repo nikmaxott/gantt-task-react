@@ -139,14 +139,10 @@ export interface StylingOption<T extends Task> {
     onExpanderClick: (task: T) => void;
   }) => React.JSX.Element;
   TaskListTable?: (props: {
-    headerHeight: number;
-    rowHeight: number;
-    rowWidth: number;
     tasks: T[];
-    locale: string;
-    selectedTaskId: string;
-    ganttHeight: number;
-    horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+    taskListRef: React.RefObject<HTMLTableElement>;
+    scrollY: number;
+    selectedTaskId?: string;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: T) => void;
   }) => React.JSX.Element;

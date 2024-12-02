@@ -9,7 +9,6 @@ export type TaskListProps<T extends Task> = {
   fontSize: string;
   rowHeight: number;
   ganttHeight: number;
-  scrollY: number;
   locale: string;
   tasks: T[];
   taskListRef: React.RefObject<HTMLTableElement>;
@@ -31,21 +30,6 @@ export type TaskListProps<T extends Task> = {
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: T) => void;
   }) => React.ReactNode;
-  TaskListTable?: (props: {
-    taskListRef: React.RefObject<HTMLTableElement>;
-    fontFamily: string;
-    fontSize: string;
-    headerHeight: number;
-    rowHeight: number;
-    rowWidth: number;
-    tasks: T[];
-    locale: string;
-    selectedTaskId: string;
-    ganttHeight: number;
-    horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
-    setSelectedTask: (taskId: string) => void;
-    onExpanderClick: (task: T) => void;
-  }) => React.ReactNode;
 };
 
 export const TaskList = <T extends Task>({
@@ -54,7 +38,6 @@ export const TaskList = <T extends Task>({
   fontSize,
   rowWidth,
   rowHeight,
-  scrollY,
   tasks,
   selectedTask,
   setSelectedTask,
@@ -64,7 +47,6 @@ export const TaskList = <T extends Task>({
   taskListRef,
   TaskListHeader,
   TaskListBody,
-  TaskListTable,
 }: TaskListProps<T>) => {
   const horizontalContainerRef = useRef<HTMLTableSectionElement>(null);
   useEffect(() => {
@@ -89,18 +71,6 @@ export const TaskList = <T extends Task>({
     setSelectedTask,
     onExpanderClick,
   };
-
-  if (TaskListTable) {
-    return (
-      <TaskListTable
-        taskListRef={taskListRef}
-        fontFamily={fontFamily}
-        fontSize={fontSize}
-        headerHeight={headerHeight}
-        {...tableProps}
-      />
-    );
-  }
 
   return (
     <table

@@ -1,7 +1,7 @@
 import React from "react";
 import { Task } from "../../src";
 
-const MyTaskListBody: React.FC<{
+type MyTaskListBodyProps = {
   tasks: Task[];
   onExpanderClick: (task: Task) => void;
   ganttHeight: number;
@@ -11,14 +11,16 @@ const MyTaskListBody: React.FC<{
   selectedTaskId: string;
   horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
   setSelectedTask: (taskId: string) => void;
-}> = ({
+};
+
+const MyTaskListBody = ({
   tasks,
   onExpanderClick,
   ganttHeight,
   rowHeight,
   rowWidth,
   horizontalContainerRef,
-}) => {
+}: MyTaskListBodyProps) => {
   return (
     <tbody
       ref={horizontalContainerRef}

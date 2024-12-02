@@ -7,6 +7,7 @@ import MyTaskListBody from "./components/custom-body";
 import MyTaskListHeader from "./components/custom-header";
 import MyTaskListBodyCustom from "./components/custom-type-body";
 import MyToolTip from "./components/custom-tooltip";
+import MyTaskListTable from "./components/custom-table";
 
 // Init
 const App = () => {
@@ -161,7 +162,7 @@ const App = () => {
         TooltipContent={MyToolTip}
       />
 
-      <h3>Gantt with Custom Table</h3>
+      <h3>Gantt with Custom Header and Body</h3>
       <Gantt
         tasks={tasks}
         viewMode={view}
@@ -197,7 +198,7 @@ const App = () => {
         TaskListBody={MyTaskListBodyCustom}
       />
 
-      <h3>Gantt with Custom Table, Header and Fixed Height</h3>
+      <h3>Gantt with Custom Table</h3>
       <Gantt
         tasks={tasks}
         viewMode={view}
@@ -211,8 +212,7 @@ const App = () => {
         listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         ganttHeight={300}
-        TaskListHeader={MyTaskListHeader}
-        TaskListBody={MyTaskListBody}
+        TaskListTable={MyTaskListTable}
       />
     </div>
   );

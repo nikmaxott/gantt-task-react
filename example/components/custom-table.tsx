@@ -2,35 +2,22 @@ import React, { useEffect, useRef } from "react";
 import { Task } from "../../src";
 
 export type TaskListProps = {
-  taskListRef: React.RefObject<HTMLTableElement>;
-  fontFamily: string;
-  fontSize: string;
-  headerHeight: number;
-  rowHeight: number;
-  rowWidth: number;
   tasks: Task[];
-  locale: string;
-  selectedTaskId: string;
-  ganttHeight: number;
-  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+  taskListRef: React.RefObject<HTMLTableElement>;
+  scrollY: number;
+  selectedTaskId?: string;
   setSelectedTask: (taskId: string) => void;
   onExpanderClick: (task: Task) => void;
-  scrollY: number;
 };
 
-export const TaskList = ({
-  fontFamily,
-  fontSize,
-  rowWidth,
-  rowHeight,
+export default function MyTaskListTable({
   scrollY,
   tasks,
-  selectedTask,
+  selectedTaskId,
   setSelectedTask,
   onExpanderClick,
-  ganttHeight,
   taskListRef,
-}: TaskListProps) => {
+}: TaskListProps) {
   const horizontalContainerRef = useRef<HTMLTableSectionElement>(null);
   useEffect(() => {
     if (horizontalContainerRef.current) {
@@ -42,11 +29,16 @@ export const TaskList = ({
     <table
       ref={taskListRef}
       style={{
-        fontFamily: fontFamily,
-        fontSize: fontSize,
         borderCollapse: "collapse",
       }}
     >
+      <thead style={{ display: "block" }}>
+        <tr>
+          <th>Ex</th>
+          <th colSpan={2}>My Custom Task List Header OVER 2</th>
+          <th>Final</th>
+        </tr>
+      </thead>
       <tbody
         ref={horizontalContainerRef}
         style={{
@@ -55,7 +47,6 @@ export const TaskList = ({
           overflow: "hidden",
           overflowY: "auto",
           display: "block",
-          maxHeight: ganttHeight ? ganttHeight : "",
         }}
       >
         {tasks.map(t => {
@@ -67,7 +58,11 @@ export const TaskList = ({
           }
 
           return (
-            <tr key={t.id} style={{ height: rowHeight }}>
+            <tr
+              key={t.id}
+              style={{ background: selectedTaskId === t.id ? "gray" : "" }}
+              onClick={() => setSelectedTask(t.id)}
+            >
               <td>
                 {expanderSymbol ? (
                   <button type="button" onClick={() => onExpanderClick(t)}>
@@ -75,16 +70,14 @@ export const TaskList = ({
                   </button>
                 ) : null}
               </td>
-              <td style={{ minWidth: rowWidth }} colSpan={2}>
+              <td colSpan={2}>
                 <a href="#">Link to {t.name}</a>
               </td>
-              <td style={{ minWidth: rowWidth }}>
-                {t.isDisabled ? "Disabled" : "Not Disabled"}
-              </td>
+              <td>{t.isDisabled ? "Disabled" : "Not Disabled"}</td>
             </tr>
           );
         })}
       </tbody>
     </table>
   );
-};
+}
