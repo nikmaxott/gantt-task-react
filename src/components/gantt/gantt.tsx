@@ -457,11 +457,13 @@ export const Gantt = <T extends Task>({
     ganttHeight,
     selectedTask,
     taskListRef,
+    scrollY,
     setSelectedTask: handleSelectedTask,
     onExpanderClick: handleExpanderClick,
     TaskListHeader,
     TaskListBody,
   };
+
   return (
     <div>
       <div
@@ -472,7 +474,7 @@ export const Gantt = <T extends Task>({
       >
         {TaskListTable ? (
           <TaskListTable
-            tasks={tasks}
+            tasks={barTasks.map(t => t.task)}
             selectedTaskId={selectedTask?.task.id}
             taskListRef={taskListRef}
             setSelectedTask={handleSelectedTask}

@@ -13,6 +13,7 @@ export type TaskListProps<T extends Task> = {
   tasks: T[];
   taskListRef: React.RefObject<HTMLTableElement>;
   selectedTask: BarTask<T> | undefined;
+  scrollY: number;
   setSelectedTask: (task: string) => void;
   onExpanderClick: (task: T) => void;
   TaskListHeader: (props: {
@@ -40,13 +41,14 @@ export const TaskList = <T extends Task>({
   rowHeight,
   tasks,
   selectedTask,
-  setSelectedTask,
-  onExpanderClick,
   locale,
   ganttHeight,
+  scrollY,
   taskListRef,
   TaskListHeader,
   TaskListBody,
+  setSelectedTask,
+  onExpanderClick,
 }: TaskListProps<T>) => {
   const horizontalContainerRef = useRef<HTMLTableSectionElement>(null);
   useEffect(() => {

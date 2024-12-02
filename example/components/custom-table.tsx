@@ -11,14 +11,18 @@ export type TaskListProps = {
 };
 
 export default function MyTaskListTable({
+  taskListRef,
   scrollY,
   tasks,
   selectedTaskId,
   setSelectedTask,
   onExpanderClick,
-  taskListRef,
 }: TaskListProps) {
   const horizontalContainerRef = useRef<HTMLTableSectionElement>(null);
+  const rowHeight = 50;
+  const rowWidth = 155;
+  const height = 200;
+
   useEffect(() => {
     if (horizontalContainerRef.current) {
       horizontalContainerRef.current.scrollTop = scrollY;
@@ -33,10 +37,29 @@ export default function MyTaskListTable({
       }}
     >
       <thead style={{ display: "block" }}>
-        <tr>
-          <th>Ex</th>
-          <th colSpan={2}>My Custom Task List Header OVER 2</th>
-          <th>Final</th>
+        <tr style={{ height: rowHeight - 2, border: "1px solid black" }}>
+          <th
+            style={{
+              minWidth: 40,
+            }}
+          >
+            Ex
+          </th>
+          <th
+            style={{
+              minWidth: rowWidth * 2,
+            }}
+            colSpan={2}
+          >
+            My Custom Task List Header OVER 2
+          </th>
+          <th
+            style={{
+              minWidth: rowWidth,
+            }}
+          >
+            Final
+          </th>
         </tr>
       </thead>
       <tbody
@@ -44,9 +67,10 @@ export default function MyTaskListTable({
         style={{
           margin: 0,
           padding: 0,
-          overflow: "hidden",
-          overflowY: "auto",
+          overflowX: "hidden",
+          overflowY: "clip",
           display: "block",
+          maxHeight: height,
         }}
       >
         {tasks.map(t => {
@@ -60,20 +84,39 @@ export default function MyTaskListTable({
           return (
             <tr
               key={t.id}
-              style={{ background: selectedTaskId === t.id ? "gray" : "" }}
+              style={{
+                background: selectedTaskId === t.id ? "gray" : "",
+                height: rowHeight,
+                border: "1px solid black",
+              }}
               onClick={() => setSelectedTask(t.id)}
             >
-              <td>
+              <td
+                style={{
+                  minWidth: 40,
+                }}
+              >
                 {expanderSymbol ? (
                   <button type="button" onClick={() => onExpanderClick(t)}>
                     {expanderSymbol}
                   </button>
                 ) : null}
               </td>
-              <td colSpan={2}>
+              <td
+                style={{
+                  minWidth: rowWidth * 2,
+                }}
+                colSpan={2}
+              >
                 <a href="#">Link to {t.name}</a>
               </td>
-              <td>{t.isDisabled ? "Disabled" : "Not Disabled"}</td>
+              <td
+                style={{
+                  minWidth: rowWidth,
+                }}
+              >
+                {t.isDisabled ? "Disabled" : "Not Disabled"}
+              </td>
             </tr>
           );
         })}
