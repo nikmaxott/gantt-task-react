@@ -63,7 +63,7 @@ export const Gantt = <T extends Task>({
   TooltipContent = StandardTooltipContent,
   TaskListHeader = TaskListHeaderDefault,
   TaskListBody = TaskListBodyDefault,
-  // TaskList = TaskListDefault,
+  TaskListTable,
   onDateChange,
   onProgressChange,
   onDoubleClick,
@@ -454,15 +454,16 @@ export const Gantt = <T extends Task>({
     tasks: barTasks.map(t => t.task),
     locale,
     headerHeight,
-    scrollY,
     ganttHeight,
     selectedTask,
     taskListRef,
+    scrollY,
     setSelectedTask: handleSelectedTask,
     onExpanderClick: handleExpanderClick,
     TaskListHeader,
     TaskListBody,
   };
+
   return (
     <div>
       <div
@@ -471,7 +472,18 @@ export const Gantt = <T extends Task>({
         tabIndex={0}
         ref={wrapperRef}
       >
-        {listCellWidth && <TaskListDefault {...tableProps} />}
+        {TaskListTable ? (
+          <TaskListTable
+            tasks={barTasks.map(t => t.task)}
+            selectedTaskId={selectedTask?.task.id}
+            taskListRef={taskListRef}
+            setSelectedTask={handleSelectedTask}
+            onExpanderClick={handleExpanderClick}
+            scrollY={scrollY}
+          />
+        ) : (
+          <>{listCellWidth && <TaskListDefault {...tableProps} />} </>
+        )}
         <TaskGantt
           gridProps={gridProps}
           calendarProps={calendarProps}

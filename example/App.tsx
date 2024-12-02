@@ -3,10 +3,11 @@ import { Task, ViewMode, Gantt } from "../src";
 import { ViewSwitcher } from "./components/view-switcher";
 import { getStartEndDateForProject, initTasks } from "./helper";
 
-import MyTaskListBody from "./components/custom-table";
+import MyTaskListBody from "./components/custom-body";
 import MyTaskListHeader from "./components/custom-header";
-import MyTaskListBodyCustom from "./components/custom-type-table";
+import MyTaskListBodyCustom from "./components/custom-type-body";
 import MyToolTip from "./components/custom-tooltip";
+import MyTaskListTable from "./components/custom-table";
 
 // Init
 const App = () => {
@@ -81,6 +82,11 @@ const App = () => {
     console.log("On expander click Id:" + task.id);
   };
 
+  const handleDelayedExpanderClick = (task: Task) => {
+    setDelayedTasks(delayedTasks.map(t => (t.id === task.id ? task : t)));
+    console.log("On expander click Id:" + task.id);
+  };
+
   React.useEffect(() => {
     const delay = 5000; // 5 seconds
     const timer = setTimeout(() => {
@@ -138,7 +144,7 @@ const App = () => {
         onDoubleClick={handleDblClick}
         onClick={handleClick}
         onSelect={handleSelect}
-        onExpanderClick={handleExpanderClick}
+        onExpanderClick={handleDelayedExpanderClick}
         listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
@@ -161,7 +167,7 @@ const App = () => {
         TooltipContent={MyToolTip}
       />
 
-      <h3>Gantt with Custom Table</h3>
+      <h3>Gantt with Custom Header and Body</h3>
       <Gantt
         tasks={tasks}
         viewMode={view}
@@ -179,7 +185,7 @@ const App = () => {
         TaskListBody={MyTaskListBody}
       />
 
-      <h3>Gantt with Custom Type, Table and Header</h3>
+      <h3>Gantt with Custom Type, Header and Body</h3>
       <Gantt<CustomTask>
         tasks={tasks.map(t => ({ ...t, hasExtraField: Math.random() > 0.5 }))}
         viewMode={view}
@@ -197,7 +203,7 @@ const App = () => {
         TaskListBody={MyTaskListBodyCustom}
       />
 
-      <h3>Gantt with Custom Table, Header and Fixed Height</h3>
+      <h3>Gantt with Custom Table</h3>
       <Gantt
         tasks={tasks}
         viewMode={view}
@@ -208,14 +214,22 @@ const App = () => {
         onClick={handleClick}
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
-        listCellWidth={isChecked ? 155 : 0}
-        columnWidth={columnWidth}
-        ganttHeight={300}
-        TaskListHeader={MyTaskListHeader}
-        TaskListBody={MyTaskListBody}
+        ganttHeight={200}
+        TaskListTable={CustomTaskList}
       />
     </div>
   );
+};
+
+const CustomTaskList = (props: {
+  tasks: Task[];
+  taskListRef: React.RefObject<HTMLTableElement>;
+  scrollY: number;
+  selectedTaskId?: string;
+  setSelectedTask: (taskId: string) => void;
+  onExpanderClick: (task: Task) => void;
+}) => {
+  return <MyTaskListTable {...props} />;
 };
 
 export interface CustomTask extends Task {

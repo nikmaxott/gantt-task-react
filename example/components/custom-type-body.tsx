@@ -3,15 +3,14 @@ import { CustomTask } from "../App";
 
 const MyTaskListBodyCustom = ({
   tasks,
-  onExpanderClick,
   ganttHeight,
   rowHeight,
   rowWidth,
   horizontalContainerRef,
+  onExpanderClick,
   setSelectedTask,
 }: {
   tasks: CustomTask[];
-  onExpanderClick: (task: CustomTask) => void;
   ganttHeight: number;
   rowHeight: number;
   rowWidth: number;
@@ -19,6 +18,7 @@ const MyTaskListBodyCustom = ({
   selectedTaskId: string;
   horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
   setSelectedTask: (taskId: string) => void;
+  onExpanderClick: (task: CustomTask) => void;
 }) => {
   return (
     <tbody

@@ -138,6 +138,14 @@ export interface StylingOption<T extends Task> {
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: T) => void;
   }) => React.JSX.Element;
+  TaskListTable?: (props: {
+    tasks: T[];
+    taskListRef: React.RefObject<HTMLTableElement>;
+    scrollY: number;
+    selectedTaskId?: string;
+    setSelectedTask: (taskId: string) => void;
+    onExpanderClick: (task: T) => void;
+  }) => React.JSX.Element;
 }
 
 export interface GanttProps<T extends Task = Task>
