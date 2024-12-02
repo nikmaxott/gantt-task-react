@@ -10,14 +10,14 @@ type TopPartOfCalendarProps = {
   yText: number;
 };
 
-export const TopPartOfCalendar: React.FC<TopPartOfCalendarProps> = ({
+export const TopPartOfCalendar = ({
   value,
   x1Line,
   y1Line,
   y2Line,
   xText,
   yText,
-}) => {
+}: TopPartOfCalendarProps) => {
   return (
     <g className="calendarTop">
       <line

@@ -17,11 +17,11 @@ export type TooltipProps<T extends Task> = {
   rowHeight: number;
   fontSize: string;
   fontFamily: string;
-  TooltipContent: React.FC<{
+  TooltipContent: (props: {
     task: T;
     fontSize: string;
     fontFamily: string;
-  }>;
+  }) => JSX.Element;
 };
 export const Tooltip = <T extends Task>({
   task,
