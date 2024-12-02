@@ -1,4 +1,4 @@
-import React, { ReactChild } from "react";
+import React from "react";
 import { Task } from "../../types/public-types";
 import { addToDate } from "../../helpers/date-helper";
 import styles from "./grid.module.css";
@@ -12,7 +12,7 @@ export type GridBodyProps = {
   todayColor: string;
   rtl: boolean;
 };
-export const GridBody: React.FC<GridBodyProps> = ({
+export const GridBody = ({
   tasks,
   dates,
   rowHeight,
@@ -20,10 +20,10 @@ export const GridBody: React.FC<GridBodyProps> = ({
   columnWidth,
   todayColor,
   rtl,
-}) => {
+}: GridBodyProps) => {
   let y = 0;
-  const gridRows: ReactChild[] = [];
-  const rowLines: ReactChild[] = [
+  const gridRows = [];
+  const rowLines = [
     <line
       key="RowLineFirst"
       x="0"
@@ -60,8 +60,8 @@ export const GridBody: React.FC<GridBodyProps> = ({
 
   const now = new Date();
   let tickX = 0;
-  const ticks: ReactChild[] = [];
-  let today: ReactChild = <rect />;
+  const ticks = [];
+  let today = <rect />;
   for (let i = 0; i < dates.length; i++) {
     const date = dates[i];
     ticks.push(

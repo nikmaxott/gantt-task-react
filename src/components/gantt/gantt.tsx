@@ -14,7 +14,10 @@ import { TaskListHeaderDefault } from "../task-list/task-list-header";
 import { TaskListBodyDefault } from "../task-list/task-list-body";
 import { StandardTooltipContent, Tooltip } from "../other/tooltip";
 import { VerticalScroll } from "../other/vertical-scroll";
-import { TaskListProps, TaskList } from "../task-list/task-list";
+import {
+  TaskListProps,
+  TaskList as TaskListDefault,
+} from "../task-list/task-list";
 import { TaskGantt } from "./task-gantt";
 import { BarTask } from "../../types/bar-task";
 import { convertToBarTasks } from "../../helpers/bar-helper";
@@ -469,7 +472,7 @@ export const Gantt = <T extends Task>({
         tabIndex={0}
         ref={wrapperRef}
       >
-        {listCellWidth && <TaskList {...tableProps} />}
+        {listCellWidth && <TaskListDefault {...tableProps} />}
         <TaskGantt
           gridProps={gridProps}
           calendarProps={calendarProps}

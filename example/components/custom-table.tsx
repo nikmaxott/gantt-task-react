@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { Task } from "../../src";
-import MyTaskListHeader from "./custom-header";
-import MyTaskListBody from "./custom-body";
 
 export type TaskListProps = {
   taskListRef: React.RefObject<HTMLTableElement>;
@@ -12,15 +10,15 @@ export type TaskListProps = {
   rowWidth: number;
   tasks: Task[];
   locale: string;
-  selectedTask: string;
+  selectedTaskId: string;
   ganttHeight: number;
   horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
   setSelectedTask: (taskId: string) => void;
   onExpanderClick: (task: Task) => void;
+  scrollY: number;
 };
 
 export const TaskList = ({
-  headerHeight,
   fontFamily,
   fontSize,
   rowWidth,
@@ -30,7 +28,6 @@ export const TaskList = ({
   selectedTask,
   setSelectedTask,
   onExpanderClick,
-  locale,
   ganttHeight,
   taskListRef,
 }: TaskListProps) => {
@@ -41,23 +38,6 @@ export const TaskList = ({
     }
   }, [scrollY]);
 
-  const headerProps = {
-    headerHeight,
-    rowWidth,
-  };
-  const selectedTaskId = selectedTask ? selectedTask.task.id : "";
-  const tableProps = {
-    rowHeight,
-    rowWidth,
-    tasks,
-    locale,
-    selectedTaskId,
-    ganttHeight,
-    horizontalContainerRef,
-    setSelectedTask,
-    onExpanderClick,
-  };
-
   return (
     <table
       ref={taskListRef}
@@ -67,8 +47,44 @@ export const TaskList = ({
         borderCollapse: "collapse",
       }}
     >
-      <MyTaskListHeader {...headerProps} />
-      <MyTaskListBody {...tableProps} />
+      <tbody
+        ref={horizontalContainerRef}
+        style={{
+          margin: 0,
+          padding: 0,
+          overflow: "hidden",
+          overflowY: "auto",
+          display: "block",
+          maxHeight: ganttHeight ? ganttHeight : "",
+        }}
+      >
+        {tasks.map(t => {
+          let expanderSymbol = "";
+          if (t.hideChildren === false) {
+            expanderSymbol = "YES";
+          } else if (t.hideChildren === true) {
+            expanderSymbol = "NO";
+          }
+
+          return (
+            <tr key={t.id} style={{ height: rowHeight }}>
+              <td>
+                {expanderSymbol ? (
+                  <button type="button" onClick={() => onExpanderClick(t)}>
+                    {expanderSymbol}
+                  </button>
+                ) : null}
+              </td>
+              <td style={{ minWidth: rowWidth }} colSpan={2}>
+                <a href="#">Link to {t.name}</a>
+              </td>
+              <td style={{ minWidth: rowWidth }}>
+                {t.isDisabled ? "Disabled" : "Not Disabled"}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
     </table>
   );
 };
