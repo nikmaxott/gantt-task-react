@@ -63,6 +63,8 @@ export const TaskGanttContent = <T extends Task>({
 
   // create xStep
   useEffect(() => {
+    if (!dates[0] || !dates[1]) return;
+
     const dateDelta =
       dates[1].getTime() -
       dates[0].getTime() -

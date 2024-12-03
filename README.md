@@ -12,7 +12,7 @@ This is a fork of https://github.com/MaTeMaTuK/gantt-task-react.
 
 ```javascript
 import { Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption } from '@nikmaxott/gantt-task-react';
-import "@nikmaxott/gantt-task-react/dist/style.css";
+import "@nikmaxott/gantt-task-react/dist/gantt-task-react.css";
 
 let tasks: Task[] = [
     {
@@ -150,7 +150,7 @@ npm run dev
 - TooltipContent: [`(props: { task: Task; fontSize: string; fontFamily: string; } => JSX.Element;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/other/tooltip.tsx)
 - TaskListHeader: [`(props: { headerHeight: number; rowWidth: number; fontFamily: string; fontSize: string;} => JSX.Element;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-header.tsx)
 - TaskListBody: [`(props: { rowHeight: number; rowWidth: number; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; } => JSX.Element;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-body.tsx)
-- Optional: TaskListTable: props: { taskListRef: React.RefObject<HTMLTableElement>; fontFamily: string; fontSize: string; headerHeight: number; rowHeight: number; rowWidth: number;
+- TaskListTable: props: { taskListRef: React.RefObject<HTMLTableElement>; fontFamily: string; fontSize: string; headerHeight: number; rowHeight: number; rowWidth: number;
   tasks: T[]; locale: string; selectedTaskId: string; ganttHeight: number; horizontalContainerRef: React.RefObject<HTMLTableSectionElement>; setSelectedTask: (taskId: string) => void; onExpanderClick: (task: T) => void; } => JSX.Element;
 
 ### Task

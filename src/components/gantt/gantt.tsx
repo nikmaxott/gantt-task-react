@@ -72,12 +72,16 @@ export const Gantt = <T extends Task>({
   onSelect,
   onExpanderClick,
 }: GanttProps<T>) => {
-  if (tasks.length === 0) return;
-
   const wrapperRef = useRef<HTMLDivElement>(null);
   const taskListRef = useRef<HTMLTableElement>(null);
   const [dateSetup, setDateSetup] = useState<DateSetup>(() => {
-    const [startDate, endDate] = ganttDateRange(tasks, viewMode, preStepsCount);
+    const dateRange = ganttDateRange(tasks, viewMode, preStepsCount);
+
+    if (!dateRange) {
+      return { viewMode, dates: [] };
+    }
+
+    const [startDate, endDate] = dateRange;
     return { viewMode, dates: seedDates(startDate, endDate, viewMode) };
   });
   const [currentViewDate, setCurrentViewDate] = useState<Date | undefined>(
@@ -115,11 +119,15 @@ export const Gantt = <T extends Task>({
       filteredTasks = tasks;
     }
     filteredTasks = filteredTasks.sort(sortTasks);
-    const [startDate, endDate] = ganttDateRange(
-      filteredTasks,
-      viewMode,
-      preStepsCount
-    );
+
+    const dateRange = ganttDateRange(filteredTasks, viewMode, preStepsCount);
+
+    if (!dateRange) {
+      return;
+    }
+
+    const [startDate, endDate] = dateRange || [new Date(), new Date()];
+
     let newDates = seedDates(startDate, endDate, viewMode);
     if (rtl) {
       newDates = newDates.reverse();
