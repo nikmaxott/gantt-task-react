@@ -8,6 +8,7 @@ export default defineConfig({
   root: "example",
   build: {
     outDir: "../dist-demo",
+    emptyOutDir: true,
     rollupOptions: {
       input: resolve(__dirname, "example/index.html"),
     },

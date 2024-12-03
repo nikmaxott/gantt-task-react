@@ -9,7 +9,7 @@ import MyTaskListBodyCustom from "./components/custom-type-body";
 import MyToolTip from "./components/custom-tooltip";
 import MyTaskListTable from "./components/custom-table";
 
-import "../dist/gantt-task-react.css";
+import "@nikmaxott/gantt-task-react/gantt-task-react.css";
 
 // Init
 const App = () => {

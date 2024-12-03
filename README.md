@@ -12,7 +12,7 @@ This is a fork of https://github.com/MaTeMaTuK/gantt-task-react.
 
 ```javascript
 import { Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption } from '@nikmaxott/gantt-task-react';
-import "@nikmaxott/gantt-task-react/dist/gantt-task-react.css";
+import "@nikmaxott/gantt-task-react/gantt-task-react.css";
 
 let tasks: Task[] = [
     {
