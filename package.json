@@ -18,7 +18,7 @@
       "import": "./dist/gantt-task-react.js",
       "require": "./dist/gantt-task-react.umd.cjs"
     },
-    "./gantt-task-react.css": "./dist/gantt-task-react.css"
+    "./dist/gantt-task-react.css": "./dist/gantt-task-react.css"
   },
   "engines": {
     "node": ">=10"
