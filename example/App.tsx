@@ -9,6 +9,8 @@ import MyTaskListBodyCustom from "./components/custom-type-body";
 import MyToolTip from "./components/custom-tooltip";
 import MyTaskListTable from "./components/custom-table";
 
+import "../dist/gantt-task-react.css";
+
 // Init
 const App = () => {
   const [view, setView] = React.useState<ViewMode>(ViewMode.Day);
@@ -215,21 +217,20 @@ const App = () => {
         onSelect={handleSelect}
         onExpanderClick={handleExpanderClick}
         ganttHeight={200}
-        TaskListTable={CustomTaskList}
+        columnWidth={columnWidth}
+        TaskListTable={(props: {
+          tasks: Task[];
+          taskListRef: React.RefObject<HTMLTableElement>;
+          scrollY: number;
+          selectedTaskId?: string;
+          setSelectedTask: (taskId: string) => void;
+          onExpanderClick: (task: Task) => void;
+        }) => {
+          return <MyTaskListTable {...props} />;
+        }}
       />
     </div>
   );
-};
-
-const CustomTaskList = (props: {
-  tasks: Task[];
-  taskListRef: React.RefObject<HTMLTableElement>;
-  scrollY: number;
-  selectedTaskId?: string;
-  setSelectedTask: (taskId: string) => void;
-  onExpanderClick: (task: Task) => void;
-}) => {
-  return <MyTaskListTable {...props} />;
 };
 
 export interface CustomTask extends Task {
