@@ -4,7 +4,7 @@
 
 This is a fork of https://github.com/MaTeMaTuK/gantt-task-react.
 
-![example](https://user-images.githubusercontent.com/26743903/88215863-f35d5f00-cc64-11ea-81db-e829e6e9b5c8.png)
+![example](https://github.com/user-attachments/assets/52dea11f-1066-4e08-a0f1-bc76a985db6a)
 
 ## [Live Demo](https://nikmaxott.github.io/gantt-task-react/)
 
@@ -74,7 +74,7 @@ let tasks: CustomTask[] = [
 
 ### Caution
 
-If aliasing '@' the style import may not work properly use the following alias to fix this bug:
+If type aliasing '@' the style import may not work properly use the following alias to fix this bug:
 
 `'@nikmaxott': path.resolve(__dirname, './node_modules/@nikmaxott')`
 
@@ -150,8 +150,8 @@ npm run dev
 - TooltipContent: [`(props: { task: Task; fontSize: string; fontFamily: string; } => JSX.Element;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/other/tooltip.tsx)
 - TaskListHeader: [`(props: { headerHeight: number; rowWidth: number; fontFamily: string; fontSize: string;} => JSX.Element;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-header.tsx)
 - TaskListBody: [`(props: { rowHeight: number; rowWidth: number; fontFamily: string; fontSize: string; locale: string; tasks: Task[]; selectedTaskId: string; setSelectedTask: (taskId: string) => void; } => JSX.Element;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/components/task-list/task-list-body.tsx)
-- TaskListTable: props: { taskListRef: React.RefObject<HTMLTableElement>; fontFamily: string; fontSize: string; headerHeight: number; rowHeight: number; rowWidth: number;
-  tasks: T[]; locale: string; selectedTaskId: string; ganttHeight: number; horizontalContainerRef: React.RefObject<HTMLTableSectionElement>; setSelectedTask: (taskId: string) => void; onExpanderClick: (task: T) => void; } => JSX.Element;
+- TaskListTable: [`props: { taskListRef: React.RefObject<HTMLTableElement>; fontFamily: string; fontSize: string; headerHeight: number; rowHeight: number; rowWidth: number;
+  tasks: T[]; locale: string; selectedTaskId: string; ganttHeight: number; horizontalContainerRef: React.RefObject<HTMLTableSectionElement>; setSelectedTask: (taskId: string) => void; onExpanderClick: (task: T) => void; } => JSX.Element;`](https://github.com/nikmaxott/gantt-task-react/blob/main/src/types/public-types.ts#L141-L148)
 
 ### Task
 
