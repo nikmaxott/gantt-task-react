@@ -16,7 +16,7 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "@nikmaxott/GanttTaskReact",
+      name: "@nikmaxott/gantt-task-react",
       fileName: "gantt-task-react",
     },
     rollupOptions: {
