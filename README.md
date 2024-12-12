@@ -12,7 +12,7 @@ This is a fork of https://github.com/MaTeMaTuK/gantt-task-react.
 
 ```javascript
 import { Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption } from '@nikmaxott/gantt-task-react';
-import "@nikmaxott/gantt-task-react/dist/gantt-task-react.css";
+import "@nikmaxott/gantt-task-react/style.css";
 
 let tasks: Task[] = [
     {
@@ -71,12 +71,6 @@ let tasks: CustomTask[] = [
 />
 
 ```
-
-### Caution
-
-If type aliasing '@' the style import may not work properly use the following alias to fix this bug:
-
-`'@nikmaxott': path.resolve(__dirname, './node_modules/@nikmaxott')`
 
 ## How to run example
 
