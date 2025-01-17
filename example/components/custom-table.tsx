@@ -3,7 +3,7 @@ import { Task } from "../../src";
 
 export type TaskListProps = {
   tasks: Task[];
-  taskListRef: React.RefObject<HTMLTableElement>;
+  taskListRef: React.RefObject<HTMLTableElement | null>;
   scrollY: number;
   selectedTaskId?: string;
   setSelectedTask: (taskId: string) => void;

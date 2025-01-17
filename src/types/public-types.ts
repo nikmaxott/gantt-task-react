@@ -131,7 +131,7 @@ export interface StylingOption<T extends Task> {
     tasks: T[];
     selectedTaskId: string;
     ganttHeight: number;
-    horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+    horizontalContainerRef: React.RefObject<HTMLTableSectionElement | null>;
     /**
      * Sets selected task by id
      */
@@ -140,7 +140,7 @@ export interface StylingOption<T extends Task> {
   }) => React.JSX.Element;
   TaskListTable?: (props: {
     tasks: T[];
-    taskListRef: React.RefObject<HTMLTableElement>;
+    taskListRef: React.RefObject<HTMLTableElement | null>;
     scrollY: number;
     selectedTaskId?: string;
     setSelectedTask: (taskId: string) => void;

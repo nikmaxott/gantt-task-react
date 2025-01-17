@@ -11,7 +11,7 @@ export type TaskListProps<T extends Task> = {
   ganttHeight: number;
   locale: string;
   tasks: T[];
-  taskListRef: React.RefObject<HTMLTableElement>;
+  taskListRef: React.RefObject<HTMLTableElement | null>;
   selectedTask: BarTask<T> | undefined;
   scrollY: number;
   setSelectedTask: (task: string) => void;
@@ -27,7 +27,7 @@ export type TaskListProps<T extends Task> = {
     tasks: T[];
     selectedTaskId: string;
     ganttHeight: number;
-    horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+    horizontalContainerRef: React.RefObject<HTMLTableSectionElement | null>;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: T) => void;
   }) => React.ReactNode;

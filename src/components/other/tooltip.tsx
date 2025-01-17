@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, ReactElement } from "react";
 import { Task } from "../../types/public-types";
 import { BarTask } from "../../types/bar-task";
 import styles from "./tooltip.module.css";
@@ -21,7 +21,7 @@ export type TooltipProps<T extends Task> = {
     task: T;
     fontSize: string;
     fontFamily: string;
-  }) => JSX.Element;
+  }) => ReactElement;
 };
 export const Tooltip = <T extends Task>({
   task,
