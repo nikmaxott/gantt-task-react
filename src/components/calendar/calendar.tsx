@@ -33,8 +33,8 @@ export const Calendar = ({
   fontSize,
 }: CalendarProps) => {
   const getCalendarValuesForYear = () => {
-    const topValues: ReactElement<any>[] = [];
-    const bottomValues: ReactElement<any>[] = [];
+    const topValues: ReactElement[] = [];
+    const bottomValues: ReactElement[] = [];
     const topDefaultHeight = headerHeight * 0.5;
     for (let i = 0; i < dateSetup.dates.length; i++) {
       const date = dateSetup.dates[i];
@@ -77,8 +77,8 @@ export const Calendar = ({
   };
 
   const getCalendarValuesForQuarterYear = () => {
-    const topValues: ReactElement<any>[] = [];
-    const bottomValues: ReactElement<any>[] = [];
+    const topValues: ReactElement[] = [];
+    const bottomValues: ReactElement[] = [];
     const topDefaultHeight = headerHeight * 0.5;
     for (let i = 0; i < dateSetup.dates.length; i++) {
       const date = dateSetup.dates[i];
@@ -122,8 +122,8 @@ export const Calendar = ({
   };
 
   const getCalendarValuesForMonth = () => {
-    const topValues: ReactElement<any>[] = [];
-    const bottomValues: ReactElement<any>[] = [];
+    const topValues: ReactElement[] = [];
+    const bottomValues: ReactElement[] = [];
     const topDefaultHeight = headerHeight * 0.5;
     for (let i = 0; i < dateSetup.dates.length; i++) {
       const date = dateSetup.dates[i];
@@ -166,8 +166,8 @@ export const Calendar = ({
   };
 
   const getCalendarValuesForWeek = () => {
-    const topValues: ReactElement<any>[] = [];
-    const bottomValues: ReactElement<any>[] = [];
+    const topValues: ReactElement[] = [];
+    const bottomValues: ReactElement[] = [];
     let weeksCount: number = 1;
     const topDefaultHeight = headerHeight * 0.5;
     const dates = dateSetup.dates;
@@ -215,8 +215,8 @@ export const Calendar = ({
   };
 
   const getCalendarValuesForDay = () => {
-    const topValues: ReactElement<any>[] = [];
-    const bottomValues: ReactElement<any>[] = [];
+    const topValues: ReactElement[] = [];
+    const bottomValues: ReactElement[] = [];
     const topDefaultHeight = headerHeight * 0.5;
     const dates = dateSetup.dates;
     for (let i = 0; i < dates.length; i++) {
@@ -263,8 +263,8 @@ export const Calendar = ({
   };
 
   const getCalendarValuesForPartOfDay = () => {
-    const topValues: ReactElement<any>[] = [];
-    const bottomValues: ReactElement<any>[] = [];
+    const topValues: ReactElement[] = [];
+    const bottomValues: ReactElement[] = [];
     const ticks = viewMode === ViewMode.HalfDay ? 2 : 4;
     const topDefaultHeight = headerHeight * 0.5;
     const dates = dateSetup.dates;
@@ -309,8 +309,8 @@ export const Calendar = ({
   };
 
   const getCalendarValuesForHour = () => {
-    const topValues: ReactElement<any>[] = [];
-    const bottomValues: ReactElement<any>[] = [];
+    const topValues: ReactElement[] = [];
+    const bottomValues: ReactElement[] = [];
     const topDefaultHeight = headerHeight * 0.5;
     const dates = dateSetup.dates;
     for (let i = 0; i < dates.length; i++) {
@@ -355,8 +355,8 @@ export const Calendar = ({
     return [topValues, bottomValues];
   };
 
-  let topValues: ReactElement<any>[] = [];
-  let bottomValues: ReactElement<any>[] = [];
+  let topValues: ReactElement[] = [];
+  let bottomValues: ReactElement[] = [];
   switch (dateSetup.viewMode) {
     case ViewMode.Year:
       [topValues, bottomValues] = getCalendarValuesForYear();

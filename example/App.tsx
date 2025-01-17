@@ -97,7 +97,7 @@ const App = () => {
   }, []);
 
   return (
-    (<div className="Wrapper">
+    <div className="Wrapper">
       <ViewSwitcher
         onViewModeChange={viewMode => setView(viewMode)}
         onViewListChange={setIsChecked}
@@ -222,7 +222,7 @@ const App = () => {
           return <MyTaskListTable {...props} />;
         }}
       />
-    </div>)
+    </div>
   );
 };
 

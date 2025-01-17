@@ -21,7 +21,7 @@ export type TooltipProps<T extends Task> = {
     task: T;
     fontSize: string;
     fontFamily: string;
-  }) => ReactElement<any>;
+  }) => ReactElement;
 };
 export const Tooltip = <T extends Task>({
   task,
