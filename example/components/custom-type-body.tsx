@@ -16,7 +16,7 @@ const MyTaskListBodyCustom = ({
   rowWidth: number;
   locale: string;
   selectedTaskId: string;
-  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+  horizontalContainerRef: React.RefObject<HTMLTableSectionElement | null>;
   setSelectedTask: (taskId: string) => void;
   onExpanderClick: (task: CustomTask) => void;
 }) => {

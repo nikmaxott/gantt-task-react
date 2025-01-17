@@ -38,7 +38,7 @@ export const TaskListBodyDefault = <T extends Task>({
   tasks: T[];
   selectedTaskId: string;
   ganttHeight: number;
-  horizontalContainerRef: React.RefObject<HTMLTableSectionElement>;
+  horizontalContainerRef: React.RefObject<HTMLTableSectionElement | null>;
   setSelectedTask: (taskId: string) => void;
   onExpanderClick: (task: T) => void;
 }) => {

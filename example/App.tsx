@@ -97,7 +97,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="Wrapper">
+    (<div className="Wrapper">
       <ViewSwitcher
         onViewModeChange={viewMode => setView(viewMode)}
         onViewListChange={setIsChecked}
@@ -133,7 +133,6 @@ const App = () => {
         ganttHeight={300}
         columnWidth={columnWidth}
       />
-
       <h3>Gantt with Delayed Tasks</h3>
       <Gantt
         tasks={delayedTasks}
@@ -149,7 +148,6 @@ const App = () => {
         columnWidth={columnWidth}
         rowHeight={30}
       />
-
       <h3>Gantt With Custom Popup</h3>
       <Gantt
         tasks={tasks}
@@ -166,7 +164,6 @@ const App = () => {
         rowHeight={30}
         TooltipContent={MyToolTip}
       />
-
       <h3>Gantt with Custom Header and Body</h3>
       <Gantt
         tasks={tasks}
@@ -184,7 +181,6 @@ const App = () => {
         TaskListHeader={MyTaskListHeader}
         TaskListBody={MyTaskListBody}
       />
-
       <h3>Gantt with Custom Type, Header and Body</h3>
       <Gantt<CustomTask>
         tasks={tasks.map(t => ({ ...t, hasExtraField: Math.random() > 0.5 }))}
@@ -202,7 +198,6 @@ const App = () => {
         TaskListHeader={MyTaskListHeader}
         TaskListBody={MyTaskListBodyCustom}
       />
-
       <h3>Gantt with Custom Table</h3>
       <Gantt
         tasks={tasks}
@@ -218,7 +213,7 @@ const App = () => {
         columnWidth={columnWidth}
         TaskListTable={(props: {
           tasks: Task[];
-          taskListRef: React.RefObject<HTMLTableElement>;
+          taskListRef: React.RefObject<HTMLTableElement | null>;
           scrollY: number;
           selectedTaskId?: string;
           setSelectedTask: (taskId: string) => void;
@@ -227,7 +222,7 @@ const App = () => {
           return <MyTaskListTable {...props} />;
         }}
       />
-    </div>
+    </div>)
   );
 };
 
