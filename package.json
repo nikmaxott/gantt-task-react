@@ -65,7 +65,6 @@
     "eslint": "^9.38.0",
     "eslint-plugin-jest-dom": "5.5.0",
     "eslint-plugin-react": "^7.35.0",
-    "eslint-plugin-react-hooks": "7.0.1",
     "eslint-plugin-testing-library": "7.13.3",
     "globals": "^15.8.0",
     "jsdom": "^25.0.1",

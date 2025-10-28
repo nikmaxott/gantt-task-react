@@ -1,5 +1,6 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import { render, screen } from "@testing-library/react";
+
 import { Gantt, Task } from "../index";
 
 // Extend SVGElement interface to satisfy typescript
@@ -44,9 +45,7 @@ beforeAll(() => {
 
 describe("gantt", () => {
   it("renders without crashing", () => {
-    const div = document.createElement("div");
-    const root = createRoot(div);
-    root.render(
+    render(
       <Gantt
         tasks={[
           {
@@ -60,12 +59,17 @@ describe("gantt", () => {
         ]}
       />
     );
+
+    expect(screen.getByRole("table")).toBeVisible();
+    // Header, Body Row and Gantt Table Row
+    expect(screen.getAllByRole("row")).toHaveLength(3);
+    expect(
+      screen.getByRole("cell", { name: "Redesign website" })
+    ).toBeVisible();
   });
 
   it("renders without crashing with current type", () => {
-    const div = document.createElement("div");
-    const root = createRoot(div);
-    root.render(
+    render(
       <Gantt<Task>
         tasks={[
           {
@@ -79,17 +83,20 @@ describe("gantt", () => {
         ]}
       />
     );
+    expect(screen.getByRole("table")).toBeVisible();
+    // Header, Body Row and Gantt Table Row
+    expect(screen.getAllByRole("row")).toHaveLength(3);
+    expect(
+      screen.getByRole("cell", { name: "Redesign website" })
+    ).toBeVisible();
   });
 
   it("renders without crashing with custom type", () => {
-    const div = document.createElement("div");
-    const root = createRoot(div);
-
     interface CustomTask extends Task {
       hasExtraField: boolean;
     }
 
-    root.render(
+    render(
       <Gantt<CustomTask>
         tasks={[
           {
@@ -104,5 +111,11 @@ describe("gantt", () => {
         ]}
       />
     );
+    expect(screen.getByRole("table")).toBeVisible();
+    // Header, Body Row and Gantt Table Row
+    expect(screen.getAllByRole("row")).toHaveLength(3);
+    expect(
+      screen.getByRole("cell", { name: "Redesign website" })
+    ).toBeVisible();
   });
 });
