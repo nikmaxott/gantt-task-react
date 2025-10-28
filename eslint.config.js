@@ -3,6 +3,7 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import react from "eslint-plugin-react";
 import { defineConfig } from "eslint/config";
+import reactHooks from "eslint-plugin-react-hooks";
 import testingLibrary from "eslint-plugin-testing-library";
 import jestDom from "eslint-plugin-jest-dom";
 import vitest from "@vitest/eslint-plugin";
@@ -13,6 +14,7 @@ export default defineConfig([
   { languageOptions: { globals: { ...globals.browser } } },
   pluginJs.configs.recommended,
   tseslint.configs.recommended,
+  reactHooks.configs.flat.recommended,
   {
     ignores: [
       "**/node_modules/*",
