@@ -18,7 +18,7 @@ const MyTaskListHeader = ({
         <th style={{ minWidth: `${rowWidth * 2}px` }} colSpan={2}>
           My Custom Task List Header OVER 2
         </th>
-        <th style={{ minWidth: rowWidth }}>Final</th>
+        <th style={{ minWidth: rowWidth }}>Is Disabled?</th>
       </tr>
     </thead>
   );

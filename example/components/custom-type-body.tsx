@@ -14,8 +14,6 @@ const MyTaskListBodyCustom = ({
   ganttHeight: number;
   rowHeight: number;
   rowWidth: number;
-  locale: string;
-  selectedTaskId: string;
   horizontalContainerRef: React.RefObject<HTMLTableSectionElement | null>;
   setSelectedTask: (taskId: string) => void;
   onExpanderClick: (task: CustomTask) => void;
@@ -29,7 +27,7 @@ const MyTaskListBodyCustom = ({
         overflow: "hidden",
         overflowY: "auto",
         display: "block",
-        maxHeight: ganttHeight ? ganttHeight : "",
+        maxHeight: ganttHeight || "",
       }}
     >
       {tasks.map(t => {
@@ -53,7 +51,7 @@ const MyTaskListBodyCustom = ({
                 </button>
               ) : null}
             </td>
-            <td style={{ minWidth: rowWidth }}>
+            <td style={{ minWidth: rowWidth }} colSpan={2}>
               <a href="#">Link to {t.name}</a>
             </td>
             <td style={{ minWidth: rowWidth }}>

@@ -20,7 +20,6 @@ export type TaskGanttContentProps<T extends Task> = {
   columnWidth: number;
   timeStep: number;
   svg?: React.RefObject<SVGSVGElement | null>;
-  svgWidth: number;
   taskHeight: number;
   arrowColor: string;
   arrowIndent: number;

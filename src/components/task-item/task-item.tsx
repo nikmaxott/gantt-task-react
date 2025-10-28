@@ -84,11 +84,8 @@ export const TaskItem = <T extends Task>(props: TaskItemProps<T>) => {
   return (
     <g
       onKeyDown={e => {
-        switch (e.key) {
-          case "Delete": {
-            if (isDelete) onEventStart("delete", task, e);
-            break;
-          }
+        if (e.key === "Delete") {
+          if (isDelete) onEventStart("delete", task, e);
         }
         e.stopPropagation();
       }}

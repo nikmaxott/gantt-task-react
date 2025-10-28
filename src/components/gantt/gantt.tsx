@@ -60,10 +60,10 @@ export const Gantt = <T extends Task>({
   arrowIndent = 20,
   todayColor = "rgba(252, 248, 227, 0.5)",
   viewDate,
-  TooltipContent = StandardTooltipContent,
-  TaskListHeader = TaskListHeaderDefault,
-  TaskListBody = TaskListBodyDefault,
-  TaskListTable,
+  renderTooltipContent = StandardTooltipContent,
+  renderTaskListHeader = TaskListHeaderDefault,
+  renderTaskListBody = TaskListBodyDefault,
+  renderTaskListTable,
   onDateChange,
   onProgressChange,
   onDoubleClick,
@@ -249,7 +249,7 @@ export const Gantt = <T extends Task>({
   useEffect(() => {
     if (failedTask) {
       setBarTasks(
-        barTasks.map(t => (t.task.id !== failedTask.task.id ? t : failedTask))
+        barTasks.map(t => (t.task.id === failedTask.task.id ? failedTask : t))
       );
       setFailedTask(null);
     }
@@ -442,7 +442,6 @@ export const Gantt = <T extends Task>({
     fontFamily,
     fontSize,
     arrowIndent,
-    svgWidth,
     rtl,
     setGanttEvent,
     setFailedTask,
@@ -468,29 +467,31 @@ export const Gantt = <T extends Task>({
     scrollY,
     setSelectedTask: handleSelectedTask,
     onExpanderClick: handleExpanderClick,
-    TaskListHeader,
-    TaskListBody,
+    TaskListHeader: renderTaskListHeader,
+    TaskListBody: renderTaskListBody,
   };
 
   return (
-    <div>
+    <>
       <div
         className={styles.wrapper}
         onKeyDown={handleKeyDown}
         tabIndex={0}
         ref={wrapperRef}
       >
-        {TaskListTable ? (
-          <TaskListTable
-            tasks={barTasks.map(t => t.task)}
-            selectedTaskId={selectedTask?.task.id}
-            taskListRef={taskListRef}
-            setSelectedTask={handleSelectedTask}
-            onExpanderClick={handleExpanderClick}
-            scrollY={scrollY}
-          />
+        {renderTaskListTable ? (
+          <>
+            {renderTaskListTable({
+              tasks: barTasks.map(t => t.task),
+              taskListRef,
+              scrollY,
+              setSelectedTask: handleSelectedTask,
+              onExpanderClick: handleExpanderClick,
+              selectedTaskId: selectedTask?.task.id,
+            })}
+          </>
         ) : (
-          <>{listCellWidth && <TaskListDefault {...tableProps} />} </>
+          <>{listCellWidth > 0 && <TaskListDefault {...tableProps} />} </>
         )}
         <TaskGantt
           gridProps={gridProps}
@@ -513,9 +514,8 @@ export const Gantt = <T extends Task>({
             task={ganttEvent.changedTask}
             headerHeight={headerHeight}
             taskListWidth={taskListWidth}
-            TooltipContent={TooltipContent}
+            TooltipContent={renderTooltipContent}
             rtl={rtl}
-            svgWidth={svgWidth}
           />
         )}
         <VerticalScroll
@@ -534,6 +534,6 @@ export const Gantt = <T extends Task>({
         rtl={rtl}
         onScroll={handleScrollX}
       />
-    </div>
+    </>
   );
 };
