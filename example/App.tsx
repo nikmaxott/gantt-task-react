@@ -162,7 +162,7 @@ const App = () => {
         listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
-        TooltipContent={MyToolTip}
+        renderTooltipContent={MyToolTip}
       />
       <h3>Gantt with Custom Header and Body</h3>
       <Gantt
@@ -178,8 +178,8 @@ const App = () => {
         listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
-        TaskListHeader={MyTaskListHeader}
-        TaskListBody={MyTaskListBody}
+        renderTaskListHeader={MyTaskListHeader}
+        renderTaskListBody={MyTaskListBody}
       />
       <h3>Gantt with Custom Type, Header and Body</h3>
       <Gantt<CustomTask>
@@ -195,8 +195,8 @@ const App = () => {
         listCellWidth={isChecked ? 155 : 0}
         columnWidth={columnWidth}
         rowHeight={30}
-        TaskListHeader={MyTaskListHeader}
-        TaskListBody={MyTaskListBodyCustom}
+        renderTaskListHeader={MyTaskListHeader}
+        renderTaskListBody={MyTaskListBodyCustom}
       />
       <h3>Gantt with Custom Table</h3>
       <Gantt
@@ -211,16 +211,7 @@ const App = () => {
         onExpanderClick={handleExpanderClick}
         ganttHeight={200}
         columnWidth={columnWidth}
-        TaskListTable={(props: {
-          tasks: Task[];
-          taskListRef: React.RefObject<HTMLTableElement | null>;
-          scrollY: number;
-          selectedTaskId?: string;
-          setSelectedTask: (taskId: string) => void;
-          onExpanderClick: (task: Task) => void;
-        }) => {
-          return <MyTaskListTable {...props} />;
-        }}
+        renderTaskListTable={MyTaskListTable}
       />
     </div>
   );

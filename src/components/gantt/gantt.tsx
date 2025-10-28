@@ -60,10 +60,10 @@ export const Gantt = <T extends Task>({
   arrowIndent = 20,
   todayColor = "rgba(252, 248, 227, 0.5)",
   viewDate,
-  TooltipContent = StandardTooltipContent,
-  TaskListHeader = TaskListHeaderDefault,
-  TaskListBody = TaskListBodyDefault,
-  TaskListTable,
+  renderTooltipContent = StandardTooltipContent,
+  renderTaskListHeader = TaskListHeaderDefault,
+  renderTaskListBody = TaskListBodyDefault,
+  renderTaskListTable,
   onDateChange,
   onProgressChange,
   onDoubleClick,
@@ -467,8 +467,8 @@ export const Gantt = <T extends Task>({
     scrollY,
     setSelectedTask: handleSelectedTask,
     onExpanderClick: handleExpanderClick,
-    TaskListHeader,
-    TaskListBody,
+    TaskListHeader: renderTaskListHeader,
+    TaskListBody: renderTaskListBody,
   };
 
   return (
@@ -479,15 +479,17 @@ export const Gantt = <T extends Task>({
         tabIndex={0}
         ref={wrapperRef}
       >
-        {TaskListTable ? (
-          <TaskListTable
-            tasks={barTasks.map(t => t.task)}
-            selectedTaskId={selectedTask?.task.id}
-            taskListRef={taskListRef}
-            setSelectedTask={handleSelectedTask}
-            onExpanderClick={handleExpanderClick}
-            scrollY={scrollY}
-          />
+        {renderTaskListTable ? (
+          <>
+            {renderTaskListTable({
+              tasks: barTasks.map(t => t.task),
+              taskListRef,
+              scrollY,
+              setSelectedTask: handleSelectedTask,
+              onExpanderClick: handleExpanderClick,
+              selectedTaskId: selectedTask?.task.id,
+            })}
+          </>
         ) : (
           <>{listCellWidth > 0 && <TaskListDefault {...tableProps} />} </>
         )}
@@ -512,7 +514,7 @@ export const Gantt = <T extends Task>({
             task={ganttEvent.changedTask}
             headerHeight={headerHeight}
             taskListWidth={taskListWidth}
-            TooltipContent={TooltipContent}
+            TooltipContent={renderTooltipContent}
             rtl={rtl}
           />
         )}

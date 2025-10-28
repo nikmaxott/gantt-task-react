@@ -115,16 +115,16 @@ export interface StylingOption<T extends Task> {
   arrowColor?: string;
   arrowIndent?: number;
   todayColor?: string;
-  TooltipContent?: (props: {
+  renderTooltipContent?: (props: {
     task: T;
     fontSize: string;
     fontFamily: string;
   }) => React.JSX.Element;
-  TaskListHeader?: (props: {
+  renderTaskListHeader?: (props: {
     headerHeight: number;
     rowWidth: number;
   }) => React.JSX.Element;
-  TaskListBody?: (props: {
+  renderTaskListBody?: (props: {
     rowHeight: number;
     rowWidth: number;
     locale: string;
@@ -138,13 +138,13 @@ export interface StylingOption<T extends Task> {
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: T) => void;
   }) => React.JSX.Element;
-  TaskListTable?: (props: {
+  renderTaskListTable?: (props: {
     tasks: T[];
     taskListRef: React.RefObject<HTMLTableElement | null>;
     scrollY: number;
-    selectedTaskId?: string;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: T) => void;
+    selectedTaskId?: string;
   }) => React.JSX.Element;
 }
 
