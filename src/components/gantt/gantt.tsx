@@ -249,7 +249,7 @@ export const Gantt = <T extends Task>({
   useEffect(() => {
     if (failedTask) {
       setBarTasks(
-        barTasks.map(t => (t.task.id !== failedTask.task.id ? t : failedTask))
+        barTasks.map(t => (t.task.id === failedTask.task.id ? failedTask : t))
       );
       setFailedTask(null);
     }
@@ -442,7 +442,6 @@ export const Gantt = <T extends Task>({
     fontFamily,
     fontSize,
     arrowIndent,
-    svgWidth,
     rtl,
     setGanttEvent,
     setFailedTask,
@@ -473,7 +472,7 @@ export const Gantt = <T extends Task>({
   };
 
   return (
-    <div>
+    <>
       <div
         className={styles.wrapper}
         onKeyDown={handleKeyDown}
@@ -490,7 +489,7 @@ export const Gantt = <T extends Task>({
             scrollY={scrollY}
           />
         ) : (
-          <>{listCellWidth && <TaskListDefault {...tableProps} />} </>
+          <>{listCellWidth > 0 && <TaskListDefault {...tableProps} />} </>
         )}
         <TaskGantt
           gridProps={gridProps}
@@ -515,7 +514,6 @@ export const Gantt = <T extends Task>({
             taskListWidth={taskListWidth}
             TooltipContent={TooltipContent}
             rtl={rtl}
-            svgWidth={svgWidth}
           />
         )}
         <VerticalScroll
@@ -534,6 +532,6 @@ export const Gantt = <T extends Task>({
         rtl={rtl}
         onScroll={handleScrollX}
       />
-    </div>
+    </>
   );
 };

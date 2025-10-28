@@ -25,25 +25,23 @@ export function removeHiddenTasks<T extends Task>(tasks: T[]) {
     for (let i = 0; groupedTasks.length > i; i++) {
       const groupedTask = groupedTasks[i];
       const children = getChildren(tasks, groupedTask);
-      tasks = tasks.filter(t => children.indexOf(t) === -1);
+      tasks = tasks.filter(t => children.includes(t));
     }
   }
   return tasks;
 }
 
 function getChildren(taskList: Task[], task: Task) {
-  let tasks: Task[] = [];
-  if (task.type !== "project") {
-    tasks = taskList.filter(
-      t => t.dependencies && t.dependencies.indexOf(task.id) !== -1
-    );
-  } else {
+  let tasks: Task[];
+  if (task.type === "project") {
     tasks = taskList.filter(t => t.project && t.project === task.id);
+  } else {
+    tasks = taskList.filter(t => t.dependencies?.includes(task.id));
   }
   const taskChildren: Task[] = [];
-  tasks.forEach(t => {
+  for (const t of tasks) {
     taskChildren.push(...getChildren(taskList, t));
-  });
+  }
   tasks = tasks.concat(tasks, taskChildren);
   return tasks;
 }

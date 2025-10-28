@@ -9,7 +9,6 @@ export type TooltipProps<T extends Task> = {
   rtl: boolean;
   svgContainerHeight: number;
   svgContainerWidth: number;
-  svgWidth: number;
   headerHeight: number;
   taskListWidth: number;
   scrollX: number;
@@ -139,7 +138,7 @@ export const StandardTooltipContent = <T extends Task>({
         task.end.getMonth() + 1
       }-${task.end.getFullYear()}`}</b>
       {task.end.getTime() - task.start.getTime() !== 0 && (
-        <p className={styles.tooltipDefaultContainerParagraph}>{`Duration: ${~~(
+         <p className={styles.tooltipDefaultContainerParagraph}>{`Duration: ${Math.trunc(
           (task.end.getTime() - task.start.getTime()) /
           (1000 * 60 * 60 * 24)
         )} day(s)`}</p>
