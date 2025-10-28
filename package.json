@@ -1,6 +1,6 @@
 {
   "name": "@nikmaxott/gantt-task-react",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Interactive Gantt Chart for React with TypeScript. Fork of MaTeMaTuK's gantt-task-react.",
   "author": "nikmaxott <nikolaus@nikmaxott.org>, MaTeMaTuK <maksym.vikarii@gmail.com>",
   "license": "MIT",
@@ -37,7 +37,7 @@
   ],
   "scripts": {
     "dev": "vite --config vite.config.demo.ts",
-    "build": "tsc --p ./tsconfig-build.json && vite build",
+    "build": "tsc -p ./tsconfig-build.json && vite build",
     "build:demo": "vite build --config vite.config.demo.ts",
     "test:unit": "vitest run",
     "test:watch": "vitest --watch",

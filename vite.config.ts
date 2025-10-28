@@ -8,8 +8,8 @@ export default defineConfig({
     react(),
     dts({
       include: "src",
-      exclude: ["src/setupTests.ts", "src/test"],
       rollupTypes: true,
+      tsconfigPath: "tsconfig-build.json",
     }),
   ],
   build: {
@@ -20,7 +20,7 @@ export default defineConfig({
       fileName: "gantt-task-react",
     },
     rollupOptions: {
-      // Ensure to externalize dependencies that shouldn't be bundled
+      // Ensure to externalise dependencies that shouldn't be bundled
       external: ["react", "react/jsx-runtime", "react-dom"],
       output: {
         // Provide global variables to use in the UMD build
