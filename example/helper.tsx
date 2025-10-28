@@ -102,8 +102,8 @@ export function getStartEndDateForProject(tasks: Task[], projectId: string) {
   let start = projectTasks[0].start;
   let end = projectTasks[0].end;
 
-  for (let i = 0; i < projectTasks.length; i++) {
-    const task = projectTasks[i];
+  for (const element of projectTasks) {
+    const task = element;
     if (start.getTime() > task.start.getTime()) {
       start = task.start;
     }

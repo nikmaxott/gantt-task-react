@@ -7,10 +7,7 @@ type MyTaskListBodyProps = {
   ganttHeight: number;
   rowHeight: number;
   rowWidth: number;
-  locale: string;
-  selectedTaskId: string;
   horizontalContainerRef: React.RefObject<HTMLTableSectionElement | null>;
-  setSelectedTask: (taskId: string) => void;
 };
 
 const MyTaskListBody = ({
@@ -30,7 +27,7 @@ const MyTaskListBody = ({
         overflow: "hidden",
         overflowY: "auto",
         display: "block",
-        maxHeight: ganttHeight ? ganttHeight : "",
+        maxHeight: ganttHeight || "",
       }}
     >
       {tasks.map(t => {

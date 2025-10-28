@@ -17,7 +17,7 @@ export default function MyTaskListTable({
   selectedTaskId,
   setSelectedTask,
   onExpanderClick,
-}: TaskListProps) {
+}: Readonly<TaskListProps>) {
   const horizontalContainerRef = useRef<HTMLTableSectionElement>(null);
   const rowHeight = 50;
   const rowWidth = 155;
