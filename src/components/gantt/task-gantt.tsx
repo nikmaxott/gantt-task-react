@@ -24,7 +24,6 @@ export const TaskGantt = <T extends Task>({
   const ganttSVGRef = useRef<SVGSVGElement>(null);
   const horizontalContainerRef = useRef<HTMLDivElement>(null);
   const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
-  const newBarProps = { ...barProps, svg: ganttSVGRef };
 
   useEffect(() => {
     if (horizontalContainerRef.current) {
@@ -73,7 +72,7 @@ export const TaskGantt = <T extends Task>({
           <title>Gantt Chart Content</title>
           <desc>Displays the tasks in the Gantt chart</desc>
           <Grid {...gridProps} />
-          <TaskGanttContent {...newBarProps} />
+          <TaskGanttContent {...barProps} svg={ganttSVGRef} />
         </svg>
       </div>
     </div>
