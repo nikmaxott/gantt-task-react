@@ -39,11 +39,11 @@
     "dev": "vite --config vite.config.demo.ts",
     "build": "tsc --p ./tsconfig-build.json && vite build",
     "build:demo": "vite build --config vite.config.demo.ts",
-    "test:lint": "eslint .",
-    "test:prettier": "prettier --check ./src",
     "test:unit": "vitest run",
     "test:watch": "vitest --watch",
+    "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "prettier": "prettier --check ./src",
     "prettier:fix": "prettier --write ./src",
     "prepublishOnly": "npm run build"
   },

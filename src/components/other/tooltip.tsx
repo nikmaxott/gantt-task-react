@@ -138,9 +138,10 @@ export const StandardTooltipContent = <T extends Task>({
         task.end.getMonth() + 1
       }-${task.end.getFullYear()}`}</b>
       {task.end.getTime() - task.start.getTime() !== 0 && (
-         <p className={styles.tooltipDefaultContainerParagraph}>{`Duration: ${Math.trunc(
-          (task.end.getTime() - task.start.getTime()) /
-          (1000 * 60 * 60 * 24)
+        <p
+          className={styles.tooltipDefaultContainerParagraph}
+        >{`Duration: ${Math.trunc(
+          (task.end.getTime() - task.start.getTime()) / (1000 * 60 * 60 * 24)
         )} day(s)`}</p>
       )}
 
