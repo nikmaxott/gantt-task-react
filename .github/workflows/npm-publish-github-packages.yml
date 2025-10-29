@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: 20.x
       - run: npm ci
-      - run: npm run test:lint
-      - run: npm run test:prettier
+      - run: npm run lint
+      - run: npm run prettier
       - run: npm run test:unit
       - run: npm run build
 
