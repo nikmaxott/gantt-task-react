@@ -1,4 +1,3 @@
-import React from "react";
 import { TaskItemProps } from "../task-item";
 import styles from "./project.module.css";
 import { Task } from "../../../types/public-types";

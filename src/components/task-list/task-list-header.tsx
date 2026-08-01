@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./task-list-header.module.css";
 
 type TaskListHeaderProps = {

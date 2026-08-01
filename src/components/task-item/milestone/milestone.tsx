@@ -1,4 +1,3 @@
-import React from "react";
 import { TaskItemProps } from "../task-item";
 import styles from "./milestone.module.css";
 import { Task } from "../../../types/public-types";
@@ -9,7 +8,7 @@ export const Milestone = <T extends Task>({
   onEventStart,
   isSelected,
 }: TaskItemProps<T>) => {
-  const transform = `rotate(45 ${task.x1 + task.height * 0.356} 
+  const transform = `rotate(45 ${task.x1 + task.height * 0.356}
     ${task.y + task.height * 0.85})`;
   const getBarColor = () => {
     return isSelected

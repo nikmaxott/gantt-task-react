@@ -1,4 +1,3 @@
-import React from "react";
 import { Task } from "../../src";
 type MyToolTipProps = {
   task: Task;
