@@ -3,13 +3,7 @@ import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 import DateTimeFormat = Intl.DateTimeFormat;
 
 type DateHelperScales =
-  | "year"
-  | "month"
-  | "day"
-  | "hour"
-  | "minute"
-  | "second"
-  | "millisecond";
+  "year" | "month" | "day" | "hour" | "minute" | "second" | "millisecond";
 
 const intlDTCache: { [key: string]: DateTimeFormat } = {};
 export const getCachedDateTimeFormat = (

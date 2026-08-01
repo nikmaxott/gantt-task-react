@@ -1,4 +1,3 @@
-import React from "react";
 import { ViewMode } from "../../src";
 
 type ViewSwitcherProps = {
