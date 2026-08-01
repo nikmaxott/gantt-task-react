@@ -17,6 +17,7 @@ export default defineConfig([
     ignores: [
       "**/node_modules/*",
       "**/dist/*",
+      "**/dist-demo/*",
       "**/build/*",
       "**/.snapshots/*",
       "**/*.css",
