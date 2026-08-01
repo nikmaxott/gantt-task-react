@@ -20,4 +20,4 @@ jobs:
           cache: 'npm'
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
-      - run: npm publish --provenance
+      - run: npm publish --provenance --access public
