@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { EventOption, Task } from "../../types/public-types";
 import { BarTask } from "../../types/bar-task";
 import { Arrow } from "../other/arrow";
@@ -59,17 +59,19 @@ export const TaskGanttContent = <T extends Task>({
   const [initEventX1Delta, setInitEventX1Delta] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
 
-  const getCursorX = (clientX: number) => {
-    const svgElement = svg?.current;
-    const point = svgElement?.createSVGPoint();
-    const screenCTM = svgElement?.getScreenCTM();
+  const getCursorX = useCallback(
+    (clientX: number) => {
+      const svgElement = svg?.current;
+      const point = svgElement?.createSVGPoint();
+      const screenCTM = svgElement?.getScreenCTM();
 
-    if (!point || !screenCTM) return undefined;
+      if (!point || !screenCTM) return undefined;
 
-    point.x = clientX;
-    return point.matrixTransform(screenCTM.inverse()).x;
-  };
-
+      point.x = clientX;
+      return point.matrixTransform(screenCTM.inverse()).x;
+    },
+    [svg]
+  );
   // create xStep
   useEffect(() => {
     if (!dates[0] || !dates[1]) return;
@@ -84,7 +86,7 @@ export const TaskGanttContent = <T extends Task>({
   }, [columnWidth, dates, timeStep]);
 
   useEffect(() => {
-    const handleMouseMove = async (event: MouseEvent) => {
+    const handleMouseMove = (event: MouseEvent) => {
       if (!ganttEvent.changedTask || !svg?.current) return;
       event.preventDefault();
 
@@ -111,6 +113,13 @@ export const TaskGanttContent = <T extends Task>({
       event.preventDefault();
 
       const cursorX = getCursorX(event.clientX);
+
+      // remove listeners
+      svg.current.removeEventListener("mousemove", handleMouseMove);
+      svg.current.removeEventListener("mouseup", handleMouseUp);
+      setGanttEvent({ action: "" });
+      setIsMoving(false);
+
       if (cursorX === undefined) return;
 
       const { changedTask: newChangedTask } = handleTaskBySVGMouseEvent(
@@ -127,12 +136,6 @@ export const TaskGanttContent = <T extends Task>({
         originalSelectedTask.task.start !== newChangedTask.task.start ||
         originalSelectedTask.task.end !== newChangedTask.task.end ||
         originalSelectedTask.task.progress !== newChangedTask.task.progress;
-
-      // remove listeners
-      svg.current.removeEventListener("mousemove", handleMouseMove);
-      svg.current.removeEventListener("mouseup", handleMouseUp);
-      setGanttEvent({ action: "" });
-      setIsMoving(false);
 
       // custom operation start
       let operationSuccess = true;
@@ -194,6 +197,7 @@ export const TaskGanttContent = <T extends Task>({
     svg,
     isMoving,
     rtl,
+    getCursorX,
     setFailedTask,
     setGanttEvent,
   ]);
