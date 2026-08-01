@@ -55,10 +55,20 @@ export const TaskGanttContent = <T extends Task>({
   onClick,
   onDelete,
 }: TaskGanttContentProps<T>) => {
-  const point = svg?.current?.createSVGPoint();
   const [xStep, setXStep] = useState(0);
   const [initEventX1Delta, setInitEventX1Delta] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
+
+  const getCursorX = (clientX: number) => {
+    const svgElement = svg?.current;
+    const point = svgElement?.createSVGPoint();
+    const screenCTM = svgElement?.getScreenCTM();
+
+    if (!point || !screenCTM) return undefined;
+
+    point.x = clientX;
+    return point.matrixTransform(screenCTM.inverse()).x;
+  };
 
   // create xStep
   useEffect(() => {
@@ -75,16 +85,14 @@ export const TaskGanttContent = <T extends Task>({
 
   useEffect(() => {
     const handleMouseMove = async (event: MouseEvent) => {
-      if (!ganttEvent.changedTask || !point || !svg?.current) return;
+      if (!ganttEvent.changedTask || !svg?.current) return;
       event.preventDefault();
 
-      point.x = event.clientX;
-      const cursor = point.matrixTransform(
-        svg?.current.getScreenCTM()?.inverse()
-      );
+      const cursorX = getCursorX(event.clientX);
+      if (cursorX === undefined) return;
 
       const { isChanged, changedTask } = handleTaskBySVGMouseEvent<T>(
-        cursor.x,
+        cursorX,
         ganttEvent.action as BarMoveAction,
         ganttEvent.changedTask,
         xStep,
@@ -99,16 +107,14 @@ export const TaskGanttContent = <T extends Task>({
 
     const handleMouseUp = async (event: MouseEvent) => {
       const { action, originalSelectedTask, changedTask } = ganttEvent;
-      if (!changedTask || !point || !svg?.current || !originalSelectedTask)
-        return;
+      if (!changedTask || !svg?.current || !originalSelectedTask) return;
       event.preventDefault();
 
-      point.x = event.clientX;
-      const cursor = point.matrixTransform(
-        svg?.current.getScreenCTM()?.inverse()
-      );
+      const cursorX = getCursorX(event.clientX);
+      if (cursorX === undefined) return;
+
       const { changedTask: newChangedTask } = handleTaskBySVGMouseEvent(
-        cursor.x,
+        cursorX,
         action as BarMoveAction,
         changedTask,
         xStep,
@@ -187,7 +193,6 @@ export const TaskGanttContent = <T extends Task>({
     onDateChange,
     svg,
     isMoving,
-    point,
     rtl,
     setFailedTask,
     setGanttEvent,
@@ -241,12 +246,12 @@ export const TaskGanttContent = <T extends Task>({
     }
     // Change task event start
     else if (action === "move") {
-      if (!svg?.current || !point) return;
-      point.x = event.clientX;
-      const cursor = point.matrixTransform(
-        svg.current.getScreenCTM()?.inverse()
-      );
-      setInitEventX1Delta(cursor.x - task.x1);
+      if (!svg?.current) return;
+
+      const cursorX = getCursorX(event.clientX);
+      if (cursorX === undefined) return;
+
+      setInitEventX1Delta(cursorX - task.x1);
       setGanttEvent({
         action,
         changedTask: task,
