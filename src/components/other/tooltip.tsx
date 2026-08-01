@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, ReactElement } from "react";
+import { useRef, useEffect, useState, ReactElement } from "react";
 import { Task } from "../../types/public-types";
 import { BarTask } from "../../types/bar-task";
 import styles from "./tooltip.module.css";
