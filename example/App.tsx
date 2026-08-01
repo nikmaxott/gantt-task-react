@@ -1,5 +1,7 @@
-import React from "react";
+import { useEffect, useState } from "react";
+
 import { Task, ViewMode, Gantt } from "../src";
+
 import { ViewSwitcher } from "./components/view-switcher";
 import { getStartEndDateForProject, initTasks } from "./helper";
 
@@ -11,10 +13,10 @@ import MyTaskListTable from "./components/custom-table";
 
 // Init
 const App = () => {
-  const [view, setView] = React.useState<ViewMode>(ViewMode.Day);
-  const [tasks, setTasks] = React.useState<Task[]>(initTasks());
-  const [delayedTasks, setDelayedTasks] = React.useState<Task[]>([]);
-  const [isChecked, setIsChecked] = React.useState(true);
+  const [view, setView] = useState<ViewMode>(ViewMode.Day);
+  const [tasks, setTasks] = useState<Task[]>(initTasks());
+  const [delayedTasks, setDelayedTasks] = useState<Task[]>([]);
+  const [isChecked, setIsChecked] = useState(true);
   let columnWidth = 65;
   if (view === ViewMode.Year) {
     columnWidth = 350;
@@ -87,7 +89,7 @@ const App = () => {
     console.log("On expander click Id:" + task.id);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const delay = 5000; // 5 seconds
     const timer = setTimeout(() => {
       setDelayedTasks(tasks);

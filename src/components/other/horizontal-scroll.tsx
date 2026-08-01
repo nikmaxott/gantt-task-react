@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useRef, useEffect } from "react";
+import { SyntheticEvent, useRef, useEffect } from "react";
 import styles from "./horizontal-scroll.module.css";
 
 type HorizontalScrollProps = {
