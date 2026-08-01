@@ -149,7 +149,7 @@ export const TaskGanttContent = <T extends Task>({
         try {
           const result = await onDateChange(
             newChangedTask.task,
-            newChangedTask.barChildren.map((child) => tasks[child.index].task)
+            newChangedTask.barChildren.map(child => tasks[child.index].task)
           );
           if (result !== undefined) {
             operationSuccess = result;
@@ -161,7 +161,7 @@ export const TaskGanttContent = <T extends Task>({
         try {
           const result = await onProgressChange(
             newChangedTask.task,
-            newChangedTask.barChildren.map((child) => tasks[child.index].task)
+            newChangedTask.barChildren.map(child => tasks[child.index].task)
           );
           if (result !== undefined) {
             operationSuccess = result;
@@ -283,8 +283,8 @@ export const TaskGanttContent = <T extends Task>({
   return (
     <g className="content">
       <g className="arrows" fill={arrowColor} stroke={arrowColor}>
-        {tasks.map((task) => {
-          return task.barChildren.map((child) => {
+        {tasks.map(task => {
+          return task.barChildren.map(child => {
             return (
               <Arrow
                 key={`Arrow from ${task.task.id} to ${tasks[child.index].task.id}`}
@@ -300,7 +300,7 @@ export const TaskGanttContent = <T extends Task>({
         })}
       </g>
       <g className="bar" fontFamily={fontFamily} fontSize={fontSize}>
-        {tasks.map((task) => {
+        {tasks.map(task => {
           return (
             <TaskItem<T>
               task={task}

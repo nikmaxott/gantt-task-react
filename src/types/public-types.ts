@@ -149,8 +149,6 @@ export interface StylingOption<T extends Task> {
 }
 
 export interface GanttProps<T extends Task = Task>
-  extends EventOption<T>,
-    DisplayOption,
-    StylingOption<T> {
+  extends EventOption<T>, DisplayOption, StylingOption<T> {
   tasks: T[];
 }
