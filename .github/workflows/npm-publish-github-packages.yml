@@ -20,4 +20,12 @@ jobs:
           cache: 'npm'
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
-      - run: npm publish --provenance --access public
+      - name: Publish package
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+
+          if [[ "$VERSION" == *-* ]]; then
+            npm publish --provenance --access public --tag next
+          else
+            npm publish --provenance --access public
+          fi
