@@ -1,4 +1,3 @@
-import React from "react";
 import { CustomTask } from "../App";
 
 const MyTaskListBodyCustom = ({

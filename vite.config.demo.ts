@@ -9,8 +9,8 @@ export default defineConfig({
   build: {
     outDir: "../dist-demo",
     emptyOutDir: true,
-    rollupOptions: {
-      input: resolve(__dirname, "example/index.html"),
+    rolldownOptions: {
+      input: resolve(import.meta.dirname, "example/index.html"),
     },
   },
 });
