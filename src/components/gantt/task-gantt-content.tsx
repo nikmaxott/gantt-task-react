@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { EventOption, Task } from "../../types/public-types";
 import { BarTask } from "../../types/bar-task";
 import { Arrow } from "../other/arrow";
@@ -55,7 +55,6 @@ export const TaskGanttContent = <T extends Task>({
   onClick,
   onDelete,
 }: TaskGanttContentProps<T>) => {
-  const point = svg?.current?.createSVGPoint();
   const [xStep, setXStep] = useState(0);
   const [initEventX1Delta, setInitEventX1Delta] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
@@ -73,18 +72,32 @@ export const TaskGanttContent = <T extends Task>({
     setXStep(newXStep);
   }, [columnWidth, dates, timeStep]);
 
+  // Helper: convert a screen clientX into the SVG coordinate system's X value.
+  // Returns `number` if conversion succeeds, otherwise undefined.
+  const getCursorX = useCallback(
+    (clientX: number): number | undefined => {
+      const svgElement = svg?.current;
+      const point = svgElement?.createSVGPoint();
+      const screenCTM = svgElement?.getScreenCTM();
+
+      if (!point || !screenCTM) return undefined;
+
+      point.x = clientX;
+      return point.matrixTransform(screenCTM.inverse()).x;
+    },
+    [svg]
+  );
+
   useEffect(() => {
     const handleMouseMove = async (event: MouseEvent) => {
-      if (!ganttEvent.changedTask || !point || !svg?.current) return;
+      if (!ganttEvent.changedTask || !svg?.current) return;
       event.preventDefault();
 
-      point.x = event.clientX;
-      const cursor = point.matrixTransform(
-        svg?.current.getScreenCTM()?.inverse()
-      );
+      const cursorX = getCursorX(event.clientX);
+      if (cursorX === undefined) return;
 
       const { isChanged, changedTask } = handleTaskBySVGMouseEvent<T>(
-        cursor.x,
+        cursorX,
         ganttEvent.action as BarMoveAction,
         ganttEvent.changedTask,
         xStep,
@@ -99,16 +112,14 @@ export const TaskGanttContent = <T extends Task>({
 
     const handleMouseUp = async (event: MouseEvent) => {
       const { action, originalSelectedTask, changedTask } = ganttEvent;
-      if (!changedTask || !point || !svg?.current || !originalSelectedTask)
-        return;
+      if (!changedTask || !svg?.current || !originalSelectedTask) return;
       event.preventDefault();
 
-      point.x = event.clientX;
-      const cursor = point.matrixTransform(
-        svg?.current.getScreenCTM()?.inverse()
-      );
+      const cursorX = getCursorX(event.clientX);
+      if (cursorX === undefined) return;
+
       const { changedTask: newChangedTask } = handleTaskBySVGMouseEvent(
-        cursor.x,
+        cursorX,
         action as BarMoveAction,
         changedTask,
         xStep,
@@ -138,7 +149,7 @@ export const TaskGanttContent = <T extends Task>({
         try {
           const result = await onDateChange(
             newChangedTask.task,
-            newChangedTask.barChildren.map(child => tasks[child.index].task)
+            newChangedTask.barChildren.map((child) => tasks[child.index].task)
           );
           if (result !== undefined) {
             operationSuccess = result;
@@ -150,7 +161,7 @@ export const TaskGanttContent = <T extends Task>({
         try {
           const result = await onProgressChange(
             newChangedTask.task,
-            newChangedTask.barChildren.map(child => tasks[child.index].task)
+            newChangedTask.barChildren.map((child) => tasks[child.index].task)
           );
           if (result !== undefined) {
             operationSuccess = result;
@@ -187,85 +198,93 @@ export const TaskGanttContent = <T extends Task>({
     onDateChange,
     svg,
     isMoving,
-    point,
+    getCursorX,
     rtl,
     setFailedTask,
     setGanttEvent,
   ]);
 
-  /**
-   * Method is Start point of task change
-   */
-  const handleBarEventStart = async (
-    action: GanttContentMoveAction,
-    task: BarTask<T>,
-    event?: React.MouseEvent | React.KeyboardEvent
-  ) => {
-    if (!event) {
-      if (action === "select") {
-        setSelectedTask(task.task.id);
+  // Memoize the public entry point that TaskItem calls so stable reference can be
+  // passed to children and to reduce re-creation across renders.
+  const handleBarEventStart = useCallback(
+    async (
+      action: GanttContentMoveAction,
+      task: BarTask<T>,
+      event?: React.MouseEvent | React.KeyboardEvent
+    ) => {
+      if (!event) {
+        if (action === "select") {
+          setSelectedTask(task.task.id);
+        }
       }
-    }
-    // Keyboard events
-    else if (isKeyboardEvent(event)) {
-      if (action === "delete") {
-        if (onDelete) {
-          try {
-            const result = await onDelete(task.task);
-            if (result !== undefined && result) {
-              setGanttEvent({ action, changedTask: task });
+      // Keyboard events
+      else if (isKeyboardEvent(event)) {
+        if (action === "delete") {
+          if (onDelete) {
+            try {
+              const result = await onDelete(task.task);
+              if (result !== undefined && result) {
+                setGanttEvent({ action, changedTask: task });
+              }
+            } catch (error) {
+              console.error("Error on Delete. " + error);
             }
-          } catch (error) {
-            console.error("Error on Delete. " + error);
           }
         }
       }
-    }
-    // Mouse Events
-    else if (action === "mouseenter") {
-      if (!ganttEvent.action) {
+      // Mouse Events
+      else if (action === "mouseenter") {
+        if (!ganttEvent.action) {
+          setGanttEvent({
+            action,
+            changedTask: task,
+            originalSelectedTask: task,
+          });
+        }
+      } else if (action === "mouseleave") {
+        if (ganttEvent.action === "mouseenter") {
+          setGanttEvent({ action: "" });
+        }
+      } else if (action === "dblclick" && onDoubleClick) {
+        onDoubleClick(task.task);
+      } else if (action === "click" && onClick) {
+        onClick(task.task);
+      }
+      // Change task event start
+      else if (action === "move") {
+        if (!svg?.current) return;
+        const cursorX = getCursorX((event as React.MouseEvent).clientX);
+        if (cursorX === undefined) return;
+        setInitEventX1Delta(cursorX - task.x1);
+        setGanttEvent({
+          action,
+          changedTask: task,
+          originalSelectedTask: task,
+        });
+      } else {
         setGanttEvent({
           action,
           changedTask: task,
           originalSelectedTask: task,
         });
       }
-    } else if (action === "mouseleave") {
-      if (ganttEvent.action === "mouseenter") {
-        setGanttEvent({ action: "" });
-      }
-    } else if (action === "dblclick" && onDoubleClick) {
-      onDoubleClick(task.task);
-    } else if (action === "click" && onClick) {
-      onClick(task.task);
-    }
-    // Change task event start
-    else if (action === "move") {
-      if (!svg?.current || !point) return;
-      point.x = event.clientX;
-      const cursor = point.matrixTransform(
-        svg.current.getScreenCTM()?.inverse()
-      );
-      setInitEventX1Delta(cursor.x - task.x1);
-      setGanttEvent({
-        action,
-        changedTask: task,
-        originalSelectedTask: task,
-      });
-    } else {
-      setGanttEvent({
-        action,
-        changedTask: task,
-        originalSelectedTask: task,
-      });
-    }
-  };
+    },
+    [
+      getCursorX,
+      setGanttEvent,
+      setSelectedTask,
+      setFailedTask,
+      onDateChange,
+      onProgressChange,
+      onDelete,
+    ]
+  );
 
   return (
     <g className="content">
       <g className="arrows" fill={arrowColor} stroke={arrowColor}>
-        {tasks.map(task => {
-          return task.barChildren.map(child => {
+        {tasks.map((task) => {
+          return task.barChildren.map((child) => {
             return (
               <Arrow
                 key={`Arrow from ${task.task.id} to ${tasks[child.index].task.id}`}
@@ -281,7 +300,7 @@ export const TaskGanttContent = <T extends Task>({
         })}
       </g>
       <g className="bar" fontFamily={fontFamily} fontSize={fontSize}>
-        {tasks.map(task => {
+        {tasks.map((task) => {
           return (
             <TaskItem<T>
               task={task}
