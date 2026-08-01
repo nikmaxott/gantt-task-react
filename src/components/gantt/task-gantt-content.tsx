@@ -59,6 +59,19 @@ export const TaskGanttContent = <T extends Task>({
   const [initEventX1Delta, setInitEventX1Delta] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
 
+  const getCursorX = useCallback(
+    (clientX: number) => {
+      const svgElement = svg?.current;
+      const point = svgElement?.createSVGPoint();
+      const screenCTM = svgElement?.getScreenCTM();
+
+      if (!point || !screenCTM) return undefined;
+
+      point.x = clientX;
+      return point.matrixTransform(screenCTM.inverse()).x;
+    },
+    [svg]
+  );
   // create xStep
   useEffect(() => {
     if (!dates[0] || !dates[1]) return;
@@ -89,7 +102,7 @@ export const TaskGanttContent = <T extends Task>({
   );
 
   useEffect(() => {
-    const handleMouseMove = async (event: MouseEvent) => {
+    const handleMouseMove = (event: MouseEvent) => {
       if (!ganttEvent.changedTask || !svg?.current) return;
       event.preventDefault();
 
@@ -116,6 +129,13 @@ export const TaskGanttContent = <T extends Task>({
       event.preventDefault();
 
       const cursorX = getCursorX(event.clientX);
+
+      // remove listeners
+      svg.current.removeEventListener("mousemove", handleMouseMove);
+      svg.current.removeEventListener("mouseup", handleMouseUp);
+      setGanttEvent({ action: "" });
+      setIsMoving(false);
+
       if (cursorX === undefined) return;
 
       const { changedTask: newChangedTask } = handleTaskBySVGMouseEvent(
@@ -132,12 +152,6 @@ export const TaskGanttContent = <T extends Task>({
         originalSelectedTask.task.start !== newChangedTask.task.start ||
         originalSelectedTask.task.end !== newChangedTask.task.end ||
         originalSelectedTask.task.progress !== newChangedTask.task.progress;
-
-      // remove listeners
-      svg.current.removeEventListener("mousemove", handleMouseMove);
-      svg.current.removeEventListener("mouseup", handleMouseUp);
-      setGanttEvent({ action: "" });
-      setIsMoving(false);
 
       // custom operation start
       let operationSuccess = true;
@@ -204,8 +218,9 @@ export const TaskGanttContent = <T extends Task>({
     setGanttEvent,
   ]);
 
-  // Memoize the public entry point that TaskItem calls so stable reference can be
-  // passed to children and to reduce re-creation across renders.
+  /**
+   * Method is Start point of task change
+   */
   const handleBarEventStart = useCallback(
     async (
       action: GanttContentMoveAction,
@@ -253,8 +268,10 @@ export const TaskGanttContent = <T extends Task>({
       // Change task event start
       else if (action === "move") {
         if (!svg?.current) return;
+
         const cursorX = getCursorX((event as React.MouseEvent).clientX);
         if (cursorX === undefined) return;
+
         setInitEventX1Delta(cursorX - task.x1);
         setGanttEvent({
           action,

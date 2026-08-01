@@ -1,4 +1,3 @@
-import React from "react";
 import { GridBody, GridBodyProps } from "./grid-body";
 
 export type GridProps = GridBodyProps;
