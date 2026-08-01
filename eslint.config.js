@@ -3,13 +3,14 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import react from "eslint-plugin-react";
 import { defineConfig } from "eslint/config";
+import reactCompiler from "eslint-plugin-react-compiler";
 import testingLibrary from "eslint-plugin-testing-library";
 import jestDom from "eslint-plugin-jest-dom";
 import vitest from "@vitest/eslint-plugin";
 
 export default defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
-  { plugins: { react: react } },
+  { plugins: { react: react, "react-compiler": reactCompiler } },
   { languageOptions: { globals: { ...globals.browser } } },
   pluginJs.configs.recommended,
   tseslint.configs.recommended,
@@ -38,6 +39,7 @@ export default defineConfig([
           ignoreRestSiblings: true,
         },
       ],
+      "react-compiler/react-compiler": "error",
     },
   },
   {
