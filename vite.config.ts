@@ -1,12 +1,16 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 import dts from "unplugin-dts/vite";
+import babel from "@rolldown/plugin-babel";
 
 export default defineConfig({
   plugins: [
     react(),
+    babel({
+      presets: [reactCompilerPreset()],
+    }),
     dts({
       include: "src",
       bundleTypes: true,
