@@ -24,7 +24,7 @@ export interface TaskItemProps<T extends Task> {
   ) => Promise<void>;
 }
 
-export const TaskItem = <T extends Task>(props: TaskItemProps<T>) => {
+const TaskItemInner = <T extends Task>(props: TaskItemProps<T>) => {
   const {
     task,
     arrowIndent,
@@ -122,3 +122,5 @@ export const TaskItem = <T extends Task>(props: TaskItemProps<T>) => {
     </g>
   );
 };
+
+export const TaskItem = React.memo(TaskItemInner) as typeof TaskItemInner;

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { memo, ReactElement } from "react";
 import { ViewMode } from "../../types/public-types";
 import { TopPartOfCalendar } from "./top-part-of-calendar";
 import {
@@ -22,7 +22,7 @@ export type CalendarProps = {
   fontSize: string;
 };
 
-export const Calendar = ({
+const CalendarInternal = ({
   dateSetup,
   locale,
   viewMode,
@@ -392,3 +392,5 @@ export const Calendar = ({
     </g>
   );
 };
+
+export const Calendar = memo(CalendarInternal) as typeof CalendarInternal;

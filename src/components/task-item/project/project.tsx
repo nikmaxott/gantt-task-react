@@ -1,8 +1,9 @@
+import React from "react";
 import { TaskItemProps } from "../task-item";
 import styles from "./project.module.css";
 import { Task } from "../../../types/public-types";
 
-export const Project = <T extends Task>({
+const ProjectInner = <T extends Task>({
   task,
   isSelected,
 }: TaskItemProps<T>) => {
@@ -59,3 +60,5 @@ export const Project = <T extends Task>({
     </g>
   );
 };
+
+export const Project = React.memo(ProjectInner) as typeof ProjectInner;

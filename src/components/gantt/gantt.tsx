@@ -4,6 +4,7 @@ import React, {
   useRef,
   useEffect,
   useMemo,
+  useCallback,
 } from "react";
 import { ViewMode, GanttProps, Task } from "../../types/public-types";
 import { GridProps } from "../grid/grid";
@@ -393,87 +394,167 @@ export const Gantt = <T extends Task>({
 
   /**
    * Task select event
+   *
+   * useCallback so this stays referentially stable across renders that
+   * don't touch barTasks/selectedTask/onSelect — it's threaded down as a
+   * prop to TaskGanttContent, TaskList, and (via those) every memoized
+   * per-row component, so a fresh function here on every render would
+   * silently defeat all of their memoization.
    */
-  const handleSelectedTask = (taskId: string) => {
-    const newSelectedTask = barTasks.find(t => t.task.id === taskId);
-    const oldSelectedTask = barTasks.find(
-      t => !!selectedTask && t.task.id === selectedTask.task.id
-    );
-    if (onSelect) {
-      if (oldSelectedTask) {
-        onSelect(oldSelectedTask.task, false);
+  const handleSelectedTask = useCallback(
+    (taskId: string) => {
+      const newSelectedTask = barTasks.find(t => t.task.id === taskId);
+      const oldSelectedTask = barTasks.find(
+        t => !!selectedTask && t.task.id === selectedTask.task.id
+      );
+      if (onSelect) {
+        if (oldSelectedTask) {
+          onSelect(oldSelectedTask.task, false);
+        }
+        if (newSelectedTask) {
+          onSelect(newSelectedTask.task, true);
+        }
       }
-      if (newSelectedTask) {
-        onSelect(newSelectedTask.task, true);
+      setSelectedTask(newSelectedTask);
+    },
+    [barTasks, selectedTask, onSelect]
+  );
+  const handleExpanderClick = useCallback(
+    (task: T) => {
+      if (onExpanderClick && task.hideChildren !== undefined) {
+        onExpanderClick({ ...task, hideChildren: !task.hideChildren });
       }
-    }
-    setSelectedTask(newSelectedTask);
-  };
-  const handleExpanderClick = (task: T) => {
-    if (onExpanderClick && task.hideChildren !== undefined) {
-      onExpanderClick({ ...task, hideChildren: !task.hideChildren });
-    }
-  };
-  const gridProps: GridProps = {
-    columnWidth,
-    svgWidth,
-    tasks: tasks,
-    rowHeight,
-    dates: dateSetup.dates,
-    todayColor,
-    rtl,
-  };
-  const calendarProps: CalendarProps = {
-    dateSetup,
-    locale,
-    viewMode,
-    headerHeight,
-    columnWidth,
-    fontFamily,
-    fontSize,
-    rtl,
-  };
-  const barProps: TaskGanttContentProps<T> = {
-    tasks: barTasks,
-    dates: dateSetup.dates,
-    ganttEvent,
-    selectedTask,
-    rowHeight,
-    taskHeight,
-    columnWidth,
-    arrowColor,
-    timeStep,
-    fontFamily,
-    fontSize,
-    arrowIndent,
-    rtl,
-    setGanttEvent,
-    setFailedTask,
-    setSelectedTask: handleSelectedTask,
-    onDateChange,
-    onProgressChange,
-    onDoubleClick,
-    onClick,
-    onDelete,
-  };
+    },
+    [onExpanderClick]
+  );
 
-  const tableProps: TaskListProps<T> = {
-    rowHeight,
-    rowWidth: listCellWidth,
-    fontFamily,
-    fontSize,
-    tasks: barTasks.map(t => t.task),
-    locale,
-    headerHeight,
-    ganttHeight,
-    selectedTask,
-    taskListRef,
-    scrollY,
-    setSelectedTask: handleSelectedTask,
-    onExpanderClick: handleExpanderClick,
-    TaskListHeader: renderTaskListHeader,
-    TaskListBody: renderTaskListBody,
-  };
+  // Same task list, new array reference, every render — recomputed only
+  // when the underlying bar tasks actually change, so it doesn't defeat
+  // memoization on TaskList/TaskListBodyDefault by itself.
+  const taskListTasks = useMemo(
+    () => barTasks.map(t => t.task),
+    [barTasks]
+  );
+
+  const gridProps: GridProps = useMemo(
+    () => ({
+      columnWidth,
+      svgWidth,
+      tasks,
+      rowHeight,
+      dates: dateSetup.dates,
+      todayColor,
+      rtl,
+    }),
+    [columnWidth, svgWidth, tasks, rowHeight, dateSetup.dates, todayColor, rtl]
+  );
+  const calendarProps: CalendarProps = useMemo(
+    () => ({
+      dateSetup,
+      locale,
+      viewMode,
+      headerHeight,
+      columnWidth,
+      fontFamily,
+      fontSize,
+      rtl,
+    }),
+    [
+      dateSetup,
+      locale,
+      viewMode,
+      headerHeight,
+      columnWidth,
+      fontFamily,
+      fontSize,
+      rtl,
+    ]
+  );
+  const barProps: TaskGanttContentProps<T> = useMemo(
+    () => ({
+      tasks: barTasks,
+      dates: dateSetup.dates,
+      ganttEvent,
+      selectedTask,
+      rowHeight,
+      taskHeight,
+      columnWidth,
+      arrowColor,
+      timeStep,
+      fontFamily,
+      fontSize,
+      arrowIndent,
+      rtl,
+      setGanttEvent,
+      setFailedTask,
+      setSelectedTask: handleSelectedTask,
+      onDateChange,
+      onProgressChange,
+      onDoubleClick,
+      onClick,
+      onDelete,
+    }),
+    [
+      barTasks,
+      dateSetup.dates,
+      ganttEvent,
+      selectedTask,
+      rowHeight,
+      taskHeight,
+      columnWidth,
+      arrowColor,
+      timeStep,
+      fontFamily,
+      fontSize,
+      arrowIndent,
+      rtl,
+      setGanttEvent,
+      setFailedTask,
+      handleSelectedTask,
+      onDateChange,
+      onProgressChange,
+      onDoubleClick,
+      onClick,
+      onDelete,
+    ]
+  );
+
+  const tableProps: TaskListProps<T> = useMemo(
+    () => ({
+      rowHeight,
+      rowWidth: listCellWidth,
+      fontFamily,
+      fontSize,
+      tasks: taskListTasks,
+      locale,
+      headerHeight,
+      ganttHeight,
+      selectedTask,
+      taskListRef,
+      scrollY,
+      setSelectedTask: handleSelectedTask,
+      onExpanderClick: handleExpanderClick,
+      TaskListHeader: renderTaskListHeader,
+      TaskListBody: renderTaskListBody,
+    }),
+    [
+      rowHeight,
+      listCellWidth,
+      fontFamily,
+      fontSize,
+      taskListTasks,
+      locale,
+      headerHeight,
+      ganttHeight,
+      selectedTask,
+      taskListRef,
+      scrollY,
+      handleSelectedTask,
+      handleExpanderClick,
+      renderTaskListHeader,
+      renderTaskListBody,
+    ]
+  );
 
   return (
     <>
@@ -486,7 +567,7 @@ export const Gantt = <T extends Task>({
         {renderTaskListTable ? (
           <>
             {renderTaskListTable({
-              tasks: barTasks.map(t => t.task),
+              tasks: taskListTasks,
               taskListRef,
               scrollY,
               setSelectedTask: handleSelectedTask,

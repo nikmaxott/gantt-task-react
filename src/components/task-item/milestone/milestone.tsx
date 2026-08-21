@@ -1,8 +1,9 @@
+import React from "react";
 import { TaskItemProps } from "../task-item";
 import styles from "./milestone.module.css";
 import { Task } from "../../../types/public-types";
 
-export const Milestone = <T extends Task>({
+const MilestoneInner = <T extends Task>({
   task,
   isDateChangeable,
   onEventStart,
@@ -37,3 +38,5 @@ export const Milestone = <T extends Task>({
     </g>
   );
 };
+
+export const Milestone = React.memo(MilestoneInner) as typeof MilestoneInner;

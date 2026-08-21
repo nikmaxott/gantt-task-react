@@ -1,3 +1,4 @@
+import React from "react";
 import { getProgressPoint } from "../../../helpers/bar-helper";
 import { BarDisplay } from "./bar-display";
 import { BarProgressHandle } from "./bar-progress-handle";
@@ -5,7 +6,7 @@ import { TaskItemProps } from "../task-item";
 import styles from "./bar.module.css";
 import { Task } from "../../../types/public-types";
 
-export const BarSmall = <T extends Task>({
+const BarSmallInner = <T extends Task>({
   task,
   isProgressChangeable,
   isDateChangeable,
@@ -48,3 +49,5 @@ export const BarSmall = <T extends Task>({
     </g>
   );
 };
+
+export const BarSmall = React.memo(BarSmallInner) as typeof BarSmallInner;

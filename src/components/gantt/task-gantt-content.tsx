@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { EventOption, Task } from "../../types/public-types";
 import { BarTask } from "../../types/bar-task";
 import { Arrow } from "../other/arrow";
@@ -26,12 +26,12 @@ export type TaskGanttContentProps<T extends Task> = {
   fontSize: string;
   fontFamily: string;
   rtl: boolean;
-  setGanttEvent: (value: GanttEvent<T>) => void;
+  setGanttEvent: React.Dispatch<React.SetStateAction<GanttEvent<T>>>;
   setFailedTask: (value: BarTask<T> | null) => void;
   setSelectedTask: (taskId: string) => void;
 } & EventOption<T>;
 
-export const TaskGanttContent = <T extends Task>({
+const TaskGanttContentInner = <T extends Task>({
   tasks,
   dates,
   ganttEvent,
@@ -55,7 +55,6 @@ export const TaskGanttContent = <T extends Task>({
   onClick,
   onDelete,
 }: TaskGanttContentProps<T>) => {
-  const point = svg?.current?.createSVGPoint();
   const [xStep, setXStep] = useState(0);
   const [initEventX1Delta, setInitEventX1Delta] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
@@ -75,12 +74,13 @@ export const TaskGanttContent = <T extends Task>({
 
   useEffect(() => {
     const handleMouseMove = async (event: MouseEvent) => {
-      if (!ganttEvent.changedTask || !point || !svg?.current) return;
+      if (!ganttEvent.changedTask || !svg?.current) return;
       event.preventDefault();
 
+      const point = svg.current.createSVGPoint();
       point.x = event.clientX;
       const cursor = point.matrixTransform(
-        svg?.current.getScreenCTM()?.inverse()
+        svg.current.getScreenCTM()?.inverse()
       );
 
       const { isChanged, changedTask } = handleTaskBySVGMouseEvent<T>(
@@ -99,13 +99,13 @@ export const TaskGanttContent = <T extends Task>({
 
     const handleMouseUp = async (event: MouseEvent) => {
       const { action, originalSelectedTask, changedTask } = ganttEvent;
-      if (!changedTask || !point || !svg?.current || !originalSelectedTask)
-        return;
+      if (!changedTask || !svg?.current || !originalSelectedTask) return;
       event.preventDefault();
 
+      const point = svg.current.createSVGPoint();
       point.x = event.clientX;
       const cursor = point.matrixTransform(
-        svg?.current.getScreenCTM()?.inverse()
+        svg.current.getScreenCTM()?.inverse()
       );
       const { changedTask: newChangedTask } = handleTaskBySVGMouseEvent(
         cursor.x,
@@ -187,7 +187,6 @@ export const TaskGanttContent = <T extends Task>({
     onDateChange,
     svg,
     isMoving,
-    point,
     rtl,
     setFailedTask,
     setGanttEvent,
@@ -196,70 +195,72 @@ export const TaskGanttContent = <T extends Task>({
   /**
    * Method is Start point of task change
    */
-  const handleBarEventStart = async (
-    action: GanttContentMoveAction,
-    task: BarTask<T>,
-    event?: React.MouseEvent | React.KeyboardEvent
-  ) => {
-    if (!event) {
-      if (action === "select") {
-        setSelectedTask(task.task.id);
+  const handleBarEventStart = useCallback(
+    async (
+      action: GanttContentMoveAction,
+      task: BarTask<T>,
+      event?: React.MouseEvent | React.KeyboardEvent
+    ) => {
+      if (!event) {
+        if (action === "select") {
+          setSelectedTask(task.task.id);
+        }
       }
-    }
-    // Keyboard events
-    else if (isKeyboardEvent(event)) {
-      if (action === "delete") {
-        if (onDelete) {
-          try {
-            const result = await onDelete(task.task);
-            if (result !== undefined && result) {
-              setGanttEvent({ action, changedTask: task });
+      // Keyboard events
+      else if (isKeyboardEvent(event)) {
+        if (action === "delete") {
+          if (onDelete) {
+            try {
+              const result = await onDelete(task.task);
+              if (result !== undefined && result) {
+                setGanttEvent({ action, changedTask: task });
+              }
+            } catch (error) {
+              console.error("Error on Delete. " + error);
             }
-          } catch (error) {
-            console.error("Error on Delete. " + error);
           }
         }
       }
-    }
-    // Mouse Events
-    else if (action === "mouseenter") {
-      if (!ganttEvent.action) {
+      // Mouse Events
+      else if (action === "mouseenter") {
+        setGanttEvent(prev =>
+          prev.action
+            ? prev
+            : { action, changedTask: task, originalSelectedTask: task }
+        );
+      } else if (action === "mouseleave") {
+        setGanttEvent(prev =>
+          prev.action === "mouseenter" ? { action: "" } : prev
+        );
+      } else if (action === "dblclick" && onDoubleClick) {
+        onDoubleClick(task.task);
+      } else if (action === "click" && onClick) {
+        onClick(task.task);
+      }
+      // Change task event start
+      else if (action === "move") {
+        if (!svg?.current) return;
+        const point = svg.current.createSVGPoint();
+        point.x = event.clientX;
+        const cursor = point.matrixTransform(
+          svg.current.getScreenCTM()?.inverse()
+        );
+        setInitEventX1Delta(cursor.x - task.x1);
+        setGanttEvent({
+          action,
+          changedTask: task,
+          originalSelectedTask: task,
+        });
+      } else {
         setGanttEvent({
           action,
           changedTask: task,
           originalSelectedTask: task,
         });
       }
-    } else if (action === "mouseleave") {
-      if (ganttEvent.action === "mouseenter") {
-        setGanttEvent({ action: "" });
-      }
-    } else if (action === "dblclick" && onDoubleClick) {
-      onDoubleClick(task.task);
-    } else if (action === "click" && onClick) {
-      onClick(task.task);
-    }
-    // Change task event start
-    else if (action === "move") {
-      if (!svg?.current || !point) return;
-      point.x = event.clientX;
-      const cursor = point.matrixTransform(
-        svg.current.getScreenCTM()?.inverse()
-      );
-      setInitEventX1Delta(cursor.x - task.x1);
-      setGanttEvent({
-        action,
-        changedTask: task,
-        originalSelectedTask: task,
-      });
-    } else {
-      setGanttEvent({
-        action,
-        changedTask: task,
-        originalSelectedTask: task,
-      });
-    }
-  };
+    },
+    [svg, onDelete, onDoubleClick, onClick, setGanttEvent, setSelectedTask]
+  );
 
   return (
     <g className="content">
@@ -303,3 +304,9 @@ export const TaskGanttContent = <T extends Task>({
     </g>
   );
 };
+
+// Cast restores the generic call signature `React.memo` erases — callers
+// still see `TaskGanttContent<T>` instead of a fixed, widened prop type.
+export const TaskGanttContent = React.memo(
+  TaskGanttContentInner
+) as typeof TaskGanttContentInner;

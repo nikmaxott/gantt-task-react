@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import styles from "./task-list-body.module.css";
 import { Task } from "../../types/public-types";
 
@@ -21,7 +21,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
   day: "numeric",
 };
 
-export const TaskListBodyDefault = <T extends Task>({
+const TaskListBodyDefaultInner = <T extends Task>({
   rowHeight,
   rowWidth,
   tasks,
@@ -115,3 +115,7 @@ export const TaskListBodyDefault = <T extends Task>({
     </tbody>
   );
 };
+
+export const TaskListBodyDefault = memo(
+  TaskListBodyDefaultInner
+) as typeof TaskListBodyDefaultInner;

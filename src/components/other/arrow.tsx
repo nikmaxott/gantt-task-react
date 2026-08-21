@@ -1,3 +1,4 @@
+import React from "react";
 import { BarTask } from "../../types/bar-task";
 
 type ArrowProps = {
@@ -8,7 +9,7 @@ type ArrowProps = {
   arrowIndent: number;
   rtl: boolean;
 };
-export const Arrow = ({
+const ArrowInner = ({
   taskFrom,
   taskTo,
   rowHeight,
@@ -43,6 +44,8 @@ export const Arrow = ({
     </g>
   );
 };
+
+export const Arrow = React.memo(ArrowInner);
 
 const drownPathAndTriangle = (
   taskFrom: BarTask,

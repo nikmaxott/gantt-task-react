@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { memo, useRef, useEffect } from "react";
 import { GridProps, Grid } from "../grid/grid";
 import { CalendarProps, Calendar } from "../calendar/calendar";
 import { TaskGanttContentProps, TaskGanttContent } from "./task-gantt-content";
@@ -13,7 +13,7 @@ export type TaskGanttProps<T extends Task> = {
   scrollY: number;
   scrollX: number;
 };
-export const TaskGantt = <T extends Task>({
+const TaskGanttInner = <T extends Task>({
   gridProps,
   calendarProps,
   barProps,
@@ -78,3 +78,8 @@ export const TaskGantt = <T extends Task>({
     </div>
   );
 };
+
+// scrollX/scrollY change on every scroll tick, so this won't bail during
+// scrolling itself — the payoff is skipping re-renders triggered by state
+// elsewhere in Gantt that don't touch scroll, grid, calendar, or tasks.
+export const TaskGantt = memo(TaskGanttInner) as typeof TaskGanttInner;

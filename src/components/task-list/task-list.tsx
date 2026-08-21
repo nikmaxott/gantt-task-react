@@ -33,7 +33,7 @@ export type TaskListProps<T extends Task> = {
   }) => React.ReactNode;
 };
 
-export const TaskList = <T extends Task>({
+const TaskListInner = <T extends Task>({
   headerHeight,
   fontFamily,
   fontSize,
@@ -88,3 +88,11 @@ export const TaskList = <T extends Task>({
     </table>
   );
 };
+
+// headerProps/tableProps above are spread onto TaskListHeader/TaskListBody,
+// so what matters for *their* memoization is each individual prop's
+// identity, not this object's — and those are already stable coming in
+// (taskListTasks, handleSelectedTask, handleExpanderClick are memoized
+// upstream in Gantt). Memoizing TaskList itself still helps when Gantt
+// re-renders for reasons unrelated to scroll/tasks/selection.
+export const TaskList = React.memo(TaskListInner) as typeof TaskListInner;

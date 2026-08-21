@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styles from "./task-list-header.module.css";
 
 type TaskListHeaderProps = {
@@ -5,7 +6,7 @@ type TaskListHeaderProps = {
   rowWidth: number;
 };
 
-export const TaskListHeaderDefault = ({
+const TaskListHeaderDefaultInner = ({
   headerHeight,
   rowWidth,
 }: TaskListHeaderProps) => {
@@ -45,3 +46,7 @@ export const TaskListHeaderDefault = ({
     </thead>
   );
 };
+
+export const TaskListHeaderDefault = memo(
+  TaskListHeaderDefaultInner
+) as typeof TaskListHeaderDefaultInner;

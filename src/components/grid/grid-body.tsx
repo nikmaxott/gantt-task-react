@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Task } from "../../types/public-types";
 import { addToDate } from "../../helpers/date-helper";
 import styles from "./grid.module.css";
@@ -11,7 +13,7 @@ export type GridBodyProps = {
   todayColor: string;
   rtl: boolean;
 };
-export const GridBody = ({
+const GridBodyInternal = ({
   tasks,
   dates,
   rowHeight,
@@ -131,3 +133,5 @@ export const GridBody = ({
     </g>
   );
 };
+
+export const GridBody = React.memo(GridBodyInternal);
