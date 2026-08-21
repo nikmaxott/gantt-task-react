@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "moduleResolution": "node",
+    "jsx": "react",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ESNext",
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "rootDir": "src"
+  },
+  "include": ["src"],
+  "exclude": ["src/setupTests.ts", "src/test", "**/*.test.ts", "**/*.test.tsx"]
+}
