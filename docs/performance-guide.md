@@ -132,11 +132,32 @@ Verified with `tsc --noEmit`, `eslint` (including
 `react-hooks/exhaustive-deps`), the full test suite, and a full
 `npm run build` (declaration-file bundling included) — all clean.
 
-Not done in this pass: splitting `Gantt`'s monolithic state so scroll
-position doesn't force the whole tree to re-render at all. The memoization
-above makes that far less costly than it was, so it's lower priority now —
-worth revisiting only if profiling still shows it matters after step 4
-(virtualization).
+**Update — also done:** scroll position is now split out of `Gantt`'s
+state entirely, via a new `GanttViewport` component
+(`src/components/gantt/gantt-viewport.tsx`). It owns `scrollX`, `scrollY`,
+`ignoreScrollEvent`, the derived layout measurements
+(`taskListWidth`/`svgContainerWidth`/`svgContainerHeight`), and the
+wheel/scrollbar/arrow-key handlers that update them. `Gantt` itself now
+holds only task-data state (`dateSetup`, `barTasks`, `ganttEvent`,
+`selectedTask`, `failedTask`) and hands `GanttViewport` fully memoized
+bundles of everything else — so scrolling, dragging the scrollbar, or
+nudging with arrow keys no longer re-runs `Gantt`'s own component function
+at all, not just the memoized subtree below it.
+
+Two behaviors needed re-threading across the new state boundary:
+
+- RTL's initial-scroll-to-the-far-end is now computed inside
+  `GanttViewport` itself, from the `svgWidth` prop it already receives,
+  guarded by a ref so it only fires once — no need to route it through
+  `Gantt`.
+- The `viewDate` prop's scroll-to-date jump still resolves in `Gantt`
+  (only it has `dateSetup` to turn a date into a column index) and is now
+  handed down as a one-shot `scrollToX` command prop that `GanttViewport`
+  applies via an effect, instead of `Gantt` reaching into scroll state
+  directly.
+
+Verified with `tsc --noEmit`, `eslint`, the full test suite, and full
+builds of both the library and the demo app.
 
 ### 3. Fix the `getBBox()` call in `TaskItem`
 
