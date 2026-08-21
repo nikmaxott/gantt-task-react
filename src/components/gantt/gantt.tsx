@@ -131,9 +131,14 @@ export const Gantt = <T extends Task>({
     let newDates = seedDates(startDate, endDate, viewMode);
     if (rtl) {
       newDates = newDates.reverse();
-      if (scrollX === -1) {
-        setScrollX(newDates.length * columnWidth);
-      }
+      // Functional form so this effect never needs to read the live
+      // scrollX value — only whether it's still at its initial (-1)
+      // sentinel. That lets scrollX stay out of the dependency array
+      // below, instead of re-running this whole conversion on every
+      // scroll/wheel tick.
+      setScrollX(prevScrollX =>
+        prevScrollX === -1 ? newDates.length * columnWidth : prevScrollX
+      );
     }
     setDateSetup({ dates: newDates, viewMode });
     setBarTasks(
@@ -180,7 +185,6 @@ export const Gantt = <T extends Task>({
     milestoneBackgroundColor,
     milestoneBackgroundSelectedColor,
     rtl,
-    scrollX,
     onExpanderClick,
   ]);
 
